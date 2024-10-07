@@ -1,6 +1,6 @@
-# Dotfiles (GNU stow)
+# Dotfiles
 
-These dotfiles use the GNU `stow` CLI utility to manage all system configuration files.
+My dotfiles for settings up my machine.
 
 ## Prerequisites
 
@@ -11,12 +11,8 @@ These dotfiles use the GNU `stow` CLI utility to manage all system configuration
 - [zsh-autosuggestions](https://github.com/zsh-users/zsh-autosuggestions/blob/master/INSTALL.md#oh-my-zsh)
 - [zsh-syntax-highlighting](https://github.com/zsh-users/zsh-syntax-highlighting/blob/master/INSTALL.md#oh-my-zsh)
 
-## Setup
+## Getting Started
 
-These dotfiles are configured to use separate directories for thinking certain things into the system. For example, the `user` directory should only contain user specific configurations, etc.
-
-### Configurations
-
-- `user`
-  - **Usage:** `$ stow user`
-  - **Description:** Links all the user specific assets to the system.
+```bash
+URL="..." DIR="dotfiles"; wget -qO- $URL | bash -s -- $DIR;
+```
