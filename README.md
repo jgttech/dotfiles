@@ -14,5 +14,5 @@ My dotfiles for settings up my machine.
 ## Getting Started
 
 ```bash
-URL="..." DIR="dotfiles"; wget -qO- $URL | bash -s -- $DIR;
+URL="https://raw.githubusercontent.com/jgttech/dotfiles/refs/heads/main/install" DIR="dotfiles"; wget -qO- $URL | bash -s -- $DIR;
 ```
