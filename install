@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-echo "INSTALLING"
+echo "INSTALLING ${DIR}"
