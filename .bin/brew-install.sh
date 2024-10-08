@@ -1,2 +1,4 @@
 #!/usr/bin/env bash
-echo "BREW INSTALL"
+BASE=$1
+
+echo "BASE: \"$BASE\""

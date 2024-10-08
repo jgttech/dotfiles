@@ -1,2 +1,5 @@
 #!/usr/bin/env bash
-echo "PACMAN INSTALL"
+BASE=$1
+
+echo "BASE: \"$BASE\""
+
