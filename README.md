@@ -13,6 +13,10 @@ My dotfiles for settings up my machine.
 
 ## Getting Started
 
+### Supported OS's
+
+- Arch Linux
+
 ```bash
 URL="https://raw.githubusercontent.com/jgttech/dotfiles/refs/heads/main/install" DIR="dotfiles"; wget -qO- $URL | bash -s -- $DIR;
 ```

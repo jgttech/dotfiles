@@ -1,4 +1,6 @@
-#!/usr/bin/env bash
+#!/bin/bash
+read -p "What's your name? " name
+
 DIR="${1}"
 BASE="${HOME}/${DIR}"
 BIN="${BASE}/.bin"
@@ -11,19 +13,8 @@ MIXED_INSTALL="mixed-install.sh"
 RED='\033[0;31m'
 GREEN='\033[0;32m'
 YELLOW='\033[0;33m'
-# BLUE='\033[0;34m'
-# MAGENTA='\033[0;35m'
-# CYAN='\033[0;36m'
 DIM='\e[2m'
 BOLD='\e[1m'
-
-# Background colors
-# BG_RED='\033[0;41m'
-# BG_GREEN='\033[0;42m'
-# BG_YELLOW='\033[0;43m'
-# BG_BLUE='\033[0;44m'
-# BG_MAGENTA='\033[0;45m'
-# BG_CYAN='\033[0;46m'
 
 # Clear the color
 CLEAR='\033[0m'
@@ -35,9 +26,6 @@ has_brew=false
 function red { printf "${RED}$@${CLEAR}\n"; }
 function green { printf "${GREEN}$@${CLEAR}\n"; }
 function yellow { printf "${YELLOW}$@${CLEAR}\n"; }
-# function blue { printf "${BLUE}$@${CLEAR}\n"; }
-# function magenta { printf "${MAGENTA}$@${CLEAR}\n"; }
-# function cyan { printf "${CYAN}$@${CLEAR}\n"; }
 
 function dim { printf "${DIM}$@${CLEAR}\n"; }
 function bold { printf "${BOLD}$@${CLEAR}\n"; }
@@ -105,6 +93,8 @@ echo ""
 git clone https://github.com/jgttech/dotfiles ${BASE}
 
 echo ""
+read -p "Continue (y/n)?" choice
+
 if [[ "$has_pacman" = true && "$has_brew" = false ]]; then
   ${BIN}/${PACMAN_INSTALL} ${BASE}
 elif [[ "$has_pacman" = false && "$has_brew" = true ]]; then

@@ -1,0 +1,17 @@
+{
+	"packages": {
+		"yay": [
+			"fswatch",
+			"python",
+			"python-pipx",
+			"ruby",
+			"perl",
+			"tree-sitter",
+			"php",
+			"rust",
+			"luarocks"
+		],
+		"pipx": ["black"],
+		"go": ["golang.org/x/telemetry/cmd/gotelemetry@latest"]
+	}
+}
