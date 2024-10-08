@@ -1,12 +1,7 @@
 #!/usr/bin/env bash
+# Must be BASH to support prompting properly.
 if [ -z "$BASH_VERSION" ]; then
     echo "This script requires bash" >&2
-    exit 1
-fi
-
-printf "What's your name? "
-if ! read -r name; then
-    echo "Error reading input" >&2
     exit 1
 fi
 
@@ -14,8 +9,7 @@ DIR="${1}"
 BASE="${HOME}/${DIR}"
 BIN="${BASE}/.bin"
 
-PACMAN_INSTALL="pacman-install.sh"
-BREW_INSTALL="brew-install.sh"
+PACMAN_INSTALL="pacman-install.sh" BREW_INSTALL="brew-install.sh"
 MIXED_INSTALL="mixed-install.sh"
 
 # Colors
@@ -28,9 +22,11 @@ BOLD='\e[1m'
 # Clear the color
 CLEAR='\033[0m'
 
+# Installation state.
 has_error=false
 has_pacman=false
 has_brew=false
+can_install=false
 
 function red { printf "${RED}$@${CLEAR}\n"; }
 function green { printf "${GREEN}$@${CLEAR}\n"; }
@@ -41,6 +37,44 @@ function bold { printf "${BOLD}$@${CLEAR}\n"; }
 
 function separator {
   echo -e "$(dim "________________________________________________")"
+}
+
+function is_yes {
+  case "${1,,}" in
+    y|yes|true|t|on|1) return 0 ;;
+    *) return 1 ;;
+  esac
+}
+
+function is_no {
+  case "${1,,}" in
+    n|no|false|f|off|0) return 0 ;;
+    *) return 1 ;;
+  esac
+}
+
+function confirm {
+  local prompt="$1"
+  local default="${2,,}"
+  local response
+
+  while true; do
+    printf "%s " "$prompt" >/dev/tty
+    read -r response </dev/tty
+    
+    # Use default if response is empty
+    if [ -z "$response" ]; then
+      response="$default"
+    fi
+
+    if is_yes "$response"; then
+      return 0
+    elif is_no "$response"; then
+      return 1
+    else
+      printf "Please answer yes or no.\n" >/dev/tty
+    fi
+  done
 }
 
 function check {
@@ -78,16 +112,17 @@ function check {
   fi
 }
 
-# Check for the required packages to be installed
-# in order to run the installation script.
-
 separator
 echo -e "$(bold "Checking required package(s)")"
 
+# Check for the required packages to be installed
+# in order to run the installation script.
 check false "pacman"
 check false "brew"
 check true "git"
 
+# If an error was triggered in the initial package(s)
+# check, then the installation won't work.
 if [ "$has_error" == true ]; then
   exit 1
 fi
@@ -95,19 +130,48 @@ fi
 echo ""
 separator
 
+# Showing any system information before starting
+# the installation process.
 echo -e "$(bold "System Configuration")"
 printf "os\t${OSTYPE}\n"
 
-echo ""
-git clone https://github.com/jgttech/dotfiles ${BASE}
+if [ ! -d "$BASE" ]; then
+  # If there is not base directory, we can trigger
+  # the installation script type.
+  can_install=true
+else
+  # If is an existing base directory we need to
+  # make sure it's okay to remove it before starting
+  # the installation.
+  echo ""
+  separator
 
-echo ""
-read -p "Continue (y/n)?" choice
+  echo "$(yellow "WARNING")"
+  echo "Path already exists: \"$BASE\""
+  echo ""
 
-if [[ "$has_pacman" = true && "$has_brew" = false ]]; then
-  ${BIN}/${PACMAN_INSTALL} ${BASE}
-elif [[ "$has_pacman" = false && "$has_brew" = true ]]; then
-  ${BIN}/${BREW_INSTALL} ${BASE}
-elif [[ "$has_pacman" = true && "$has_brew" = true ]]; then
-  ${BIN}/${MIXED_INSTALL} ${BASE}
+  if confirm "Do you want to continue? (y/N)" "n"; then
+    can_install=true
+    rm -rfv ${BASE}
+  else
+    echo "Nothing to be installed..."
+    exit 0
+  fi
+fi
+
+# If we can perform the installation, we check
+# the system package flags we checked for for use
+# that to know which installation script to run.
+if [[ "$can_install" = true ]]; then
+  echo ""
+  separator
+  git clone https://github.com/jgttech/dotfiles ${BASE}
+
+  if [[ "$has_pacman" = true && "$has_brew" = false ]]; then
+    ${BIN}/${PACMAN_INSTALL} ${BASE}
+  elif [[ "$has_pacman" = false && "$has_brew" = true ]]; then
+    ${BIN}/${BREW_INSTALL} ${BASE}
+  elif [[ "$has_pacman" = true && "$has_brew" = true ]]; then
+    ${BIN}/${MIXED_INSTALL} ${BASE}
+  fi
 fi
