@@ -1,4 +1,11 @@
 #!/usr/bin/env bash
+use_local=false
+local_dir=".dotfiles"
+
+if [[ "$2" = "local" ]]; then
+  use_local=true
+fi
+
 # Must be BASH to support prompting properly.
 if [ -z "$BASH_VERSION" ]; then
     echo "This script requires bash" >&2
@@ -9,7 +16,14 @@ DIR="${1}"
 BASE="${HOME}/${DIR}"
 BIN="${BASE}/.bin"
 
-PACMAN_INSTALL="pacman-install.sh" BREW_INSTALL="brew-install.sh"
+# Allows me to invoke the installation from
+# local scripts instead of through GitHub.
+if [[ "$use_local" = true ]]; then
+  BIN="${HOME}/${local_dir}/.bin"
+fi
+
+PACMAN_INSTALL="pacman-install.sh"
+BREW_INSTALL="brew-install.sh"
 MIXED_INSTALL="mixed-install.sh"
 
 # Colors
