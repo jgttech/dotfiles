@@ -1,7 +1,11 @@
 #!/usr/bin/env bash
-DIR=${1}
-BASE=${HOME}/${DIR}
-has_error=false
+DIR="${1}"
+BASE="${HOME}/${DIR}"
+BIN="${BASE}/.bin"
+
+PACMAN_INSTALL="pacman-install.sh"
+BREW_INSTALL="brew-install.sh"
+MIXED_INSTALL="mixed-install.sh"
 
 # Colors
 RED='\033[0;31m'
@@ -23,6 +27,10 @@ BOLD='\e[1m'
 
 # Clear the color
 CLEAR='\033[0m'
+
+has_error=false
+has_pacman=false
+has_brew=false
 
 function red { printf "${RED}$@${CLEAR}\n"; }
 function green { printf "${GREEN}$@${CLEAR}\n"; }
@@ -62,6 +70,14 @@ function check {
     fi
   else
     echo -e "$(green "✔️")  $(dim "(found)")"
+
+    if [[ $pkg == *"pacman"* ]]; then
+      has_pacman=true
+    fi
+
+    if [[ $pkg == *"brew"* ]]; then
+      has_brew=true
+    fi
   fi
 }
 
@@ -72,7 +88,7 @@ separator
 echo -e "$(bold "Checking required package(s)")"
 
 check false "pacman"
-check true "brew"
+check false "brew"
 check true "git"
 
 if [ "$has_error" == true ]; then
@@ -88,4 +104,10 @@ printf "os\t${OSTYPE}\n"
 echo ""
 git clone https://github.com/jgttech/dotfiles ${BASE}
 
-# ${BASE}
+if [ "$has_pacman" == true & "$has_brew" == false ]; then
+  ${BIN}/${PACMAN_INSTALL}
+elif [ "$has_pacman" == false & "$has_brew" == true ]; then
+  ${BIN}/${BREW_INSTALL}
+elif [ "$has_pacman" == true & "$has_brew" == true ]; then
+  ${BIN}/${MIXED_INSTALL}
+fi
