@@ -50,7 +50,14 @@ function dim { printf "${DIM}$@${CLEAR}\n"; }
 function bold { printf "${BOLD}$@${CLEAR}\n"; }
 
 function separator {
-  echo -e "$(dim "________________________________________________")"
+  line=""
+
+  for i in {1..45}
+  do
+    line+="_"
+  done
+
+  printf "$(dim $line)\n"
 }
 
 function is_yes {
