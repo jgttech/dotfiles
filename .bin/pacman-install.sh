@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
 BASE=$1
 
-echo "BASE: \"$BASE\""
-
+echo "(WIP) Pacman only installation not yet supported."
+echo "$BASE"
