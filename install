@@ -1,4 +1,91 @@
 #!/usr/bin/env bash
 DIR=${1}
+BASE=${HOME}/${DIR}
+has_error=false
 
-echo "INSTALLING ${DIR}"
+# Colors
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+# YELLOW='\033[0;33m'
+# BLUE='\033[0;34m'
+# MAGENTA='\033[0;35m'
+# CYAN='\033[0;36m'
+DIM='\e[2m'
+BOLD='\e[1m'
+
+# Background colors
+# BG_RED='\033[0;41m'
+# BG_GREEN='\033[0;42m'
+# BG_YELLOW='\033[0;43m'
+# BG_BLUE='\033[0;44m'
+# BG_MAGENTA='\033[0;45m'
+# BG_CYAN='\033[0;46m'
+
+# Clear the color
+CLEAR='\033[0m'
+
+function red { printf "${RED}$@${CLEAR}\n"; }
+function green { printf "${GREEN}$@${CLEAR}\n"; }
+# function yellow { printf "${YELLOW}$@${CLEAR}\n"; }
+# function blue { printf "${BLUE}$@${CLEAR}\n"; }
+# function magenta { printf "${MAGENTA}$@${CLEAR}\n"; }
+# function cyan { printf "${CYAN}$@${CLEAR}\n"; }
+
+function dim { printf "${DIM}$@${CLEAR}\n"; }
+function bold { printf "${BOLD}$@${CLEAR}\n"; }
+
+function separator {
+  echo -e "$(dim "________________________________________________")"
+}
+
+function check {
+  is_required=$1
+  pkg=$2
+
+  printf "$pkg\t"
+
+  which $pkg &>/dev/null; if [[ $? != 0 ]]; then
+    msg="$(red "❌") "
+
+    if [ "$is_required" == true ]; then
+      msg+="$(dim "(missing required package)")"
+    else
+      msg+="$(dim "(missing, but NOT required)")"
+    fi
+
+    echo -e "${msg}"
+
+    if [ "$is_required" == true ]; then
+      if [ "$has_error" == false ]; then
+        has_error=true
+      fi
+    fi
+  else
+    echo -e "$(green "✔️")  $(dim "(found)")"
+  fi
+}
+
+# Check for the required packages to be installed
+# in order to run the installation script.
+
+separator
+echo -e "$(bold "Checking required package(s)")"
+
+check false "pacman"
+check true "brew"
+check true "git"
+
+if [ "$has_error" == true ]; then
+  exit 1
+fi
+
+echo ""
+separator
+
+echo -e "$(bold "System Configuration")"
+printf "os\t${OSTYPE}\n"
+
+echo ""
+git clone https://github.com/jgttech/dotfiles ${BASE}
+
+# ${BASE}
