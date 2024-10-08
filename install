@@ -91,41 +91,6 @@ function confirm {
   done
 }
 
-# function check {
-#   is_required=$1
-#   pkg=$2
-#
-#   printf "$pkg\t"
-#
-#   which $pkg &>/dev/null; if [[ $? != 0 ]]; then
-#     msg="$(red "❌") "
-#
-#     if [ "$is_required" == true ]; then
-#       msg+="$(dim "(missing required package)")"
-#     else
-#       msg+="$(dim "(missing, but NOT required)")"
-#     fi
-#
-#     echo -e "${msg}"
-#
-#     if [ "$is_required" == true ]; then
-#       if [ "$has_error" == false ]; then
-#         has_error=true
-#       fi
-#     fi
-#   else
-#     echo -e "$(green "✔️")  $(dim "(found)")"
-#
-#     if [[ $pkg == *"pacman"* ]]; then
-#       has_pacman=true
-#     fi
-#
-#     if [[ $pkg == *"brew"* ]]; then
-#       has_brew=true
-#     fi
-#   fi
-# }
-
 function check {
   local pkg="$1"
   local is_required="${2:-false}"
