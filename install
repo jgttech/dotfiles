@@ -186,10 +186,16 @@ if [[ "$can_install" = true ]]; then
   echo ""
   separator
   if [[ "$has_pacman" = true && "$has_brew" = false ]]; then
+    echo "Installing using pacman, by itself."
+    echo ""
     ${BIN}/${PACMAN_INSTALL} ${BASE}
   elif [[ "$has_pacman" = false && "$has_brew" = true ]]; then
+    echo "Installing using Homebrew, by itself."
+    echo ""
     ${BIN}/${BREW_INSTALL} ${BASE}
   elif [[ "$has_pacman" = true && "$has_brew" = true ]]; then
+    echo "Installing using a mixed installation."
+    echo ""
     ${BIN}/${MIXED_INSTALL} ${BASE}
   fi
 fi
