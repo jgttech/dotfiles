@@ -4,6 +4,12 @@ if [ -z "$BASH_VERSION" ]; then
     exit 1
 fi
 
+printf "What's your name? "
+if ! read -r name; then
+    echo "Error reading input" >&2
+    exit 1
+fi
+
 DIR="${1}"
 BASE="${HOME}/${DIR}"
 BIN="${BASE}/.bin"
