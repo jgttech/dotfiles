@@ -10,7 +10,7 @@ MIXED_INSTALL="mixed-install.sh"
 # Colors
 RED='\033[0;31m'
 GREEN='\033[0;32m'
-# YELLOW='\033[0;33m'
+YELLOW='\033[0;33m'
 # BLUE='\033[0;34m'
 # MAGENTA='\033[0;35m'
 # CYAN='\033[0;36m'
@@ -34,7 +34,7 @@ has_brew=false
 
 function red { printf "${RED}$@${CLEAR}\n"; }
 function green { printf "${GREEN}$@${CLEAR}\n"; }
-# function yellow { printf "${YELLOW}$@${CLEAR}\n"; }
+function yellow { printf "${YELLOW}$@${CLEAR}\n"; }
 # function blue { printf "${BLUE}$@${CLEAR}\n"; }
 # function magenta { printf "${MAGENTA}$@${CLEAR}\n"; }
 # function cyan { printf "${CYAN}$@${CLEAR}\n"; }
@@ -44,6 +44,18 @@ function bold { printf "${BOLD}$@${CLEAR}\n"; }
 
 function separator {
   echo -e "$(dim "________________________________________________")"
+}
+
+function confirm() {
+  while true; do
+    read -p "Do you want to proceed? (y/n/c) " yn
+    case $yn in
+      [Yy]* ) return 0;;
+      [Nn]* ) return 1;;
+      [Cc]* ) exit;;
+      * ) echo "Please answer YES, NO, or CANCEL.";;
+    esac
+  done
 }
 
 function check {
@@ -93,6 +105,18 @@ check true "git"
 
 if [ "$has_error" == true ]; then
   exit 1
+fi
+
+if [ -d "$BASE" ]; then
+  echo "$(bold $(yellow "WARNING"))"
+  echo "You are about to DELETE what you have and"
+  echo "re-install the dotfiles."
+
+  if confirm; then
+    echo "RE-INSTALLING"
+  else
+    echo "DOING NOTHING"
+  fi
 fi
 
 echo ""
