@@ -46,7 +46,7 @@ function separator {
   echo -e "$(dim "________________________________________________")"
 }
 
-function confirm() {
+function confirm {
   while true; do
     read -p "Do you want to proceed? (y/n/c) " yn
     case $yn in
@@ -128,10 +128,10 @@ printf "os\t${OSTYPE}\n"
 echo ""
 git clone https://github.com/jgttech/dotfiles ${BASE}
 
-if [ "$has_pacman" == true & "$has_brew" == false ]; then
+if [ "$has_pacman" == true && "$has_brew" == false ]; then
   ${BIN}/${PACMAN_INSTALL} ${BASE}
-elif [ "$has_pacman" == false & "$has_brew" == true ]; then
+elif [ "$has_pacman" == false && "$has_brew" == true ]; then
   ${BIN}/${BREW_INSTALL} ${BASE}
-elif [ "$has_pacman" == true & "$has_brew" == true ]; then
+elif [ "$has_pacman" == true && "$has_brew" == true ]; then
   ${BIN}/${MIXED_INSTALL} ${BASE}
 fi
