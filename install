@@ -91,9 +91,44 @@ function confirm {
   done
 }
 
+# function check {
+#   is_required=$1
+#   pkg=$2
+#
+#   printf "$pkg\t"
+#
+#   which $pkg &>/dev/null; if [[ $? != 0 ]]; then
+#     msg="$(red "❌") "
+#
+#     if [ "$is_required" == true ]; then
+#       msg+="$(dim "(missing required package)")"
+#     else
+#       msg+="$(dim "(missing, but NOT required)")"
+#     fi
+#
+#     echo -e "${msg}"
+#
+#     if [ "$is_required" == true ]; then
+#       if [ "$has_error" == false ]; then
+#         has_error=true
+#       fi
+#     fi
+#   else
+#     echo -e "$(green "✔️")  $(dim "(found)")"
+#
+#     if [[ $pkg == *"pacman"* ]]; then
+#       has_pacman=true
+#     fi
+#
+#     if [[ $pkg == *"brew"* ]]; then
+#       has_brew=true
+#     fi
+#   fi
+# }
+
 function check {
-  is_required=$1
-  pkg=$2
+  local pkg="$1"
+  local is_required="${2:-false}"
 
   printf "$pkg\t"
 
@@ -107,22 +142,10 @@ function check {
     fi
 
     echo -e "${msg}"
-
-    if [ "$is_required" == true ]; then
-      if [ "$has_error" == false ]; then
-        has_error=true
-      fi
-    fi
+    return 1
   else
     echo -e "$(green "✔️")  $(dim "(found)")"
-
-    if [[ $pkg == *"pacman"* ]]; then
-      has_pacman=true
-    fi
-
-    if [[ $pkg == *"brew"* ]]; then
-      has_brew=true
-    fi
+    return 0
   fi
 }
 
@@ -131,18 +154,26 @@ echo -e "$(bold "Checking required package(s)")"
 
 # Check for the required packages to be installed
 # in order to run the installation script.
-check false "pacman"
-check false "brew"
-check true "git"
+if check "pacman"; then
+  has_pacman=true
+fi
+
+if check "brew"; then
+  has_brew=true
+fi
+
+if check "git" true; then
+  echo ""
+  separator
+else
+  has_error=true
+fi
 
 # If an error was triggered in the initial package(s)
 # check, then the installation won't work.
 if [ "$has_error" == true ]; then
   exit 1
 fi
-
-echo ""
-separator
 
 # Showing any system information before starting
 # the installation process.
@@ -185,17 +216,9 @@ if [[ "$can_install" = true ]]; then
 
   echo ""
   separator
-  if [[ "$has_pacman" = true && "$has_brew" = false ]]; then
-    echo "Installing using pacman, by itself."
-    echo ""
+  if [[ "$has_pacman" = true ]]; then
     ${BIN}/${PACMAN_INSTALL} ${BASE}
-  elif [[ "$has_pacman" = false && "$has_brew" = true ]]; then
-    echo "Installing using Homebrew, by itself."
-    echo ""
-    ${BIN}/${BREW_INSTALL} ${BASE}
-  elif [[ "$has_pacman" = true && "$has_brew" = true ]]; then
-    echo "Installing using a mixed installation."
-    echo ""
-    ${BIN}/${MIXED_INSTALL} ${BASE}
+  else
+    echo "This system type is not, yet, supported."
   fi
 fi
