@@ -146,8 +146,10 @@ else
   echo ""
   separator
 
-  echo "$(yellow "WARNING")"
-  echo "Path already exists: \"$BASE\""
+  echo "$(bold $(yellow "WARNING"))"
+  echo "Path already exists!"
+  echo ""
+  echo "$(bold $BASE)"
   echo ""
 
   if confirm "Do you want to continue? (y/N)" "n"; then
@@ -167,6 +169,8 @@ if [[ "$can_install" = true ]]; then
   separator
   git clone https://github.com/jgttech/dotfiles ${BASE}
 
+  echo ""
+  separator
   if [[ "$has_pacman" = true && "$has_brew" = false ]]; then
     ${BIN}/${PACMAN_INSTALL} ${BASE}
   elif [[ "$has_pacman" = false && "$has_brew" = true ]]; then
