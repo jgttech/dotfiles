@@ -18,5 +18,5 @@ My dotfiles for settings up my machine.
 - Arch Linux
 
 ```bash
-URL="https://raw.githubusercontent.com/jgttech/dotfiles/refs/heads/main/install" DIR="dotfiles"; wget -qO- $URL | bash -s -- $DIR;
+URL="https://raw.githubusercontent.com/jgttech/dotfiles/refs/heads/main/install" DIR="dotfiles"; wget -qO- $URL | bash /dev/stdin $DIR;
 ```
