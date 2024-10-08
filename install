@@ -46,18 +46,6 @@ function separator {
   echo -e "$(dim "________________________________________________")"
 }
 
-function confirm {
-  while true; do
-    read -p "Do you want to proceed? (y/n/c) " yn
-    case $yn in
-      [Yy]* ) return 0;;
-      [Nn]* ) return 1;;
-      [Cc]* ) exit;;
-      * ) echo "Please answer YES, NO, or CANCEL.";;
-    esac
-  done
-}
-
 function check {
   is_required=$1
   pkg=$2
@@ -107,18 +95,6 @@ if [ "$has_error" == true ]; then
   exit 1
 fi
 
-# if [ -d "$BASE" ]; then
-#   echo "$(bold $(yellow "WARNING"))"
-#   echo "You are about to DELETE what you have and"
-#   echo "re-install the dotfiles."
-#
-#   if confirm; then
-#     echo "RE-INSTALLING"
-#   else
-#     echo "DOING NOTHING"
-#   fi
-# fi
-
 echo ""
 separator
 
@@ -128,6 +104,7 @@ printf "os\t${OSTYPE}\n"
 echo ""
 git clone https://github.com/jgttech/dotfiles ${BASE}
 
+echo ""
 if [[ "$has_pacman" = true && "$has_brew" = false ]]; then
   ${BIN}/${PACMAN_INSTALL} ${BASE}
 elif [[ "$has_pacman" = false && "$has_brew" = true ]]; then
