@@ -16,5 +16,5 @@ My personal dotfiles.
 > Arch Linux
 
 ```bash
-URL="https://raw.githubusercontent.com/jgttech/dotfiles/refs/heads/main/install" DIR="dotfiles"; INSTALL="pacman-install"; wget -qO- $URL | bash /dev/stdin $DIR $INSTALL;
+URL="https://raw.githubusercontent.com/jgttech/dotfiles/refs/heads/main/.bin/install" DIR="dotfiles"; INSTALL="pacman-install"; wget -qO- $URL | bash /dev/stdin $DIR $INSTALL;
 ```
