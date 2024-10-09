@@ -120,9 +120,10 @@ function check {
 function section {
   separator
   echo -e $(bold "$1")
+  echo ""
 }
 
-section "Checking initial package(s)..."
+section "Checking initial package(s)"
 
 # Check for the required packages to be installed
 # in order to run the installation script.
@@ -170,7 +171,7 @@ else
 
   if confirm "Do you want to continue? (y/N)" "n"; then
     can_install=true
-    rm -rfv ${BASE}
+    rm -rfv $BASE
   else
     echo "Nothing to be installed..."
     exit 0
@@ -181,12 +182,19 @@ fi
 # the system package flags we checked for for use
 # that to know which installation script to run.
 if [[ "$can_install" = true ]]; then
-  section "Cloning dotfiles..."
+  section "Cloning dotfiles"
   git clone https://github.com/jgttech/dotfiles ${BASE}
 
   if [[ "$has_pacman" = true ]]; then
-    ${BIN}/pacman-install ${BASE} $2
+    $BIN/$PACMAN_INSTALL $BASE $2
   else
     echo "This system type is not, yet, supported."
   fi
+
+  CWD=$(pwd)
+  cd $BASE
+
+  stow user tools/go tools/odin
+
+  cd $CWD
 fi
