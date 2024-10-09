@@ -19,10 +19,20 @@ source "$utils/can_install.sh"
 yay_dir="$HOME/.yay"
 
 function yay_install {
-  local which_bin=${2:-$1}
+  local target=${2:-$1}
 
-  if can_install "$which_bin"; then
+  if can_install "$target"; then
+    echo ""
     yay -S $1 < /dev/tty
+  fi
+}
+
+function pacman_install {
+  local target=${2:-$1}
+
+  if can_install "$target"; then
+    echo ""
+    sudo pacman -S $1 < /dev/tty
   fi
 }
 
@@ -44,6 +54,8 @@ if can_install "yay"; then
   makepkg -si
 fi
 
+pacman_install "tmux"
+pacman_install "stow"
 yay_install "fswatch"
 yay_install "python"
 yay_install "python-pipx"
@@ -53,14 +65,27 @@ yay_install "tree-sitter"
 yay_install "php"
 yay_install "rust"
 yay_install "luarocks"
-yay_install "odin"
+yay_install "odin-bin"
 yay_install "go"
 
-if can_install "nvm"; then
+if [ ! -d "$HOME/.nvm" ]; then
+  echo -e "$(red "❌") nvm $(dim "(not installed)")" 
+  echo ""
   curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash
+else
+  echo -e "$(green "✔️") nvm $(dim "(already installed)")"
 fi
 
-if can_install "brew"; then
+pipx list | grep "black" &>/dev/null; if [[ $? != 0 ]]; then
+  echo -e "$(red "❌") black (pipx) $(dim "(not installed)")" 
+  echo ""
+  pipx install black
+else
+  echo -e "$(green "✔️") black (pipx) $(dim "(already installed)")"
+fi
+
+which brew &>/dev/null; if [[ $? != 0 ]]; then
+  echo -e "$(red "❌") brew $(dim "(not installed)")" 
   echo ""
   echo -e $(bold $(yellow "WARNING"))
   echo "There may be additional instructions"
@@ -70,12 +95,10 @@ if can_install "brew"; then
 
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 else
+  echo -e "$(green "✔️") brew $(dim "(already installed)")"
   echo ""
-  brew install cffi 
+  brew install cffi < /dev/tty
 fi
-
-echo ""
-pipx install black
 
 echo ""
 go install golang.org/x/telemetry/cmd/gotelemetry@latest

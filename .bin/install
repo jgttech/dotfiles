@@ -24,9 +24,6 @@ if [[ "$2" = "local" ]]; then
   BIN="${HOME}/${local_dir}/.bin"
 fi
 
-# Installation script(s)
-PACMAN_INSTALL="pacman-install.sh"
-
 # Colors
 RED='\033[0;31m'
 GREEN='\033[0;32m'
@@ -120,8 +117,12 @@ function check {
   fi
 }
 
-separator
-echo -e "$(bold "Checking initial package(s)...")"
+function section {
+  separator
+  echo -e $(bold "$1")
+}
+
+section "Checking initial package(s)..."
 
 # Check for the required packages to be installed
 # in order to run the installation script.
@@ -159,8 +160,7 @@ else
   # If is an existing base directory we need to
   # make sure it's okay to remove it before starting
   # the installation.
-  echo ""
-  separator
+  section "Existing installation"
 
   echo "$(bold $(yellow "WARNING"))"
   echo "Path already exists!"
@@ -181,12 +181,11 @@ fi
 # the system package flags we checked for for use
 # that to know which installation script to run.
 if [[ "$can_install" = true ]]; then
-  echo ""
-  separator
+  section "Cloning dotfiles..."
   git clone https://github.com/jgttech/dotfiles ${BASE}
 
   if [[ "$has_pacman" = true ]]; then
-    ${BIN}/${PACMAN_INSTALL} ${BASE} $2
+    ${BIN}/pacman-install ${BASE} $2
   else
     echo "This system type is not, yet, supported."
   fi
