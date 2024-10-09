@@ -23,7 +23,7 @@ function yay_install {
 
   if can_install "$target"; then
     echo ""
-    yay -S $1 < /dev/tty
+    echo y | LANG=C yay --noprovides --answerdiff None --answerclean None --mflags "--noconfirm" $1 < /dev/tty
   fi
 }
 
@@ -32,7 +32,7 @@ function pacman_install {
 
   if can_install "$target"; then
     echo ""
-    sudo pacman -S $1 < /dev/tty
+    yes | LC_ALL=en_US.UTF-8 pacman -S $1 < /dev/tty
   fi
 }
 
