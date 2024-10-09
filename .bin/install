@@ -7,6 +7,13 @@
 # OF NEEDING TO MANAGE A SERIES OF INTERWORKING
 # CODE. local_dir=".dotfiles"
 local_dir=".dotfiles"
+install_type="$2"
+dev_flag="$3"
+is_dev=false
+
+if [ "$dev_flag" = "dev" ]; then
+  is_dev=true
+fi
 
 # Must be BASH to support prompting properly.
 if [ -z "$BASH_VERSION" ]; then
@@ -16,15 +23,12 @@ fi
 
 DIR="$1"
 
-if [[ "$2" = "local" ]]; then
+if [ "$is_dev" = true ]; then
   DIR="$local_dir"
 fi
 
 BASE="$HOME/$DIR"
 BIN="$BASE/.bin"
-
-# Installation script(s)
-PACMAN_INSTALL="pacman-install"
 
 # Colors
 RED='\033[0;31m'
@@ -156,7 +160,7 @@ if [ "$has_brew" = true ]; then
   brew upgrade < /dev/tty
 fi
 
-if [[ "$2" = "local" ]]; then
+if [ "$is_dev" = true ]; then
   can_install=true
 else
   if [ ! -d "$BASE" ]; then
@@ -192,14 +196,14 @@ if [[ "$can_install" = true ]]; then
   section "Cloning dotfiles"
   
 
-  if [[ "$2" = "local" ]]; then
+  if [ "$is_dev" = true ]; then
     echo $(dim "Using local directory instead ($local_dir).")
   else
-    git clone https://github.com/jgttech/dotfiles ${BASE}
+    git clone https://github.com/jgttech/dotfiles $BASE
   fi
 
   if [[ "$has_pacman" = true ]]; then
-    ${BIN}/${PACMAN_INSTALL} ${BASE} $2
+    $BIN/$install_type $BASE $is_dev
   else
     echo "This system type is not, yet, supported."
     exit 1
