@@ -1,3 +1,11 @@
+
+# This file should NEVER be committed to a
+# source code manager, in any way. The things
+# that should not be committed should be in this
+# file.
+UNCOMMITTED_ZSHRC="$HOME/.zshrc.local"
+[[ -f "$UNCOMMITTED_ZSHRC" ]] && source "$UNCOMMITTED_ZSHRC"
+
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
