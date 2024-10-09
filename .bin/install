@@ -156,28 +156,32 @@ if [ "$has_brew" = true ]; then
   brew upgrade < /dev/tty
 fi
 
-if [ ! -d "$BASE" ]; then
-  # If there is not base directory, we can trigger
-  # the installation script type.
+if [[ "$2" = "local" ]]; then
   can_install=true
 else
-  # If is an existing base directory we need to
-  # make sure it's okay to remove it before starting
-  # the installation.
-  section "Existing installation"
-
-  echo "$(bold $(yellow "WARNING"))"
-  echo "Path already exists!"
-  echo ""
-  echo "$(bold $(green $BASE))"
-  echo ""
-
-  if confirm "Do you want to continue? (y/N)" "n"; then
+  if [ ! -d "$BASE" ]; then
+    # If there is not base directory, we can trigger
+    # the installation script type.
     can_install=true
-    rm -rfv ${BASE}
   else
-    echo "Nothing to be installed..."
-    exit 0
+    # If is an existing base directory we need to
+    # make sure it's okay to remove it before starting
+    # the installation.
+    section "Existing installation"
+
+    echo "$(bold $(yellow "WARNING"))"
+    echo "Path already exists!"
+    echo ""
+    echo "$(bold $(green $BASE))"
+    echo ""
+
+    if confirm "Do you want to continue? (y/N)" "n"; then
+      can_install=true
+      rm -rfv ${BASE}
+    else
+      echo "Nothing to be installed..."
+      exit 0
+    fi
   fi
 fi
 
@@ -189,7 +193,7 @@ if [[ "$can_install" = true ]]; then
   
 
   if [[ "$2" = "local" ]]; then
-    echo "Using local directory instead ($local_dir)."
+    echo $(dim "Using local directory instead ($local_dir).")
   else
     git clone https://github.com/jgttech/dotfiles ${BASE}
   fi
@@ -210,5 +214,4 @@ if [[ "$can_install" = true ]]; then
   cd $CWD
 fi
 
-echo ""
 echo -e $(green $(bold "done"))
