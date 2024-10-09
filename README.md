@@ -6,9 +6,9 @@ My personal dotfiles.
 
 - [ZSH](https://github.com/ohmyzsh/ohmyzsh/wiki/Installing-ZSH)
   - Need to install and configure a setup before installing the dotfiles.
-- (Optional) [Oh My ZSH](https://ohmyz.sh/#install)
+- [Oh My ZSH](https://ohmyz.sh/#install) (Optional)
   - Could set this up, if desired.
-- (Optional) [Powerlevel10k](https://github.com/romkatv/powerlevel10k)
+- [Powerlevel10k](https://github.com/romkatv/powerlevel10k) (Optional)
   - Could set this up, if desired.
 
 ## Getting Started
