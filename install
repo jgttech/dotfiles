@@ -5,13 +5,13 @@
 # THIS IS A PURELY SELF-CONTAINED INSTALLATION
 # SCRIPT. THIS IS DONE TO AVOID THE COMPLEXITY
 # OF NEEDING TO MANAGE A SERIES OF INTERWORKING
-# CODE.
+# CODE. local_dir=".dotfiles"
 local_dir=".dotfiles"
 
 # Must be BASH to support prompting properly.
 if [ -z "$BASH_VERSION" ]; then
-    echo "This script requires bash" >&2
-    exit 1
+  echo "This script requires bash" >&2
+  exit 1
 fi
 
 DIR="${1}"
@@ -103,10 +103,8 @@ function check {
   local pkg="$1"
   local is_required="${2:-false}"
 
-  printf "$pkg\t"
-
-  which $pkg &>/dev/null; if [[ $? != 0 ]]; then
-    msg="$(red "❌") "
+  pacman -Q | grep $pkg &>/dev/null; if [[ $? != 0 ]]; then
+    msg="$(red "❌") $pkg "
 
     if [ "$is_required" == true ]; then
       msg+="$(dim "(missing required package)")"
@@ -117,13 +115,13 @@ function check {
     echo -e "${msg}"
     return 1
   else
-    echo -e "$(green "✔️")  $(dim "(found)")"
+    echo -e "$(green "✔️") $pkg $(dim "(found)")"
     return 0
   fi
 }
 
 separator
-echo -e "$(bold "Checking required package(s)")"
+echo -e "$(bold "Checking initial package(s)...")"
 
 # Check for the required packages to be installed
 # in order to run the installation script.
@@ -131,15 +129,14 @@ if check "pacman"; then
   has_pacman=true
 fi
 
-if check "brew"; then
-  has_brew=true
-fi
-
 if check "git" true; then
-  echo ""
-  separator
+  has_error=false
 else
   has_error=true
+fi
+
+if check "brew"; then
+  has_brew=true
 fi
 
 # If an error was triggered in the initial package(s)
@@ -148,10 +145,11 @@ if [ "$has_error" == true ]; then
   exit 1
 fi
 
-# Showing any system information before starting
-# the installation process.
-echo -e "$(bold "System Configuration")"
-printf "os\t${OSTYPE}\n"
+if [ "$has_brew" = true ]; then
+  echo ""
+  brew update
+  brew upgrade
+fi
 
 if [ ! -d "$BASE" ]; then
   # If there is not base directory, we can trigger

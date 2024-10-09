@@ -18,22 +18,47 @@ source "$utils/can_install.sh"
 # Begin installation
 yay_dir="$HOME/.yay"
 
-section "Installing ZSH"
-if can_install "zsh"; then
-  sudo pacman -S zsh
-  chsh -s $(which zsh)
-  zsh --version
+function yay_install {
+  local which_bin=${2:-$1}
+
+  if can_install "$which_bin"; then
+    yay -S $1 < /dev/tty
+  fi
+}
+
+pacman -Q | grep "zsh" &>/dev/null; if [[ $? != 0 ]]; then
+  echo "Please install and perform the initial"
+  echo "ZSH setup process and then re-run this"
+  echo "installation script."
+
+  exit 1
 fi
 
-section "Installing yay..."
+section "Installing packages..."
+
 if can_install "yay"; then
+  echo ""
   sudo pacman -S --needed git base-devel < /dev/tty
   git clone https://aur.archlinux.org/yay.git $yay_dir
   cd $yay_dir
   makepkg -si
 fi
 
-section "Installing homebrew..."
+yay_install "fswatch"
+yay_install "python"
+yay_install "python-pipx"
+yay_install "ruby"
+yay_install "perl"
+yay_install "tree-sitter"
+yay_install "php"
+yay_install "rust"
+yay_install "luarocks"
+yay_install "odin"
+yay_install "go"
+
+if can_install "nvm"; then
+  curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash
+fi
 
 if can_install "brew"; then
   echo ""
@@ -45,38 +70,14 @@ if can_install "brew"; then
 
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 else
-  brew update
-  brew upgrade
-  brew install cffi
+  echo ""
+  brew install cffi 
 fi
 
-section "Installing system packages..."
 echo ""
-
-yay -S \
-  fswatch \
-  python \
-  python-pipx \
-  ruby \
-  perl \
-  tree-sitter \
-  php \
-  rust \
-  luarocks \
-  odin \
-  go \
-  < /dev/tty
-
 pipx install black
 
+echo ""
 go install golang.org/x/telemetry/cmd/gotelemetry@latest
 go telemetry off
 rm -rfv ~/.config/go/telemetry
-
-section "Node Version Manager"
-echo ""
-echo "This needs to be done manually because the terminal"
-echo "session needs to be changed to ZSH. Once changed, ZSH"
-echo "needs to be configured and setup. After that run:"
-echo ""
-echo "curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash"

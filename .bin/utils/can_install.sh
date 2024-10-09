@@ -1,13 +1,12 @@
 #!/usr/bin/env bash
 function can_install {
   local pkg="$1"
-  printf "$pkg\t"
 
-  which $pkg &>/dev/null; if [[ $? != 0 ]]; then
-    echo -e"$(red "❌") $(dim "not installed")" 
+  pacman -Q | grep $pkg &>/dev/null; if [[ $? != 0 ]]; then
+  echo -e "$(red "❌") $pkg $(dim "(not installed)")" 
     return 0
   else
-    echo -e "$(green "✔️")  $(dim "(already installed)")"
+    echo -e "$(green "✔️") $pkg $(dim "(already installed)")"
     return 1
   fi
 }
