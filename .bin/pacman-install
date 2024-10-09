@@ -90,6 +90,22 @@ else
   echo -e "$(green "✔️") black (pipx) $(dim "(already installed)")"
 fi
 
+if [ ! -d "~/.tmux/plugins/tpm" ]; then
+  echo -e "$(red "❌") tpm (tmux package manager) $(dim "(not installed)")" 
+  git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+
+  section "How to install TMUX plugins"
+  echo "Open TMUX and run the following keybind."
+  echo "Note that you will not see any output until"
+  echo "the plugins are done installing which takes"
+  echo "a moment to run."
+  echo ""
+  echo $(bold $(dim "KEYBIND"))
+  echo "CTRL+B+I"
+else
+  echo -e "$(green "✔️") tmp (tmux package manager) $(dim "(already installed)")"
+fi
+
 which brew &>/dev/null; if [[ $? != 0 ]]; then
   echo -e "$(red "❌") brew $(dim "(not installed)")" 
   echo ""
