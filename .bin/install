@@ -203,7 +203,7 @@ if [[ "$can_install" = true ]]; then
   fi
 
   if [[ "$has_pacman" = true ]]; then
-    $BIN/$install_type $BASE $is_dev
+    $BIN/$install_type $BASE $dev_flag
   else
     echo "This system type is not, yet, supported."
     exit 1

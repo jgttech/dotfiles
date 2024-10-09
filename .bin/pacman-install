@@ -1,8 +1,14 @@
 #!/usr/bin/env bash
 base=$1
 local_dir=".dotfiles"
+dev_flag="$2"
+is_dev=false
 
-if [[ "$2" = "local" ]]; then
+if [ "$dev_flag" = "dev" ]; then
+  is_dev=true
+fi
+
+if [ "$is_dev" = true ]; then
   base="$HOME/$local_dir"
 fi
 
