@@ -14,15 +14,14 @@ if [ -z "$BASH_VERSION" ]; then
   exit 1
 fi
 
-DIR="${1}"
-BASE="${HOME}/${DIR}"
-BIN="${BASE}/.bin"
+DIR="$1"
 
-# Allows me to invoke the installation from
-# local scripts instead of through GitHub.
 if [[ "$2" = "local" ]]; then
-  BIN="${HOME}/${local_dir}/.bin"
+  DIR="$local_dir"
 fi
+
+BASE="$HOME/$DIR"
+BIN="$BASE/.bin"
 
 # Installation script(s)
 PACMAN_INSTALL="pacman-install"
@@ -187,7 +186,13 @@ fi
 # that to know which installation script to run.
 if [[ "$can_install" = true ]]; then
   section "Cloning dotfiles"
-  git clone https://github.com/jgttech/dotfiles ${BASE}
+  
+
+  if [[ "$2" = "local" ]]; then
+    echo "Using local directory instead ($local_dir)."
+  else
+    git clone https://github.com/jgttech/dotfiles ${BASE}
+  fi
 
   if [[ "$has_pacman" = true ]]; then
     ${BIN}/${PACMAN_INSTALL} ${BASE} $2
@@ -200,10 +205,10 @@ if [[ "$can_install" = true ]]; then
   CWD=$(pwd)
 
   cd $BASE
-  stow user tools/go tools/odin
+  stow user
 
   cd $CWD
-  pwd
 fi
 
-echo $(green $(bold "done"))
+echo ""
+echo -e $(green $(bold "done"))
