@@ -1,10 +1,12 @@
 #!/usr/bin/env bash
-use_local=false
+# [ABOUT]
+# THIS IS AN INDEPENDENT INSTALL SCRIPT. IT IS NOT
+# MEANT TO BE DEPENDENT ON ANY OTHER SOURCE CODE.
+# THIS IS A PURELY SELF-CONTAINED INSTALLATION
+# SCRIPT. THIS IS DONE TO AVOID THE COMPLEXITY
+# OF NEEDING TO MANAGE A SERIES OF INTERWORKING
+# CODE.
 local_dir=".dotfiles"
-
-if [[ "$2" = "local" ]]; then
-  use_local=true
-fi
 
 # Must be BASH to support prompting properly.
 if [ -z "$BASH_VERSION" ]; then
@@ -18,10 +20,11 @@ BIN="${BASE}/.bin"
 
 # Allows me to invoke the installation from
 # local scripts instead of through GitHub.
-if [[ "$use_local" = true ]]; then
+if [[ "$2" = "local" ]]; then
   BIN="${HOME}/${local_dir}/.bin"
 fi
 
+# Installation script(s)
 PACMAN_INSTALL="pacman-install.sh"
 
 # Colors
@@ -164,7 +167,7 @@ else
   echo "$(bold $(yellow "WARNING"))"
   echo "Path already exists!"
   echo ""
-  echo "$(bold $BASE)"
+  echo "$(bold $(green $BASE))"
   echo ""
 
   if confirm "Do you want to continue? (y/N)" "n"; then
@@ -184,10 +187,8 @@ if [[ "$can_install" = true ]]; then
   separator
   git clone https://github.com/jgttech/dotfiles ${BASE}
 
-  echo ""
-  separator
   if [[ "$has_pacman" = true ]]; then
-    ${BIN}/${PACMAN_INSTALL} ${BASE}
+    ${BIN}/${PACMAN_INSTALL} ${BASE} $2
   else
     echo "This system type is not, yet, supported."
   fi
