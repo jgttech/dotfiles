@@ -1,3 +1,4 @@
+source "${HOME}/.fontawesome"
 
 # This file should NEVER be committed to a
 # source code manager, in any way. The things
@@ -130,5 +131,3 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 alias vim="nvim"
-
-export FONT_AWESOME_TOKEN="6EC45960-B44A-489D-B15E-339A569B1B40"
