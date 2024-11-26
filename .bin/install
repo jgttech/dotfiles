@@ -1,17 +1,28 @@
 #!/usr/bin/env bash
+wd=`pwd`
 base=$HOME/.dotfiles
 
-git clone https://github.com/jgttech/dotfiles.git $base
+if ! command -v git > /dev/null; then
+  echo "Git must be installed!"
+  exit 1
+fi
+
+if [[ ! -d "$base" ]]; then
+  git clone https://github.com/jgttech/dotfiles.git $base
+else
+  cd $base
+  git pull
+  cd $wd
+fi
 
 if ! command -v brew > /dev/null; then
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 else
-  echo "Homebrew installed!"
+  brew --version
 fi
 
 if ! command -v go > /dev/null; then
   brew install go
 else
-  echo "Go installed!"
   go version
 fi

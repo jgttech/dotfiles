@@ -2,7 +2,7 @@
 
 My personal dotfiles.
 
-## Prerequisites
+## Packges
 
 - [ZSH](https://github.com/ohmyzsh/ohmyzsh/wiki/Installing-ZSH)
   - The shell of my choice.
@@ -15,28 +15,8 @@ My personal dotfiles.
 
 ## Automatic Installation & Setup
 
+This is intended for installation from scratch. This will attempt to install the Prerequisites, build the Go binary for installation and run it.
+
 ```bash
 wget -qO- "https://raw.githubusercontent.com/jgttech/dotfiles/refs/heads/main/.bin/install" | bash
-```
-
-## Getting Started
-
-> Clone the repo to wherever you want, I use `dotfiles`.
-
-```bash
-gh repo clone jgttech/dotfiles
-```
-
-> Link all the things.
-
-```bash
-cd ~/dotfiles
-stow alacritty nvim p10k tmux zsh
-cd ~
-```
-
-### Yolo
-
-```bash
-gh repo clone jgttech/dotfiles; cd ~/dotfiles; stow alacritty nvim p10k tmux zsh; cd ~; exit;
 ```
