@@ -50,6 +50,7 @@ vim.keymap.set('n', '<down>', '<cmd>echo "Use j to move!!"<CR>')
 -- vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
 -- vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
 -- vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
+--
 vim.keymap.set('n', '<leader>h', '<C-w><C-h>', { desc = 'Move focus to the left window' })
 vim.keymap.set('n', '<leader>l', '<C-w><C-l>', { desc = 'Move focus to the right window' })
 vim.keymap.set('n', '<leader>j', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
@@ -68,4 +69,5 @@ vim.keymap.set('n', '<leader>sx', '<cmd>close<CR>', { desc = 'Close current spli
 
 -- Oil
 -- vim.keymap.set('n', '<C-o>', '<cmd>Oil<cr>', { desc = 'Oil' })
-vim.keymap.set('n', '<leader>o', '<cmd>Oil<cr>', { desc = 'Oil' })
+-- vim.keymap.set('n', '<leader>o', '<cmd>Oil<cr>', { desc = 'Oil' })
+vim.keymap.set('n', '<M-o>', '<cmd>Oil<cr>', { desc = 'Oil' })

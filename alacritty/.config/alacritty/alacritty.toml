@@ -2,6 +2,7 @@
 
 [window]
 # Window dimensions in character columns and lines.
+option_as_alt = 'Both'
 dimensions = { columns = 80, lines = 24 }
 opacity = 1
 
