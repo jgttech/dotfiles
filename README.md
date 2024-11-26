@@ -13,6 +13,12 @@ My personal dotfiles.
 - [Homebrew](https://brew.sh/)
   - Used to install some kinds of packages.
 
+## Automatic Installation & Setup
+
+```bash
+URL="https://raw.githubusercontent.com/jgttech/dotfiles/refs/heads/main/.bin/install" wget -qO- $URL | bash /dev/stdin;
+```
+
 ## Getting Started
 
 > Clone the repo to wherever you want, I use `dotfiles`.
