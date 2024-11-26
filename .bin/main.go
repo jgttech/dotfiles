@@ -1,7 +1,22 @@
 package main
 
-import "fmt"
+import (
+	"context"
+	"os"
+
+	"github.com/urfave/cli/v3"
+	"jgttech/dotfiles/cmds/install"
+)
 
 func main() {
-	fmt.Println("Hello world")
+	app := cli.Command{
+		Name: "dotfiles",
+		Commands: []*cli.Command{
+			install.Command(),
+		},
+	}
+
+	if err := app.Run(context.Background(), os.Args); err != nil {
+		panic(err)
+	}
 }

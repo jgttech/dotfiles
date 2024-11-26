@@ -5,7 +5,14 @@ wd=`pwd`
 base=$HOME/.dotfiles
 bin=$base/.bin/dotfiles
 
-if ! command -v git > /dev/null; then
+function installed {
+  command -v $1 &> /dev/null
+}
+
+#####################################
+# Git
+#
+if ! installed git; then
   echo "Git must be installed!"
   exit 1
 fi
@@ -18,27 +25,41 @@ else
   cd $wd
 fi
 
-if ! command -v brew > /dev/null; then
+#####################################
+# Homebrew
+
+if ! installed brew; then
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 else
   brew --version
 fi
 
-! command -v brew > /dev/null && {
+if ! installed; then
   echo "Error: Unable to detect Homebrew installation."
   exit 1
-}
+fi
 
-if ! command -v go > /dev/null; then
+#####################################
+# Go lang
+
+if ! installed go; then
   brew install go
 else
   go version
+
+  go install golang.org/x/telemetry/cmd/gotelemetry@latest
+  go telemetry off
+
+  rm -rfv ~/.config/go/telemetry &> /dev/null
 fi
 
-! command -v go > /dev/null && {
+if ! installed go; then
   echo "Error: Unable to detect Go installation."
   exit 1
-}
+fi
+
+#####################################
+# Build the Go binary and run it.
 
 if [[ ! -f $bin ]]; then
   wd=`pwd`
@@ -49,6 +70,6 @@ if [[ ! -f $bin ]]; then
   cd $wd
 fi
 
-$bin
+$bin install
 
 echo "Done"
