@@ -3,6 +3,7 @@ set -euo pipefail
 
 wd=`pwd`
 base=$HOME/.dotfiles
+bin=$base/.bin/dotfiles
 
 if ! command -v git > /dev/null; then
   echo "Git must be installed!"
@@ -39,13 +40,15 @@ fi
   exit 1
 }
 
-wd=`pwd`
+if [[ ! -f $bin ]]; then
+  wd=`pwd`
 
-cd $base/.bin
-go build .
+  cd $base/.bin
+  go build .
 
-cd $wd
+  cd $wd
+fi
 
-$base/.bin/dotfiles
+$bin
 
 echo "Done"
