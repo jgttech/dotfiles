@@ -10,5 +10,6 @@ const (
 )
 
 var (
-	BASE = path.Join(os.Getenv("HOME"), DIR)
+	BASE        = path.Join(os.Getenv("HOME"), DIR)
+	STOW_IGNORE = []string{".git", ".bin", "tools"}
 )
