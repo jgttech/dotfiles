@@ -47,9 +47,11 @@ if ! installed go; then
 else
   go version
 
-  go install golang.org/x/telemetry/cmd/gotelemetry@latest
-  go telemetry off
+  # Fuck Google and their telemtry.
+  go install golang.org/x/telemetry/cmd/gotelemetry@latest &> /dev/null
+  go telemetry off &> /dev/null
 
+  # Fuck Google and their telemtry.
   rm -rfv ~/.config/go/telemetry &> /dev/null
 fi
 
