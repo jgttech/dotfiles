@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
+set -euo pipefail
+
 wd=`pwd`
 base=$HOME/.dotfiles
 
@@ -21,8 +23,29 @@ else
   brew --version
 fi
 
+! command -v brew > /dev/null && {
+  echo "Error: Unable to detect Homebrew installation."
+  exit 1
+}
+
 if ! command -v go > /dev/null; then
   brew install go
 else
   go version
 fi
+
+! command -v go > /dev/null && {
+  echo "Error: Unable to detect Go installation."
+  exit 1
+}
+
+wd=`pwd`
+
+cd $base/.bin
+go build .
+
+cd $wd
+
+$base/.bin/dotfiles
+
+echo "Done"
