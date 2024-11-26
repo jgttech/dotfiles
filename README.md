@@ -16,7 +16,7 @@ My personal dotfiles.
 ## Automatic Installation & Setup
 
 ```bash
-URL="https://raw.githubusercontent.com/jgttech/dotfiles/refs/heads/main/.bin/install" wget -qO- $URL | bash /dev/stdin;
+URL="https://raw.githubusercontent.com/jgttech/dotfiles/refs/heads/main/.bin/install" wget -qO- $URL | bash
 ```
 
 ## Getting Started
