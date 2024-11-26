@@ -3,7 +3,7 @@ set -euo pipefail
 
 wd=`pwd`
 base=$HOME/.dotfiles
-bin=$base/.bin/dotfiles
+bin=$base/.bin/build/dotfiles
 
 function installed {
   command -v $1 &> /dev/null
@@ -66,7 +66,7 @@ fi
 wd=`pwd`
 
 cd $base/.bin
-go build .
+go build -o build/dotfiles .
 
 cd $wd
 
