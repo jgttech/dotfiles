@@ -13,7 +13,7 @@ opacity = 1
 normal = { family = "MesloLGS NF", style = "Regular" }
 bold = { family = "MesloLGS NF", style = "Bold" }
 italic = { family = "MesloLGS NF", style = "Italic" }
-size = 11.0
+size = 14.0
 
 ################################
 # Kanagawa                     #

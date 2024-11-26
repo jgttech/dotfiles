@@ -1,4 +1,17 @@
-source "${HOME}/.fontawesome"
+# Makes which ZSH configuration file that was loaded
+# available within the shell environment.
+export DOTFILES_ZSHRC=""
+
+# Loads a particular OS-based ZSH configuration file.
+if [[ $(uname) == "Darwin" ]]; then
+  DOTFILES_ZSHRC="$HOME/.zshrc.macos"
+elif command -v pacman > /dev/null; then
+  DOTFILES_ZSHRC="$HOME/.zshrc.arch"
+fi
+
+[[ -f "$DOTFILES_ZSHRC" ]] && source $DOTFILES_ZSHRC || {
+  echo "Error: ZSH config not found: '$DOTFILES_ZSHRC'"
+};
 
 # This file should NEVER be committed to a
 # source code manager, in any way. The things
