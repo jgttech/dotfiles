@@ -1,2 +1,4 @@
 #!/usr/bin/env zsh
-echo "Arch Linux!"
+[[ -d "/home/linuxbrew/.linuxbrew" ]] && {
+  eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)";
+}
