@@ -1,0 +1,221 @@
+#!/usr/bin/env bash
+# [ABOUT]
+# THIS IS AN INDEPENDENT INSTALL SCRIPT. IT IS NOT
+# MEANT TO BE DEPENDENT ON ANY OTHER SOURCE CODE.
+# THIS IS A PURELY SELF-CONTAINED INSTALLATION
+# SCRIPT. THIS IS DONE TO AVOID THE COMPLEXITY
+# OF NEEDING TO MANAGE A SERIES OF INTERWORKING
+# CODE. local_dir=".dotfiles"
+local_dir=".dotfiles"
+install_type="$2"
+dev_flag="$3"
+is_dev=false
+
+if [ "$dev_flag" = "dev" ]; then
+  is_dev=true
+fi
+
+# Must be BASH to support prompting properly.
+if [ -z "$BASH_VERSION" ]; then
+  echo "This script requires bash" >&2
+  exit 1
+fi
+
+DIR="$1"
+
+if [ "$is_dev" = true ]; then
+  DIR="$local_dir"
+fi
+
+BASE="$HOME/$DIR"
+BIN="$BASE/.bin"
+
+# Colors
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[0;33m'
+DIM='\e[2m'
+BOLD='\e[1m'
+
+# Clear the color
+CLEAR='\033[0m'
+
+# Installation state.
+has_error=false
+has_pacman=false
+has_brew=false
+can_install=false
+
+function red { printf "${RED}$@${CLEAR}\n"; }
+function green { printf "${GREEN}$@${CLEAR}\n"; }
+function yellow { printf "${YELLOW}$@${CLEAR}\n"; }
+
+function dim { printf "${DIM}$@${CLEAR}\n"; }
+function bold { printf "${BOLD}$@${CLEAR}\n"; }
+
+function separator {
+  line=""
+
+  for i in {1..45}
+  do
+    line+="_"
+  done
+
+  printf "$(dim $line)\n"
+}
+
+function is_yes {
+  case "${1,,}" in
+    y|yes|true|t|on|1) return 0 ;;
+    *) return 1 ;;
+  esac
+}
+
+function is_no {
+  case "${1,,}" in
+    n|no|false|f|off|0) return 0 ;;
+    *) return 1 ;;
+  esac
+}
+
+function confirm {
+  local prompt="$1"
+  local default="${2,,}"
+  local response
+
+  while true; do
+    printf "%s " "$prompt" >/dev/tty
+    read -r response </dev/tty
+    
+    # Use default if response is empty
+    if [ -z "$response" ]; then
+      response="$default"
+    fi
+
+    if is_yes "$response"; then
+      return 0
+    elif is_no "$response"; then
+      return 1
+    else
+      printf "Please answer yes or no.\n" >/dev/tty
+    fi
+  done
+}
+
+function check {
+  local pkg="$1"
+  local is_required="${2:-false}"
+
+  pacman -Q | grep $pkg &>/dev/null; if [[ $? != 0 ]]; then
+    msg="$(red "❌") $pkg "
+
+    if [ "$is_required" == true ]; then
+      msg+="$(dim "(missing required package)")"
+    else
+      msg+="$(dim "(missing, but NOT required)")"
+    fi
+
+    echo -e "${msg}"
+    return 1
+  else
+    echo -e "$(green "✔️") $pkg $(dim "(found)")"
+    return 0
+  fi
+}
+
+function section {
+  echo ""
+  separator
+  echo -e "$(bold "$1")"
+  echo ""
+}
+
+section "Checking initial package(s)"
+
+# Check for the required packages to be installed
+# in order to run the installation script.
+if check "pacman"; then
+  has_pacman=true
+fi
+
+if check "git" true; then
+  has_error=false
+else
+  has_error=true
+fi
+
+if check "brew"; then
+  has_brew=true
+fi
+
+# If an error was triggered in the initial package(s)
+# check, then the installation won't work.
+if [ "$has_error" == true ]; then
+  exit 1
+fi
+
+if [ "$has_brew" = true ]; then
+  echo ""
+  brew update < /dev/tty
+  brew upgrade < /dev/tty
+fi
+
+if [ "$is_dev" = true ]; then
+  can_install=true
+else
+  if [ ! -d "$BASE" ]; then
+    # If there is not base directory, we can trigger
+    # the installation script type.
+    can_install=true
+  else
+    # If is an existing base directory we need to
+    # make sure it's okay to remove it before starting
+    # the installation.
+    section "Existing installation"
+
+    echo "$(bold $(yellow "WARNING"))"
+    echo "Path already exists!"
+    echo ""
+    echo "$(bold $(green $BASE))"
+    echo ""
+
+    if confirm "Do you want to continue? (y/N)" "n"; then
+      can_install=true
+      rm -rfv ${BASE}
+    else
+      echo "Nothing to be installed..."
+      exit 0
+    fi
+  fi
+fi
+
+# If we can perform the installation, we check
+# the system package flags we checked for for use
+# that to know which installation script to run.
+if [[ "$can_install" = true ]]; then
+  section "Cloning dotfiles"
+  
+
+  if [ "$is_dev" = true ]; then
+    echo $(dim "Using local directory instead ($local_dir).")
+  else
+    git clone https://github.com/jgttech/dotfiles $BASE
+  fi
+
+  if [[ "$has_pacman" = true ]]; then
+    $BIN/$install_type $BASE $dev_flag
+  else
+    echo "This system type is not, yet, supported."
+    exit 1
+  fi
+
+  section "Linking dotfiles"
+  CWD=$(pwd)
+
+  cd $BASE
+  stow user
+
+  cd $CWD
+fi
+
+echo -e $(green $(bold "done"))
