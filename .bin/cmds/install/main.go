@@ -24,7 +24,7 @@ func Command() *cli.Command {
 				}
 			}
 
-			cmd := exec.Cmd("stow " + strings.Join(stow, " "))
+			cmd := exec.Cmd("stow "+strings.Join(stow, " "), exec.Stdio)
 			cmd.Dir = env.BASE
 
 			return cmd.Run()
