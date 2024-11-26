@@ -13,6 +13,8 @@ fi
   echo "Error: ZSH config not found: '$DOTFILES_ZSHRC'"
 };
 
+export PATH="$PATH:$HOME/.dotfiles/.bin/build"
+
 # This file should NEVER be committed to a
 # source code manager, in any way. The things
 # that should not be committed should be in this
