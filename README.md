@@ -5,11 +5,13 @@ My personal dotfiles.
 ## Prerequisites
 
 - [ZSH](https://github.com/ohmyzsh/ohmyzsh/wiki/Installing-ZSH)
-  - Need to install and configure a setup before installing the dotfiles.
+  - The shell of my choice.
 - [Oh My ZSH](https://ohmyz.sh/#install)
-  - Could set this up, if desired.
+  - For themeing the terminal.
 - [Powerlevel10k](https://github.com/romkatv/powerlevel10k)
-  - Could set this up, if desired.
+  - For themeing the terminal.
+- [Homebrew](https://brew.sh/)
+  - Used to install some kinds of packages.
 
 ## Getting Started
 
@@ -22,5 +24,13 @@ gh repo clone jgttech/dotfiles
 > Link all the things.
 
 ```bash
-cd ~/dotfiles; stow alacritty nvim omz p10k tmux zsh; cd ~;
+cd ~/dotfiles
+stow alacritty nvim p10k tmux zsh
+cd ~
+```
+
+### Yolo
+
+```bash
+gh repo clone jgttech/dotfiles; cd ~/dotfiles; stow alacritty nvim p10k tmux zsh; cd ~; exit;
 ```
