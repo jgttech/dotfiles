@@ -6,6 +6,7 @@ import (
 
 	"github.com/urfave/cli/v3"
 	"jgttech/dotfiles/cmds/install"
+	"jgttech/dotfiles/cmds/uninstall"
 )
 
 func main() {
@@ -13,6 +14,7 @@ func main() {
 		Name: "dotfiles",
 		Commands: []*cli.Command{
 			install.Command(),
+			uninstall.Command(),
 		},
 	}
 
