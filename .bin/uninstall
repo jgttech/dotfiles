@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+base=$HOME/.dotfiles
+
+[[ -d $base ]] && {
+  stow -D
+  rm -rfv $base 
+}

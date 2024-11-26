@@ -1,8 +1,17 @@
 #!/usr/bin/env bash
-git clone https://github.com/jgttech/dotfiles.git $HOME/.dotfiles
+base=$HOME/.dotfiles
+
+git clone https://github.com/jgttech/dotfiles.git $base
+
+if ! command -v brew > /dev/null; then
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+else
+  echo "Homebrew installed!"
+fi
 
 if ! command -v go > /dev/null; then
-  echo "No GO installed"
+  brew install go
 else
-  go --version
+  echo "Go installed!"
+  go version
 fi
