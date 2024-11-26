@@ -34,7 +34,7 @@ else
   brew --version
 fi
 
-if ! installed; then
+if ! installed brew; then
   echo "Error: Unable to detect Homebrew installation."
   exit 1
 fi
@@ -61,14 +61,12 @@ fi
 #####################################
 # Build the Go binary and run it.
 
-if [[ ! -f $bin ]]; then
-  wd=`pwd`
+wd=`pwd`
 
-  cd $base/.bin
-  go build .
+cd $base/.bin
+go build .
 
-  cd $wd
-fi
+cd $wd
 
 $bin install
 
