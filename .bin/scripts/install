@@ -26,24 +26,11 @@ else
 fi
 
 #####################################
-# Homebrew
-
-if ! installed brew; then
-  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-else
-  brew --version
-fi
-
-if ! installed brew; then
-  echo "Error: Unable to detect Homebrew installation."
-  exit 1
-fi
-
-#####################################
 # Go lang
 
 if ! installed go; then
-  brew install go
+  echo "Please install Go and re-run the install"
+  exit 1
 else
   go version
 
