@@ -15,7 +15,7 @@ My personal dotfiles.
 
 ## Install
 
-This is intended for installation from scratch. This will attempt to install the Prerequisites, build the Go binary for installation and run it.
+This is intended to be installed from scratch, ideally.
 
 ```bash
 wget -qO- "https://raw.githubusercontent.com/jgttech/dotfiles/refs/heads/main/.bin/scripts/install" | bash
