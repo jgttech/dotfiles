@@ -8,7 +8,7 @@ opacity = 1
 normal = { family = "MesloLGS NF", style = "Regular" }
 bold = { family = "MesloLGS NF", style = "Bold" }
 italic = { family = "MesloLGS NF", style = "Italic" }
-size = 13.5
+size = 13
 
 [colors]
 # Default colors
@@ -73,4 +73,3 @@ action = "Quit"
 key = "N"
 mods = "Control|Shift"
 action = "SpawnNewInstance"
-

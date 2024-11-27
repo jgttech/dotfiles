@@ -4,11 +4,9 @@ dimensions = { columns = 80, lines = 24 }
 opacity = 1
 
 [font]
-# Font settings
 normal = { family = "MesloLGS NF", style = "Regular" }
 bold = { family = "MesloLGS NF", style = "Bold" }
 italic = { family = "MesloLGS NF", style = "Italic" }
-size = 13.5
 
 [colors]
 # Default colors
@@ -73,4 +71,3 @@ action = "Quit"
 key = "N"
 mods = "Control|Shift"
 action = "SpawnNewInstance"
-
