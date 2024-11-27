@@ -21,15 +21,15 @@ wget -qO- "https://raw.githubusercontent.com/jgttech/dotfiles/refs/heads/main/.b
 
 ## Uninstall
 
-There are 2 types of uninstall; 1 - removes the symlinks and 2 - remove the symlinks and delete the `dotfiles` repo. Choose wisely.
+There are 2 types of uninstall; 1 - removes the symlinks and 2 - remove the symlinks and delete the `dotfiles` repo. Pick one of these options. Choose wisely.
 
-> Only remove the symlinks
+> 1. Only remove the symlinks
 
 ```bash
 dotfiles uninstall
 ```
 
-> Remove the symlinks AND delete the repo, locally.
+> 2. Remove the symlinks AND delete the repo, locally.
 
 ```bash
 dotfiles uninstall --destroy
