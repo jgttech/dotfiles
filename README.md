@@ -15,8 +15,6 @@ My personal dotfiles.
 
 ## Install
 
-This is intended to be installed from scratch, ideally.
-
 ```bash
 wget -qO- "https://raw.githubusercontent.com/jgttech/dotfiles/refs/heads/main/.bin/scripts/install" | bash
 ```
@@ -35,4 +33,12 @@ dotfiles uninstall
 
 ```bash
 dotfiles uninstall --destroy
+```
+
+## Re-install
+
+If you uninstalled ONLY the symlinks using `dotfiles uninstall` you can re-link everything back-up with the following command.
+
+```bash
+dotfiles install
 ```
