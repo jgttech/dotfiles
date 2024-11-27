@@ -2,8 +2,9 @@ package install
 
 import (
 	"context"
-	"jgttech/dotfiles/alacritty"
-	"jgttech/dotfiles/stow"
+	"jgttech/dotfiles/pkg/alacritty"
+	"jgttech/dotfiles/pkg/stow"
+	"jgttech/dotfiles/pkg/tpm"
 
 	"github.com/urfave/cli/v3"
 )
@@ -14,6 +15,7 @@ func Command() *cli.Command {
 		Action: func(ctx context.Context, c *cli.Command) error {
 			alacritty.Copy()
 			stow.Link()
+			tpm.Install()
 
 			return nil
 		},
