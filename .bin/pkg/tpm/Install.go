@@ -17,11 +17,6 @@ func Install() {
 		return
 	}
 
-	cfg := path.Join(_os.Getenv("HOME"), ".tmux.conf")
-
 	cmd := exec.Cmd(fmt.Sprintf("git clone https://github.com/tmux-plugins/tpm %s", dir), exec.Stdio)
-	assert.Will(cmd.Run())
-
-	cmd = exec.Cmd(fmt.Sprintf("tmux source %s", cfg), exec.Stdio)
 	assert.Will(cmd.Run())
 }
