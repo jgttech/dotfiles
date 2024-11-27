@@ -2,7 +2,7 @@ package uninstall
 
 import (
 	"context"
-	"jgttech/dotfiles/stow"
+	"jgttech/dotfiles/pkg/stow"
 	"os"
 
 	"github.com/urfave/cli/v3"
