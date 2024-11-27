@@ -2,36 +2,33 @@ package uninstall
 
 import (
 	"context"
-	"jgttech/dotfiles/assert"
-	"jgttech/dotfiles/env"
-	"jgttech/dotfiles/exec"
+	"jgttech/dotfiles/stow"
 	"os"
-	"slices"
-	"strings"
 
 	"github.com/urfave/cli/v3"
+	"jgttech/dotfiles/env"
 )
 
 func Command() *cli.Command {
+	var destroy bool
+
 	return &cli.Command{
 		Name: "uninstall",
+		Flags: []cli.Flag{
+			&cli.BoolFlag{
+				Name:        "destroy",
+				Usage:       "Indicates that you want to delete the repo, locally.",
+				Destination: &destroy,
+			},
+		},
 		Action: func(ctx context.Context, c *cli.Command) error {
-			stow := []string{}
+			stow.Unlink()
 
-			for _, file := range assert.Must(os.ReadDir(env.BASE)) {
-				if file.IsDir() && !slices.Contains(env.STOW_IGNORE, file.Name()) {
-					stow = append(stow, file.Name())
-				}
+			if destroy {
+				return os.RemoveAll(env.BASE)
 			}
 
-			cmd := exec.Cmd("stow -D "+strings.Join(stow, " "), exec.Stdio)
-			cmd.Dir = env.BASE
-
-			if err := cmd.Run(); err != nil {
-				return err
-			}
-
-			return os.RemoveAll(env.BASE)
+			return nil
 		},
 	}
 }

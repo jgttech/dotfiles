@@ -1,6 +1,6 @@
 package assert
 
-func Catch(err error) {
+func Will(err error) {
 	if err != nil {
 		panic(err)
 	}

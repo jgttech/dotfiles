@@ -2,12 +2,10 @@ package install
 
 import (
 	"context"
-	"jgttech/dotfiles/assert"
-	"jgttech/dotfiles/env"
-	"jgttech/dotfiles/exec"
-	"os"
-	"slices"
-	"strings"
+	"fmt"
+	"jgttech/dotfiles/alacritty"
+	"jgttech/dotfiles/stow"
+	"runtime"
 
 	"github.com/urfave/cli/v3"
 )
@@ -16,18 +14,17 @@ func Command() *cli.Command {
 	return &cli.Command{
 		Name: "install",
 		Action: func(ctx context.Context, c *cli.Command) error {
-			stow := []string{}
+			fmt.Println("goos:", runtime.GOOS)
 
-			for _, file := range assert.Must(os.ReadDir(env.BASE)) {
-				if file.IsDir() && !slices.Contains(env.STOW_IGNORE, file.Name()) {
-					stow = append(stow, file.Name())
-				}
+			if runtime.GOOS == "darwin" {
+				alacritty.Swap("alacritty.darwin.toml")
+			} else if runtime.GOOS == "linux" {
+				alacritty.Swap("alacritty.linux.toml")
 			}
 
-			cmd := exec.Cmd("stow "+strings.Join(stow, " "), exec.Stdio)
-			cmd.Dir = env.BASE
+			stow.Link()
 
-			return cmd.Run()
+			return nil
 		},
 	}
 }
