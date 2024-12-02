@@ -9,7 +9,7 @@ opacity = 1
 normal = { family = "MesloLGS NF", style = "Regular" }
 bold = { family = "MesloLGS NF", style = "Bold" }
 italic = { family = "MesloLGS NF", style = "Italic" }
-size = 13.5
+size = 14.5
 
 [colors]
 # Default colors
