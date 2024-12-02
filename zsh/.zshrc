@@ -1,6 +1,8 @@
+export DOTFILES_ZSHRC=""
+
 # Load environment variables.
-# source "$HOME/.dotfiles/zsh/.zshrc.env"
 source "$HOME/.zshrc.env"
+source "$HOME/.zshrc.utils"
 
 # Loads a particular OS-based ZSH configuration file.
 if [[ $(uname) == "Darwin" ]]; then
@@ -10,7 +12,7 @@ elif command -v pacman > /dev/null; then
 fi
 
 if [[ $(uname) == "$WORK_OS" ]] && [[ $(uname -n) == "$WORK_ID" ]]; then
-  source "$HOME/.work/.zshrc"
+  source "$HOME/.zshrc.work"
 fi
 
 [[ -f "$DOTFILES_ZSHRC" ]] && source $DOTFILES_ZSHRC || {

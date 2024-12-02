@@ -1,0 +1,40 @@
+#!/usr/bin/env zsh
+export GPG_TTY=$(tty)
+
+function get_default_branch {
+  GIT_DEFAULT_BRANCH=`git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/remotes/origin/@@'`
+}
+
+function gpgtty {
+  export GPG_TTY=$(tty)
+}
+
+function aws-profile () {
+  builtin export AWS_DEFAULT_PROFILE=$1
+  aws s3 ls
+}
+
+##########################################
+# SAMHSA
+
+function samhsa-ecr-login() {
+  aws ecr get-login-password --profile=new-icf-samhsa | docker login --username AWS --password-stdin 522578921706.dkr.ecr.us-east-1.amazonaws.com
+}
+
+function samhsa-aws-sso() {
+  aws sso login --profile=new-icf-samhsa
+}
+
+function samhsa-login() {
+  samhsa-aws-sso
+  samhsa-ecr-login
+}
+
+##########################################
+# Research Connections
+
+alias mci='make composer install'
+alias mdd='make drush deploy'
+alias mdc='make drush cr'
+alias mdev='git pull; mci; mdd'
+
