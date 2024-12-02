@@ -1,5 +1,5 @@
 # Load environment variables.
-[[ -f "$HOME/.zshrc.env" ]] && source "$HOME/.zshrc.env"
+source "$HOME/.dotfiles/zsh/.zshrc.env"
 
 # Loads a particular OS-based ZSH configuration file.
 if [[ $(uname) == "Darwin" ]]; then
