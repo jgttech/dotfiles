@@ -2,9 +2,9 @@ package install
 
 import (
 	"context"
-	"jgttech/dotfiles/pkg/alacritty"
-	"jgttech/dotfiles/pkg/stow"
-	"jgttech/dotfiles/pkg/tpm"
+	"jgttech/dotfiles/src/pkg/alacritty"
+	"jgttech/dotfiles/src/pkg/stow"
+	"jgttech/dotfiles/src/pkg/tpm"
 
 	"github.com/urfave/cli/v3"
 )
