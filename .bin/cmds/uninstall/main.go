@@ -2,11 +2,11 @@ package uninstall
 
 import (
 	"context"
-	"jgttech/dotfiles/pkg/stow"
+	"jgttech/dotfiles/src/pkg/stow"
+	"jgttech/dotfiles/src/env"
 	"os"
 
 	"github.com/urfave/cli/v3"
-	"jgttech/dotfiles/env"
 )
 
 func Command() *cli.Command {
