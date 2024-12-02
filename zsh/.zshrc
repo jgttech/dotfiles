@@ -1,6 +1,5 @@
-# Makes which ZSH configuration file that was loaded
-# available within the shell environment.
-export DOTFILES_ZSHRC=""
+# Load environment variables.
+[[ -f "$HOME/.zshrc.env" ]] && source "$HOME/.zshrc.env"
 
 # Loads a particular OS-based ZSH configuration file.
 if [[ $(uname) == "Darwin" ]]; then
