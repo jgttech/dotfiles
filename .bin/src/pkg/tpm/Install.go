@@ -5,9 +5,9 @@ import (
 	_os "os"
 	"path"
 
-	"jgttech/dotfiles/assert"
-	"jgttech/dotfiles/exec"
-	"jgttech/dotfiles/os"
+	"jgttech/dotfiles/src/assert"
+	"jgttech/dotfiles/src/exec"
+	"jgttech/dotfiles/src/os"
 )
 
 func Install() {

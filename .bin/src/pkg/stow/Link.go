@@ -1,9 +1,9 @@
 package stow
 
 import (
-	"jgttech/dotfiles/assert"
-	"jgttech/dotfiles/env"
-	"jgttech/dotfiles/exec"
+	"jgttech/dotfiles/src/assert"
+	"jgttech/dotfiles/src/env"
+	"jgttech/dotfiles/src/exec"
 	"strings"
 )
 

@@ -3,10 +3,10 @@ package alacritty
 import (
 	"errors"
 	"fmt"
-	"jgttech/dotfiles/assert"
-	"jgttech/dotfiles/env"
-	"jgttech/dotfiles/exec"
-	"jgttech/dotfiles/os"
+	"jgttech/dotfiles/src/assert"
+	"jgttech/dotfiles/src/env"
+	"jgttech/dotfiles/src/exec"
+	"jgttech/dotfiles/src/os"
 	_os "os"
 
 	"path"

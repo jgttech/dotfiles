@@ -1,8 +1,8 @@
 package stow
 
 import (
-	"jgttech/dotfiles/assert"
-	"jgttech/dotfiles/env"
+	"jgttech/dotfiles/src/assert"
+	"jgttech/dotfiles/src/env"
 	"os"
 	"slices"
 )
