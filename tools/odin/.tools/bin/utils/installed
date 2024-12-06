@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+function installed {
+  command -v $1 &> /dev/null
+}

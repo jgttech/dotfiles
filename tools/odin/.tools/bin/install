@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+source `pwd`/bin/utils/installed
+
+dependencies=("jq" "odin")
+missing=()
+
+for dep in "${dependencies[@]}"; do
+  if ! installed "$dep"; then
+    missing+=("$dep")
+  fi
+done
+
+if [[ "${#missing[@]}" -gt 0 ]]; then
+  echo "Please install the missing dependencies:"
+
+  for dep in "${missing[@]}"; do
+    echo " - ${dep}"
+  done
+fi
