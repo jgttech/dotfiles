@@ -1,5 +1,17 @@
 #!/usr/bin/env zsh
-function branch() {
+alias li="ls -lah"
+
+function branch {
   git checkout -b $1
   git push --set-upstream origin $1
+}
+
+function merge {
+  local cwb=`git rev-parse --abbrev-ref HEAD`
+
+  git checkout $1
+  git fetch
+  git pull
+  git checkout $cwb
+  git merge $1
 }
