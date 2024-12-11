@@ -19,3 +19,11 @@ function merge {
   git checkout $cwb
   git merge $1
 }
+
+function wip {
+  local msg="WIP (`date +%s`) $1"
+
+  git add .
+  git commit -m "`echo $msg | awk '{$1=$1};1'`"
+  git push
+}
