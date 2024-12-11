@@ -1,5 +1,9 @@
 #!/usr/bin/env zsh
 alias li="ls -lah"
+alias add="git add"
+alias cm="git commit"
+alias pull="git pull"
+alias push="git push"
 
 function branch {
   git checkout -b $1
