@@ -112,9 +112,17 @@ return {
         tailwindCSS = {
           experimental = {
             classRegex = {
+              -- Try this more inclusive pattern first
+              { '[a-zA-Z]+`([^`]*)`', '([^`]*)' },
+
+              -- Alternative pattern with slightly different capture groups
+              -- { '[a-zA-Z]+`([^`]*)`', '`([^`]*)`' },
+
+              -- Even more generalized pattern
+              -- { '[a-zA-Z0-9_]+`([^`]*)`', '[`"]([^`"]*)[`"]' },
+
               { 'cva\\(([^)]*)\\)', '["\'`]([^"\'`]*).*?["\'`]' },
               { 'cx\\(([^)]*)\\)', "(?:'|\"|`)([^']*)(?:'|\"|`)" },
-              '`([^`]*)', -- `...`
               ': `([^`]*)', -- = `...`
               '= `([^`]*)', -- = `...`
               'tw`([^`]*)', -- tw`...`
