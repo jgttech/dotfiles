@@ -4,7 +4,7 @@ alias add="git add"
 alias cm="git commit -m"
 alias commit="git commit"
 alias pull="git pull"
-alias push="git push"
+# alias push="git push"
 
 function branch {
   git checkout -b $1
@@ -27,4 +27,14 @@ function wip {
   git add .
   git commit -m "`echo $msg | awk '{$1=$1};1'`"
   git push
+}
+
+function push {
+  if [[ ! -z "$1" ]]; then
+    git add .
+    git commit -m "$1"
+    git push
+  else
+    git push
+  fi
 }
