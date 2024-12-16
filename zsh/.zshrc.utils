@@ -5,6 +5,7 @@ alias cm="git commit -m"
 alias commit="git commit"
 alias pull="git pull"
 alias push="git push"
+alias co="git checkout"
 
 function branch {
   git checkout -b $1
