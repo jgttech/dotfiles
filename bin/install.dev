@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+# [WARNING] DEVELOPMENT ONLY
+
+set -euo pipefail
+
+# Default test.
+cat bin/install | DOTFILES_DIR=`pwd` bash
+
+# Go test.
+# cat bin/install | DOTFILES_DIR=`pwd` DOTFILES_LANG="go" bash
+
+# Zig test.
+# cat bin/install | DOTFILES_DIR=`pwd` DOTFILES_LANG="zig" bash
+
+# Odin test.
+# cat bin/install | DOTFILES_DIR=`pwd` DOTFILES_LANG="odin" bash
+
+# TypeScript test.
+# cat bin/install | DOTFILES_DIR=`pwd` DOTFILES_LANG="typescript" bash
+
+# Python test.
+# cat bin/install | DOTFILES_DIR=`pwd` DOTFILES_LANG="python" bash

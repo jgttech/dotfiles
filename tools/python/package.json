@@ -1,0 +1,9 @@
+{
+	"name": "@dotfiles/python",
+	"version": "0.0.1",
+	"private": false,
+	"type": "module",
+	"scripts": {
+		"build": "echo 'PYTHON'"
+	}
+}

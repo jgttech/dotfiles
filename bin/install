@@ -1,0 +1,103 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# Working directory when the script was called.
+# Used to keep track of the origin directory path
+# so that the user can be placed back in the same
+# path when the installation finishes.
+wd=`pwd`
+
+# Set the base directory for where the repo is going
+# to be. However, the user can use "DOTFILES_DIR" to
+# override where things are down loaded to.
+base="${DOTFILES_DIR:-"$HOME/.dotfiles"}"
+
+# The language that should be used to install the CLI
+# and defaults to "go" as the default language.
+language="${DOTFILES_LANG:-"go"}"
+
+# Which tools we want to install.
+tools="tools/$language"
+
+# For now, I only check for the directory that this
+# should be built to, but in the future I would like
+# to standardize the binary installation process and
+# have a standard way to verify it was built.
+build="$base/.build"
+
+# What is absolutely required to run the installation.
+dependencies=("git" "jq" "bun")
+
+# Keeps track of what we do not have so that if something
+# that is required is missing, we can display what that is
+# and tell the user to install it.
+missing=()
+
+# Checks if a target binary exists.
+function installed {
+  command -v $1 &> /dev/null
+}
+
+# Ends the program after putting the user
+# back where they started. But also allows
+# the use of passing in an error code, if
+# there was an actual error.
+function quit {
+  cd $wd
+  exit $1
+}
+
+# Check for any missing dependencies.
+for dependency in "${dependencies[@]}"; do
+  if ! installed $dependency; then
+    missing+=("$dependency")
+  fi
+done
+
+# If we are missing anything, display what we are
+# missing so we can install it and re-run it, again.
+if [[ ${#missing[@]} -ne 0 ]]; then
+  echo ""
+  echo "Please install the missing dependencies and try again."
+
+  for dependency in "${missing[@]}"; do
+    echo " - $dependency"
+  done
+
+  exit 1
+fi
+
+# Clone the repo. If running again, then try to
+# update the repo, if it has a ".git" dir in it.
+if [[ ! -d "$base" ]]; then
+  git clone https://github.com/jgttech/dotfiles.git $base
+elif [[ -d "$base/.git" ]]; then
+  cd $base
+  git pull
+  cd $wd
+fi
+
+# Anytime there is an install happening
+# try to screw Google's analytics nonsense.
+# Because fuck Google.
+if installed go; then
+  # Fuck Google and their telemtry.
+  go install golang.org/x/telemetry/cmd/gotelemetry@latest &> /dev/null
+  go telemetry off &> /dev/null
+
+  # Fuck Google and their telemtry.
+  rm -rfv ~/.config/go/telemetry &> /dev/null
+fi
+
+# Ensure we are in the repo.
+cd $base
+
+# Install the dependencies.
+bun i &> /dev/null
+
+# Loads the build function.
+source "bin/src/colors"
+source "bin/src/build"
+
+# Runs the build.
+build

@@ -1,0 +1,8 @@
+tags
+test.sh
+.luarc.json
+
+spell/
+lazy-lock.json
+.bin/build
+alacritty/.config/alacritty/alacritty.toml

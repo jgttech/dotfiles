@@ -1,0 +1,63 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# [About]
+# The goal of this script is to allow for changes
+# to the configuration to re-install the tools but
+# with the new configuration. Effectively, migrating
+# where things are run from, on a whim.
+#
+# It is possible that, as time goes, I may need to
+# change where things are installed to, in order to
+# better support OS's that may or may not effecitvely
+# use the same approach I am using here.
+#
+# Or if I decide that placing the installation elsewhere
+# is better for some other reason.
+
+dir=".build"
+
+if [[ ! -d "$dir" ]]; then
+  echo "Unable to find '$dir'."
+  exit 1
+fi
+
+source "bin/src/colors"
+source "bin/src/config"
+source "bin/src/build"
+source "$dir/config"
+
+build="$base/$dir"
+
+tput dim
+echo ""
+echo "| BASE CONFIG"
+echo "| exe......: $exe"
+echo "| symlink..: $symlink"
+echo "|"
+echo "| BUILD CONFIG"
+echo "| base.....: $base"
+echo "| tools....: $tools"
+echo "| language.: $language"
+echo "|"
+echo "| BUILD PATH"
+echo "| build....: $build"
+echo ""
+tput sgr0
+
+# Removes the symbolic link created by stow
+# which, effectively, uninstalls the binary.
+stow -D $dir
+
+if [[ -d "$dir" ]]; then
+  rm -rfv "$dir"
+fi
+
+echo ""
+build false
+
+echo ""
+echo "$(bold "Build successful.")"
+echo ""
+echo "To see current environment config:"
+echo "$(bold "$(green "$exe env")")"

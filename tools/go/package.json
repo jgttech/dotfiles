@@ -1,0 +1,11 @@
+{
+	"name": "@dotfiles/go",
+	"version": "0.0.1",
+	"private": true,
+	"type": "module",
+	"scripts": {
+		"postinstall": "go mod download",
+		"build": "bash build",
+		"get": "go get"
+	}
+}

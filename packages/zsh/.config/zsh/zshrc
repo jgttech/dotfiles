@@ -1,0 +1,19 @@
+#!/usr/bin/env zsh
+# Used to easily import the dotfiles shell files.
+function zsh-import {
+  local dir="$1"
+  local file="${2:-"main"}"
+
+  # source "$DOTFILES_DIR/$dir/${file}.zsh"
+  echo "$DOTFILES_DIR/$dir/${file}.zsh"
+}
+
+# Load environment variables.
+zsh-import "env"
+zsh-import "utils"
+zsh-import "os"
+
+[[ -f "$DOTFILES_ZSHRC" ]] && source $DOTFILES_ZSHRC || {
+  echo "Error: ZSH config not found: '$DOTFILES_ZSHRC'"
+  exit 1
+};

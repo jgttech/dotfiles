@@ -1,0 +1,17 @@
+{
+	"name": "dotfiles",
+	"version": "0.0.1",
+	"type": "module",
+	"private": true,
+	"workspaces": ["packages/*", "tools/*"],
+	"scripts": {
+		"postinstall": "bun --filter '@dotfiles/*' postinstall",
+		"+install": "bash bin/install.dev",
+		"+uninstall": "bash bin/uninstall",
+		"+reinstall": "bash bin/reinstall",
+		"@go": "bun --cwd tools/go"
+	},
+	"devDependencies": {
+		"@types/node": "^22.10.2"
+	}
+}

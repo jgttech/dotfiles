@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+# [WARNING] DEVELOPMENT ONLY
+set -euo pipefail
+
+dir=".build"
+
+stow -D $dir
+
+if [[ -d "$dir" ]]; then
+  rm -rfv "$dir"
+fi

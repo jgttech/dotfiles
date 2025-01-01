@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+_dim=`tput dim`
+_bold=`tput bold`
+_normal=`tput sgr0`
+_green=`tput setaf 2`
+
+function log {
+  echo -e $@
+}
+
+function dim {
+  printf "${_dim}$1${_normal}"
+}
+
+function bold {
+  printf "${_bold}$1${_normal}"
+}
+
+function green {
+  printf "${_green}$1${_normal}"
+}

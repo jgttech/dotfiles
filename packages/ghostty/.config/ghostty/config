@@ -1,0 +1,6 @@
+theme = "Kanagawa Wave"
+font-size = 11
+font-family = "MesloLGS NF"
+shell-integration = zsh
+cursor-style = block
+cursor-style-blink = false

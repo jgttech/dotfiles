@@ -1,0 +1,65 @@
+#!/usr/bin/env bash
+function build {
+  local show_instructions=false
+
+  if [ -z ${1+x} ]; then
+    show_instructions=true
+  fi
+
+  # Install the tools based on a particular
+  # language option that exists.
+  if [[ -d "$base/$tools" ]]; then
+    # Load the build configuration.
+    #
+    # It is done this way to other management
+    # scripts can use the same config, should
+    # things change later on.
+    source "$base/bin/src/config"
+
+    # Attempt to build the executable.
+    bun --cwd "tools/$language" build $symlink $exe
+
+    # Link the build output directory from
+    # the build process using stow to make the
+    # CLI available.
+    if [[ -d $build ]]; then
+      # Bind the local binary with "stow".
+      stow .build
+      
+      # Save the build configuration into the build
+      # directory for use later to make the "reinstall"
+      # script, so I know what happened when it was
+      # initially installed.
+      cfg="#!/usr/bin/env bash\n"
+      cfg+="base=\"$base\"\n"
+      cfg+="tools=\"$tools\"\n"
+      cfg+="language=\"$language\""
+      echo -e $cfg > "$build/config"
+
+      if [ "$show_instructions" == true ]; then
+        # What to do next.
+        echo ""
+        echo "$(bold "Build successful.")"
+        echo ""
+
+        log "$(dim "[NOTICE]")"
+        tput dim
+        echo "To ensure that the install and setup of the tools"
+        echo "themselves is done separately from managing the"
+        echo "packages, the linking and management of packages"
+        echo "is done with an initial 'install' command below."
+        tput sgr0
+
+        echo ""
+        echo "To complete the installation run:"
+        echo "$(bold "$(green "$exe install")")"
+      fi
+    else
+      echo "Failed to build: 'tools/$language'"
+      quit 1
+    fi
+  else
+    echo "Could not find: 'tools/$language'"
+    quit 1
+  fi
+}
