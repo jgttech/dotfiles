@@ -47,6 +47,10 @@ echo "| build....: $build"
 echo ""
 tput sgr0
 
+# Remove the symlinks, but do NOT delete
+# the repo.
+$exe uninstall
+
 # Removes the symbolic link created by stow
 # which, effectively, uninstalls the binary.
 stow -D $dir
