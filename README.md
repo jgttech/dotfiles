@@ -16,12 +16,6 @@ The process is pretty easy. Run the script that installs the repo and runs any s
 wget -qO- "https://raw.githubusercontent.com/jgttech/dotfiles/refs/heads/main/bin/install" | bash
 ```
 
-> (Optional) If you want to verify the `dotfiles` are installed before trying to install the tools in your system.
-
-```bash
-dotfiles version
-```
-
 > Install the tools.
 
 ```bash
