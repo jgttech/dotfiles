@@ -1,4 +1,0 @@
-#!/usr/bin/env bash
-base="/home/kronos/.dotfiles2"
-tools="tools/go"
-language="go"

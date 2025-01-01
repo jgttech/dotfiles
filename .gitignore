@@ -2,6 +2,7 @@ tags
 test.sh
 .luarc.json
 
+.build/
 node_modules/
 spell/
 lazy-lock.json

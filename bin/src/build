@@ -26,11 +26,11 @@ function build {
       # directory for use later to make the "reinstall"
       # script, so I know what happened when it was
       # initially installed.
-      cfg="#!/usr/bin/env bash\n"
-      cfg+="base=\"$base\"\n"
-      cfg+="tools=\"$tools\"\n"
-      cfg+="language=\"$language\""
-      echo -e $cfg > "$build/config"
+      jq -n '{build: $ARGS.named}' \
+        --arg  base "$base" \
+        --arg tools "$tools" \
+        --arg language "$language" \
+        > $build/config.json
 
       if [ "$show_message" == true ]; then
         # What to do next.
