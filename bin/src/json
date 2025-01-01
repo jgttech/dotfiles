@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+function json {
+  local conf_file=package.json
+  local var=$(cat $conf_file | jq $@)
+
+  var=$(echo "$var" | tr -d '"')
+
+  printf '%s' "$var"
+}

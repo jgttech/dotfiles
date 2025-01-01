@@ -1,21 +1,17 @@
 #!/usr/bin/env bash
 function build {
-  local show_instructions=false
+  local exe=`json ".dotfiles.executable"`
+  local symlink=`json ".dotfiles.symlink"`
+
+  local show_message=false
 
   if [ -z ${1+x} ]; then
-    show_instructions=true
+    show_message=true
   fi
 
   # Install the tools based on a particular
   # language option that exists.
   if [[ -d "$base/$tools" ]]; then
-    # Load the build configuration.
-    #
-    # It is done this way to other management
-    # scripts can use the same config, should
-    # things change later on.
-    source "$base/bin/src/config"
-
     # Attempt to build the executable.
     bun --cwd "tools/$language" build $symlink $exe
 
@@ -36,7 +32,7 @@ function build {
       cfg+="language=\"$language\""
       echo -e $cfg > "$build/config"
 
-      if [ "$show_instructions" == true ]; then
+      if [ "$show_message" == true ]; then
         # What to do next.
         echo ""
         echo "$(bold "Build successful.")"

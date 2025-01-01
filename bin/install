@@ -97,6 +97,7 @@ bun i &> /dev/null
 
 # Loads the build function.
 source "bin/src/colors"
+source "bin/src/json"
 source "bin/src/build"
 
 # Runs the build.

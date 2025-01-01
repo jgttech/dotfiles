@@ -4,12 +4,20 @@
 	"type": "module",
 	"private": true,
 	"workspaces": ["packages/*", "tools/*"],
+	"dotfiles": {
+		"executable": "dtf",
+		"symlink": ".local/bin"
+	},
 	"scripts": {
 		"postinstall": "bun --filter '@dotfiles/*' postinstall",
 		"+install": "bash bin/install.dev",
 		"+uninstall": "bash bin/uninstall",
 		"+reinstall": "bash bin/reinstall",
-		"@go": "bun --cwd tools/go"
+		"@go": "bun --cwd tools/go",
+		"@odin": "bun --cwd tools/odin",
+		"@python": "bun --cwd tools/python",
+		"@typescript": "bun --cwd tools/typescript",
+		"@zig": "bun --cwd tools/zig"
 	},
 	"devDependencies": {
 		"@types/node": "^22.10.2"

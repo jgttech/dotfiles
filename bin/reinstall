@@ -23,11 +23,13 @@ if [[ ! -d "$dir" ]]; then
 fi
 
 source "bin/src/colors"
-source "bin/src/config"
+source "bin/src/json"
 source "bin/src/build"
 source "$dir/config"
 
 build="$base/$dir"
+exe=`json ".dotfiles.executable"`
+symlink=`json ".dotfiles.symlink"`
 
 tput dim
 echo ""
