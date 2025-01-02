@@ -8,12 +8,10 @@ function zsh-import {
   echo "$DOTFILES_ZSH_DIR/$dir/${file}.zsh"
 }
 
-echo "WORKING"
-
 # Load environment variables.
-# zsh-import "env"
-# zsh-import "utils"
-# zsh-import "os"
+zsh-import "env"
+zsh-import "utils"
+zsh-import "os"
 
 # [[ -f "$DOTFILES_ZSHRC" ]] && source $DOTFILES_ZSHRC || {
 #   echo "Error: ZSH config not found: '$DOTFILES_ZSHRC'"
