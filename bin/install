@@ -104,6 +104,6 @@ build
 
 # Link ZSH
 cd packages
-stow alacritty ghostty nvim p10k tmux zsh
+stow -t $HOME alacritty ghostty nvim p10k tmux zsh
 
 quit 0
