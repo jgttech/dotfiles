@@ -3,6 +3,10 @@
 export DOTFILES_ZSHRC_DIR="$HOME/.config/zsh"         ##
 export DOTFILES_ZSHRC="$HOME/.config/zsh/zshrc"       ##
 export DOTFILES_CONFIG="$HOME/.dotfiles.config.json"  ##
+                                                      ##
+if [[ -f "$DOTFILES_ZSHRC" ]]; then                   ##
+  source "$DOTFILES_ZSHRC"                            ##
+fi                                                    ##
 ########################################################
 
 # This file should NEVER be committed to a
