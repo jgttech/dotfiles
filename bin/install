@@ -97,6 +97,13 @@ bun i &> /dev/null
 
 # Loads the build function.
 source "bin/src/build"
+source "bin/src/quit"
 
 # Runs the build.
 build
+
+# Link ZSH
+cd packages
+stow alacritty ghostty nvim p10k tmux zsh
+
+quit 0
