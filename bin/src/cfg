@@ -1,10 +1,9 @@
 #!/usr/bin/env bash
 function cfg {
-  local conf_file=".build/config.json"
+  local conf_file="$HOME/.dotfiles.build.json"
   local var=$(cat $conf_file | jq $@)
 
   var=$(echo "$var" | tr -d '"')
 
   printf '%s' "$var"
 }
-

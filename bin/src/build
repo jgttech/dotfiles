@@ -5,7 +5,6 @@ function build {
 
   local exe=`pkg ".dotfiles.executable"`
   local symlink=`pkg ".dotfiles.symlink"`
-
   local show_message=false
 
   if [ -z ${1+x} ]; then
@@ -27,7 +26,7 @@ function build {
       # script, so I know what happened when it was
       # initially installed.
       jq -n '{build: $ARGS.named}' \
-        --arg  base "$base" \
+        --arg base "$base" \
         --arg tools "$tools" \
         --arg language "$language" \
         > "$build/.dotfiles.build.json"
@@ -39,19 +38,6 @@ function build {
         # What to do next.
         echo ""
         echo "$(bold "Build successful.")"
-        echo ""
-
-        log "$(dim "[NOTICE]")"
-        tput dim
-        echo "To ensure that the install and setup of the tools"
-        echo "themselves is done separately from managing the"
-        echo "packages, the linking and management of packages"
-        echo "is done with an initial 'install' command below."
-        tput sgr0
-
-        echo ""
-        echo "To complete the installation run:"
-        echo "$(bold "$(green "$exe install")")"
       fi
     else
       echo "Failed to build: 'tools/$language'"

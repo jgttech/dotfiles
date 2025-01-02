@@ -1,11 +1,11 @@
-###################################################
-# [DOTFILES CONFIGURATION]                       ##
-export DOTFILES_DIR="$HOME/.config/zsh"          ##
-export DOTFILES_ZSHRC=""                         ##
-export DOTFILES_ZSHRC_BUILD="$HOME/.zsh.json"    ##
-                                                 ##
-source "$DOTFILES_DIR/zshrc";                    ##
-###################################################
+#################################################
+# [DOTFILES CONFIGURATION]                     ##
+export DOTFILES_DIR="$HOME/.config/zsh"        ##
+export DOTFILES_ZSHRC=""                       ##
+export DOTFILES_ZSHRC_BUILD="$HOME/.zsh.json"  ##
+                                               ##
+source "$DOTFILES_DIR/zshrc";                  ##
+#################################################
 
 # This file should NEVER be committed to a
 # source code manager, in any way. The things
