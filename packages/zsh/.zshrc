@@ -1,16 +1,9 @@
-#############################################################
-# [DOTFILES CONFIGURATION]                                 ##
-export DOTFILES_DIR="$HOME/.config/zsh"                    ##
-export DOTFILES_ZSHRC=""                                   ##
-export DOTFILES_ZSHRC_CONFIG="$HOME/.dotfiles.config.json" ##
-export DOTFILES_FONTAWESOME="$HOME/.fontawesome"           ##
-                                                           ##
-source "$DOTFILES_DIR/zshrc";                              ##
-                                                           ##
-if [[ -f "$DOTFILES_FONTAWESOME" ]]; then                  ##
-  source "$DOTFILES_FONTAWESOME"                           ##
-fi                                                         ##
-#############################################################
+########################################################
+# [DOTFILES CONFIGURATION]                            ##
+export DOTFILES_ZSHRC_DIR="$HOME/.config/zsh"         ##
+export DOTFILES_ZSHRC="$HOME/.config/zsh/zshrc"       ##
+export DOTFILES_CONFIG="$HOME/.dotfiles.config.json"  ##
+########################################################
 
 # This file should NEVER be committed to a
 # source code manager, in any way. The things

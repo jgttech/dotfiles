@@ -5,15 +5,17 @@ function zsh-import {
   local file="${2:-"main"}"
 
   # source "$DOTFILES_DIR/$dir/${file}.zsh"
-  echo "$DOTFILES_DIR/$dir/${file}.zsh"
+  echo "$DOTFILES_ZSH_DIR/$dir/${file}.zsh"
 }
 
-# Load environment variables.
-zsh-import "env"
-zsh-import "utils"
-zsh-import "os"
+echo "WORKING"
 
-[[ -f "$DOTFILES_ZSHRC" ]] && source $DOTFILES_ZSHRC || {
-  echo "Error: ZSH config not found: '$DOTFILES_ZSHRC'"
-  exit 1
-};
+# Load environment variables.
+# zsh-import "env"
+# zsh-import "utils"
+# zsh-import "os"
+
+# [[ -f "$DOTFILES_ZSHRC" ]] && source $DOTFILES_ZSHRC || {
+#   echo "Error: ZSH config not found: '$DOTFILES_ZSHRC'"
+#   exit 1
+# };
