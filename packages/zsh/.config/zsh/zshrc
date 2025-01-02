@@ -3,17 +3,14 @@
 function zsh-import {
   local dir="$1"
   local file="${2:-"main"}"
+  local import="$DOTFILES_ZSHRC_DIR/$dir/${file}.zsh"
 
-  # source "$DOTFILES_DIR/$dir/${file}.zsh"
-  echo "$DOTFILES_ZSHRC_DIR/$dir/${file}.zsh"
+  if [[ -f "$import" ]]; then
+    source "$import"
+  fi
 }
 
 # Load environment variables.
 zsh-import "env"
 zsh-import "utils"
 zsh-import "os"
-
-# [[ -f "$DOTFILES_ZSHRC" ]] && source $DOTFILES_ZSHRC || {
-#   echo "Error: ZSH config not found: '$DOTFILES_ZSHRC'"
-#   exit 1
-# };
