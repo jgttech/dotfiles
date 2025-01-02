@@ -39,4 +39,3 @@ dotfiles purge
 ```
 
 ## Development
-
