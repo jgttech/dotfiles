@@ -22,9 +22,6 @@ function build {
     # the build process using stow to make the
     # CLI available.
     if [[ -d $build ]]; then
-      # Bind the local binary with "stow".
-      stow .build
-
       # Save the build configuration into the build
       # directory for use later to make the "reinstall"
       # script, so I know what happened when it was
@@ -33,7 +30,10 @@ function build {
         --arg  base "$base" \
         --arg tools "$tools" \
         --arg language "$language" \
-        > $build/config.json
+        > "$build/.dotfiles.build.json"
+
+      # Bind the local binary with "stow".
+      stow .build
 
       if [ "$show_message" == true ]; then
         # What to do next.
