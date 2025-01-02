@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 function build {
+  source "bin/src/colors"
+  source "bin/src/pkg"
+
   local exe=`pkg ".dotfiles.executable"`
   local symlink=`pkg ".dotfiles.symlink"`
 
@@ -21,7 +24,7 @@ function build {
     if [[ -d $build ]]; then
       # Bind the local binary with "stow".
       stow .build
-      
+
       # Save the build configuration into the build
       # directory for use later to make the "reinstall"
       # script, so I know what happened when it was
