@@ -13,7 +13,8 @@ import (
 
 func main() {
 	app := &cli.Command{
-		Name: "dotfiles",
+		Name:  "dotfiles",
+		Usage: "My personal dotfiles CLI.",
 		Commands: []*cli.Command{
 			env.Command(),
 			install.Command(),

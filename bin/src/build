@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 function build {
-  local exe=`json ".dotfiles.executable"`
-  local symlink=`json ".dotfiles.symlink"`
+  local exe=`pkg ".dotfiles.executable"`
+  local symlink=`pkg ".dotfiles.symlink"`
 
   local show_message=false
 

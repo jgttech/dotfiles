@@ -7,4 +7,5 @@ node_modules/
 spell/
 lazy-lock.json
 .bin/build
-alacritty/.config/alacritty/alacritty.toml
+packages/alacritty/.config/alacritty/alacritty.toml
+packages/zsh/.zsh.build
