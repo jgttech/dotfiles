@@ -100,11 +100,3 @@ source "bin/src/build"
 
 # Runs the build.
 build
-
-stow \
-packages/alacritty \
-packages/ghostty \
-packages/nvim \
-packages/p10k \
-packages/tmux \
-packages/zsh
