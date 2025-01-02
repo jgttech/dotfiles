@@ -5,7 +5,7 @@ function zsh-import {
   local file="${2:-"main"}"
 
   # source "$DOTFILES_DIR/$dir/${file}.zsh"
-  echo "$DOTFILES_ZSH_DIR/$dir/${file}.zsh"
+  echo "$DOTFILES_ZSHRC_DIR/$dir/${file}.zsh"
 }
 
 # Load environment variables.
