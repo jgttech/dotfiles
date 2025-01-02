@@ -9,3 +9,6 @@ stow -D $dir
 if [[ -d "$dir" ]]; then
   rm -rfv "$dir"
 fi
+
+cd packages
+stow -t $HOME -D alacritty ghostty nvim p10k tmux zsh
