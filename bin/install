@@ -98,6 +98,8 @@ bun i &> /dev/null
 # Loads the build function.
 source "bin/src/build"
 source "bin/src/quit"
+source "bin/src/colors"
+source "bin/src/pkg"
 
 # Runs the build.
 build

@@ -1,8 +1,5 @@
 #!/usr/bin/env bash
 function build {
-  source "bin/src/colors"
-  source "bin/src/pkg"
-
   local exe=`pkg ".dotfiles.executable"`
   local symlink=`pkg ".dotfiles.symlink"`
   local show_message=false
