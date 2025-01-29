@@ -158,6 +158,3 @@ source $ZSH/oh-my-zsh.sh
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 export PATH="${PATH}:${HOME}/.local/bin"
-
-# bun completions
-[ -s "/Users/kyoma/.bun/_bun" ] && source "/Users/kyoma/.bun/_bun"
