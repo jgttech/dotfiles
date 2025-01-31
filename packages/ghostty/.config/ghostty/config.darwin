@@ -1,3 +1,13 @@
+#
+# type: darwin
+#
+# Ghosty config customizations.
+# To see all config options and documentation, run the following command
+# ghostty +show-config --default --docs
+#
+# Or visit https://ghostty.org/docs/config
+#
+
 theme = "Kanagawa Wave"
 font-size = 14
 font-family = "MesloLGS NF"
