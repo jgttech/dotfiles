@@ -1,4 +1,5 @@
 {
 	"version": "0.0.1",
-	"binary": "dotfiles"
+	"binary": "dotfiles",
+	"shorthand": "dtf"
 }
