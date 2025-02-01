@@ -1,4 +1,4 @@
-# Personal Dotfiles Ecosystem
+# (WIP) Personal Dotfiles Ecosystem
 
 > WARNING: Do not blindly install scripts you do not trust. First, make sure you trust the source.
 
@@ -91,7 +91,7 @@ All you have to do is clone the repo and run some make commands. That's it. Belo
 
 ```bash
 # Clone the repo.
-git clone git@github.com:jgttech/dotfiles.v2.git
+git clone git@github.com:jgttech/dotfiles.git
 
 # Ensure we are in the right directory.
 cd dotfiles
