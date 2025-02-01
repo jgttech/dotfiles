@@ -62,7 +62,7 @@ Below are examples of how to do each of these things.
 # Adding "- --base=<dir>" you can change what
 # directory these dotfiles clone into relative
 # to the users HOME directory.
-wget -qO- "https://raw.githubusercontent.com/jgttech/dotfiles/refs/heads/main/bin/install" | python - --base=<dir>
+wget -qO- <url> | python - --base=<dir>
 ```
 
 ### Change the CLI language:
