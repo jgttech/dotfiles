@@ -105,8 +105,8 @@ You can review the `Makefile` to see for yourself, but here is a quick breakdown
 
 | Command | Description |
 |:-|:-|
-| `make install` | Removes any existing container and images. Then it rebuilds and runs the installation in a fresh container. |
-| `make version` | Does the same things as `make install` but, at the end, uses `jq` to print the CLI version. |
+| `make install` | Removes container and image. Then builds/rebuilds and runs a fresh install. |
+| `make version` | Same thing as `make install`, but prints the CLI version at the end. |
 | `make build` | Removes any existing image and builds/rebuilds a new one. |
 | `make rmi` | If an image already exits, it removes it. |
 | `make rm` | If a container already exists, it kills it and removes it. |
