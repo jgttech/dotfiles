@@ -70,7 +70,7 @@ wget -qO- "https://raw.githubusercontent.com/jgttech/dotfiles/refs/heads/main/bi
 ```bash
 # Adding "- --lang=<lang>" you can change which
 # supported language is used for the CLI.
-wget -qO- "https://raw.githubusercontent.com/jgttech/dotfiles/refs/heads/main/bin/install" | python - --lang=<lang>
+wget -qO- <url> | python - --lang=<lang>
 ```
 
 ### Change both:
@@ -79,7 +79,7 @@ wget -qO- "https://raw.githubusercontent.com/jgttech/dotfiles/refs/heads/main/bi
 # Using both the "--base" and "--lang" you can
 # choose, all at once, where it should install
 # to and what language the CLI should use.
-wget -qO- "https://raw.githubusercontent.com/jgttech/dotfiles/refs/heads/main/bin/install" | python - --base=<dir> --lang=<lang>
+wget -qO- <url> | python - --base=<dir> --lang=<lang>
 ```
 
 # Development
