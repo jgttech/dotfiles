@@ -17,13 +17,13 @@ Some packages are required to make the system installation work correctly. When 
 
 ## Supported Languages
 
-These dotfiles are centered around the CLI. The CLI can be installed using different supported languages.
+These dotfiles are centered around the CLI. The CLI can be installed using different supported languages. Unchecked languages are still work-in-progress (wip).
 
-1. Go `(default)`
-2. Python
-3. Odin
-4. Zig
-5. TypeScript
+1. [x] Go `(default)`
+2. [ ] Python
+3. [ ] Odin
+4. [ ] Zig
+5. [ ] TypeScript
 
 ## Quick Setup
 
@@ -68,18 +68,17 @@ wget -qO- "https://raw.githubusercontent.com/jgttech/dotfiles/refs/heads/main/bi
 ### Change the CLI language:
 
 ```bash
-# Adding "- --base=<dir>" you can change what
-# directory these dotfiles clone into relative
-# to the users HOME directory.
+# Adding "- --lang=<lang>" you can change which
+# supported language is used for the CLI.
 wget -qO- "https://raw.githubusercontent.com/jgttech/dotfiles/refs/heads/main/bin/install" | python - --lang=<lang>
 ```
 
 ### Change both:
 
 ```bash
-# Adding "- --base=<dir>" you can change what
-# directory these dotfiles clone into relative
-# to the users HOME directory.
+# Using both the "--base" and "--lang" you can
+# choose, all at once, where it should install
+# to and what language the CLI should use.
 wget -qO- "https://raw.githubusercontent.com/jgttech/dotfiles/refs/heads/main/bin/install" | python - --base=<dir> --lang=<lang>
 ```
 
