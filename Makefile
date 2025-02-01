@@ -60,8 +60,8 @@ ssh:
 
 .PHONY: version
 version: rm build
-	@podman run -it $(IMAGE_NAME) /bin/bash -c "cat .dotfiles/dotfiles.json | jq '.version' | tr -d '\"'"
+	@podman run -it $(IMAGE_NAME) /bin/zsh -c "cat .dotfiles/dotfiles.json | jq '.version' | tr -d '\"'"
 
 .PHONY: install
 install: rm build
-	@podman run -it $(IMAGE_NAME) /bin/bash -c "cat .dotfiles/bin/install | python - -D; exec /bin/bash"
+	@podman run -it $(IMAGE_NAME) /bin/zsh -c "cat .dotfiles/bin/install | python - -D; exec /bin/bash"
