@@ -67,5 +67,5 @@ install: rm build
 	@podman run -it $(IMAGE_NAME) /bin/zsh -c "cat .dotfiles/bin/install | python - -D; exec /bin/zsh"
 
 .PHONY: prod
-prod:
+prod: rm build
 	@podman run -it $(IMAGE_NAME) /bin/zsh -c "cat .dotfiles/bin/install | python; exec /bin/zsh"
