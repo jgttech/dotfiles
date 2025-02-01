@@ -93,6 +93,9 @@ All you have to do is clone the repo and run some make commands. That's it. Belo
 # Clone the repo.
 git clone git@github.com:jgttech/dotfiles.v2.git
 
+# Ensure we are in the right directory.
+cd dotfiles
+
 # Test it to make sure it works.
 make version
 ```
