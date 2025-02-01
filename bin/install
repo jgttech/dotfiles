@@ -102,7 +102,7 @@ if __name__ == "__main__":
     # we need to check these before installing the dotfiles.
     # These should only be what is required to install the
     # dotfiles.
-    dependencies=["git", "stow", "omz"],
+    dependencies=["git", "stow", "omz", "nvm"],
 
     # This is the default location where, under the HOME
     # path of the user, the dotfiles will link the build
