@@ -62,7 +62,7 @@ Below are examples of how to do each of these things.
 # Adding "- --base=<dir>" you can change what
 # directory these dotfiles clone into relative
 # to the users HOME directory.
-wget -qO- <url> | python - --base=<dir>
+wget -qO- ... | python - --base=<dir>
 ```
 
 ### Change the CLI language:
@@ -70,7 +70,7 @@ wget -qO- <url> | python - --base=<dir>
 ```bash
 # Adding "- --lang=<lang>" you can change which
 # supported language is used for the CLI.
-wget -qO- <url> | python - --lang=<lang>
+wget -qO- ... | python - --lang=<lang>
 ```
 
 ### Change both:
@@ -79,7 +79,7 @@ wget -qO- <url> | python - --lang=<lang>
 # Using both the "--base" and "--lang" you can
 # choose, all at once, where it should install
 # to and what language the CLI should use.
-wget -qO- <url> | python - --base=<dir> --lang=<lang>
+wget -qO- ... | python - --base=<dir> --lang=<lang>
 ```
 
 # Development
