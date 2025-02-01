@@ -51,17 +51,17 @@ ssh:
 
 	@if [ -z "$(CONTAINER_ID)" ]; then \
 		echo "Attaching to container..."; \
-		podman run -it $(IMAGE_NAME) /bin/bash; \
+		podman run -it $(IMAGE_NAME) /bin/zsh; \
 	else \
 		echo "Starting and attaching to container..."; \
 		podman start $(CONTAINER_ID) &> /dev/null; \
-		podman exec -it $(CONTAINER_ID) /bin/bash; \
+		podman exec -it $(CONTAINER_ID) /bin/zsh; \
 	fi
 
 .PHONY: version
 version: rm build
-	@podman run -it $(IMAGE_NAME) /bin/zsh -c "cat .dotfiles/dotfiles.json | jq '.version' | tr -d '\"'"
+	@podman run -it $(IMAGE_NAME) /bin/zsh -c "cat .dotfiles/dotfiles.json | jq '.version' | tr -d '\"'; exec /bin/zsh"
 
 .PHONY: install
 install: rm build
-	@podman run -it $(IMAGE_NAME) /bin/zsh -c "cat .dotfiles/bin/install | python - -D; exec /bin/bash"
+	@podman run -it $(IMAGE_NAME) /bin/zsh -c "cat .dotfiles/bin/install | python - -D; exec /bin/zsh"

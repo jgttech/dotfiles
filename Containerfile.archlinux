@@ -6,3 +6,5 @@ COPY . /root/.dotfiles
 
 RUN yes | pacman -Syu
 RUN yes | pacman -S git wget curl jq stow zsh python go odin zig
+RUN sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+RUN wget -qO- "https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh" | bash

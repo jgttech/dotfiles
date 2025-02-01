@@ -3,6 +3,7 @@ import argparse
 import subprocess
 import sys
 import os
+import json
 from os import environ, path, access
 from shutil import which, copyfile
 from time import time
@@ -15,6 +16,8 @@ def main(repo: str, dependencies: list[str], default_build: str):
   bin_dirs: list[str] = []
   missing: list[str] = []
   build: str = path.join(home, default_build)
+  version: str = ""
+  binary: str = ""
 
   parser = argparse.ArgumentParser(description="Dotfiles install script")
   parser.add_argument(
@@ -62,10 +65,29 @@ def main(repo: str, dependencies: list[str], default_build: str):
 
   print("Checking required system packages...")
   for dep in dependencies:
-    exists = which(dep)
+    if dep != "omz" and dep != "nvm":
+      exists = which(dep)
 
-    if exists == None:
-      missing.append(dep)
+      if exists == None:
+        missing.append(dep)
+    else:
+      # For each of these special circumstances I need
+      # to simulate the ZSH environment and check for the
+      # required packages that way. Otherwise, it is less
+      # reliable and harder to consistently track.
+      if dep == "omz":
+        command = 'zsh -i -c "which omz && omz version"'
+        code = subprocess.run(command, shell=True, capture_output=True, text=True).returncode
+
+        if code != 0:
+          missing.append(dep)
+
+      if dep == "nvm":
+        command = 'zsh -i -c "which nvm && nvm version"'
+        code = subprocess.run(command, shell=True, capture_output=True, text=True).returncode
+
+        if code != 0:
+          missing.append(dep)
 
   if len(missing) > 0:
     print("\nMissing required packages:")
@@ -82,11 +104,27 @@ def main(repo: str, dependencies: list[str], default_build: str):
 
   print("Determining build path...")
   if build not in bin_dirs:
-    build = bin_dirs[0]
+    idx = 0
+
+    if bin_dirs[0][0] == "/":
+      idx = 1
+
+    build = bin_dirs[0][idx:]
 
   print("Building dotfiles CLI...")
   if path.exists(tools):
-    subprocess.call(f"python {path.join(tools, "build.py")}", shell=True)
+    with open(path.join(base, "dotfiles.json"), 'r') as file:
+      data = json.load(file)
+      version = data["version"]
+      binary = data["binary"]
+
+    subprocess.call(
+      f"python {path.join(tools, "build")} --symlink={build} --binary={binary}",
+      cwd=path.join(os.getcwd(), args.base),
+      shell=True,
+    )
+
+    print(f"version: {version}")
   else:
     print("Failed to build dotfiles CLI")
     sys.exit(1)
