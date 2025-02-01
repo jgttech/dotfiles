@@ -14,8 +14,8 @@ Some packages are required to make the system installation work correctly. When 
 4. wget
 5. jq
 6. go
-7. omz
-8. nvm
+7. [omz](https://ohmyz.sh/)
+8. [nvm](https://github.com/nvm-sh/nvm)
 
 ## Supported Languages
 
