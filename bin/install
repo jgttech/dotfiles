@@ -1,0 +1,120 @@
+#!/usr/bin/env python
+import argparse
+import subprocess
+import sys
+import os
+from os import environ, path, access
+from shutil import which, copyfile
+from time import time
+
+def main(repo: str, dependencies: list[str], default_build: str):
+  timestamp: int = int(time())
+  home: str = environ["HOME"]
+  paths: str = environ["PATH"]
+  zshrc: str = path.join(home, ".zshrc")
+  bin_dirs: list[str] = []
+  missing: list[str] = []
+  build: str = path.join(home, default_build)
+
+  parser = argparse.ArgumentParser(description="Dotfiles install script")
+  parser.add_argument(
+    "-D", "--dev",
+    action="store_true",
+    dest='dev',
+    default=False
+  )
+  parser.add_argument(
+    "-L", "--lang",
+    action="store",
+    dest="lang",
+    default="go"
+  )
+  parser.add_argument(
+    "-B", "--base",
+    action="store",
+    dest="base",
+    default=".dotfiles",
+    type=str
+  )
+
+  args = parser.parse_args()
+  dependencies.append(args.lang)
+  base = path.join(home, args.base)
+  is_dev = args.dev
+  tools = path.join(base, "tools", args.lang)
+
+  if not is_dev:
+    print(f"Cloning to {base}...")
+    subprocess.call(f"git clone {repo} {base}", shell=True)
+
+  if not path.exists(base):
+    print("Failed to clone")
+    sys.exit(1)
+
+  print("Finding PATH directories...")
+  for dir in paths.split(":"):
+    if access(dir, os.W_OK | os.R_OK) and "sbin" not in dir:
+      bin_dirs.append(dir)
+
+  if len(bin_dirs) == 0:
+    print("No valid directory in PATH")
+    sys.exit(1)
+
+  print("Checking required system packages...")
+  for dep in dependencies:
+    exists = which(dep)
+
+    if exists == None:
+      missing.append(dep)
+
+  if len(missing) > 0:
+    print("\nMissing required packages:")
+
+    for dep in missing:
+      print(f"> {dep}")
+
+    print("\nPlease install required packages and try again")
+    sys.exit(1)
+
+  if path.exists(zshrc):
+    print("Backing up existing .zshrc...")
+    copyfile(zshrc, path.join(home, f".zshrc.{timestamp}.backup"))
+
+  if build not in bin_dirs:
+    build = bin_dirs[0]
+
+  print("Building dotfiles CLI...")
+  if path.exists(tools):
+    subprocess.call(f"python {path.join(tools, "build.py")}", shell=True)
+  else:
+    print("Failed to build dotfiles CLI")
+    sys.exit(1)
+
+if __name__ == "__main__":
+  main(
+    # Where to clone the repo from. Changing this changes
+    # which repo is cloned.
+    repo="https://github.com/jgttech/dotfiles.v2.git",
+
+    # The packages that the system needs to have to install.
+    # This can't be inside a JSON or other file because
+    # we need to check these before installing the dotfiles.
+    # These should only be what is required to install the
+    # dotfiles.
+    dependencies=["git", "stow"],
+
+    # This is the default location where, under the HOME
+    # path of the user, the dotfiles will link the build
+    # to, to make it available in the PATH automatically.
+    #
+    # However, if this path is not found, it will check
+    # the PATH for user accessible directories and pick
+    # the first one it finds and try to link the build
+    # there so it is automatically available.
+    #
+    # Unfortunately, I have to use this approach because
+    # some systems will not have this in their PATH and
+    # instead of making the user modify their PATH I can
+    # just detect what options exist and use of those.
+    default_build=".local/bin"
+  )

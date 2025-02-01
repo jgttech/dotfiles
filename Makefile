@@ -50,12 +50,14 @@ ssh:
 	fi
 
 	@if [ -z "$(CONTAINER_ID)" ]; then \
+		echo "Attaching to container..."; \
 		podman run -it $(IMAGE_NAME) /bin/bash; \
 	else \
+		echo "Starting and attaching to container..."; \
 		podman start $(CONTAINER_ID) &> /dev/null; \
 		podman exec -it $(CONTAINER_ID) /bin/bash; \
 	fi
 
 .PHONY: install
 install: rm build
-	@podman run -it $(IMAGE_NAME) /bin/zsh -c "bash .dotfiles/bin/install.sh"
+	@podman run -it $(IMAGE_NAME) /bin/bash -c "cat .dotfiles/bin/install | python - -D; exec /bin/bash"
