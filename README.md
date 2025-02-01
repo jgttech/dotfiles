@@ -99,6 +99,8 @@ cd dotfiles
 make version
 ```
 
+Assuming the version is displayed at the end properly, you can be confident that the system is working as expected.
+
 ## Development Commands
 
 You can review the `Makefile` to see for yourself, but here is a quick breakdown of what I can do with the `Makefile`:
