@@ -1,21 +1,33 @@
 # Personal Dotfiles Ecosystem
 
+> WARNING: Do not blindly install scripts you do not trust. First, make sure you trust the source.
+
 These files are my person utilities and implementations that support my own personal goals, desires, and interests. I make no claim about its usefulness to anyone, except myself.
 
 # Prerequisites
 
-Some packages are required to make the system installation work correctly.
+Some packages are required to make the system installation work correctly. When installing, if something is missing, the installation script will tell you what is missing. Once you install any missing packges and re-run the script (if you need to) it should just install normally.
 
-1. Python
-  - For running the install script
-2. Git
-3. GNU Stow
+1. python
+2. git
+3. stow
 4. wget
 5. jq
-6. (depends) Go lang
-  - This is the default dotfiles CLI language.
+6. go
+
+## Supported Languages
+
+These dotfiles are centered around the CLI. The CLI can be installed using different supported languages.
+
+1. Go `(default)`
+2. Python
+3. Odin
+4. Zig
+5. TypeScript
 
 ## Quick Setup
+
+This quick setup shows a quick getting started by being able to copy-and-paste commands to get going.
 
 > Arch Linux
 
@@ -26,20 +38,49 @@ sudo pacman -S git wget jq stow zsh python go odin zig
 
 # Installation
 
-> WARNING: Do not blindly install scripts you do not trust. First, make sure you trust the source.
+By default this uses Python to install the dotfiles, build the CLI, and link the dotfiles to your system. If you just want the default installation, then you only need to concern yourself with the "Default Installation" section. The other sections show how you can change certain aspects of the installation process for customization.
+
+## Default Installation
+
+> Use this if you do not want to change the defaults.
 
 ```bash
-# By default, this installs in to ~/.dotfiles
+# By default, this installs into ~/.dotfiles
 wget -qO- "https://raw.githubusercontent.com/jgttech/dotfiles/refs/heads/main/bin/install" | python
 ```
 
-## Change the Installation Location
+There are a few other ways to install these tools. When installing you can change the:
+
+1. Installation directory.
+2. CLI lanaguage.
+
+Below are examples of how to do each of these things.
+
+### Change the installation directory:
 
 ```bash
 # Adding "- --base=<dir>" you can change what
 # directory these dotfiles clone into relative
 # to the users HOME directory.
 wget -qO- "https://raw.githubusercontent.com/jgttech/dotfiles/refs/heads/main/bin/install" | python - --base=<dir>
+```
+
+### Change the CLI language:
+
+```bash
+# Adding "- --base=<dir>" you can change what
+# directory these dotfiles clone into relative
+# to the users HOME directory.
+wget -qO- "https://raw.githubusercontent.com/jgttech/dotfiles/refs/heads/main/bin/install" | python - --lang=<lang>
+```
+
+### Change both:
+
+```bash
+# Adding "- --base=<dir>" you can change what
+# directory these dotfiles clone into relative
+# to the users HOME directory.
+wget -qO- "https://raw.githubusercontent.com/jgttech/dotfiles/refs/heads/main/bin/install" | python - --base=<dir> --lang=<lang>
 ```
 
 # Development
