@@ -80,6 +80,7 @@ def main(repo: str, dependencies: list[str], default_build: str):
     print("Backing up existing .zshrc...")
     copyfile(zshrc, path.join(home, f".zshrc.{timestamp}.backup"))
 
+  print("Determining build path...")
   if build not in bin_dirs:
     build = bin_dirs[0]
 
