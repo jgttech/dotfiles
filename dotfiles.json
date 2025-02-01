@@ -1,0 +1,8 @@
+{
+	"source": "https://raw.githubusercontent.com/jgttech/dotfiles/refs/heads/main/bin/install",
+	"binary": "dotfiles",
+	"symlink": {
+		"linux": ".local/bin",
+		"darwin": ".local/bin"
+	}
+}

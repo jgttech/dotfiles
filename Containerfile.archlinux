@@ -1,0 +1,8 @@
+FROM archlinux:latest
+
+WORKDIR /root
+
+COPY . /root/.dotfiles
+
+RUN yes | pacman -Syu
+RUN yes | pacman -S zsh git stow jq go vim wget curl
