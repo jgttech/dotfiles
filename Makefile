@@ -58,6 +58,10 @@ ssh:
 		podman exec -it $(CONTAINER_ID) /bin/bash; \
 	fi
 
+.PHONY: version
+version: rm build
+	@podman run -it $(IMAGE_NAME) /bin/bash -c "cat .dotfiles/dotfiles.json | jq '.version' | tr -d '\"'"
+
 .PHONY: install
 install: rm build
 	@podman run -it $(IMAGE_NAME) /bin/bash -c "cat .dotfiles/bin/install | python - -D; exec /bin/bash"
