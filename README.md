@@ -20,10 +20,10 @@ Some packages are required to make the system installation work correctly. When 
 These dotfiles are centered around the CLI. The CLI can be installed using different supported languages. Unchecked languages are still work-in-progress (wip).
 
 1. [x] Go `(default)`
-2. [ ] Python
-3. [ ] Odin
-4. [ ] Zig
-5. [ ] TypeScript
+2. [ ] Python `(wip)`
+3. [ ] Odin `(wip)`
+4. [ ] Zig `(wip)`
+5. [ ] TypeScript `(wip)`
 
 ## Quick Setup
 
