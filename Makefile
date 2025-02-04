@@ -1,3 +1,4 @@
+INSTALL := .dotfiles/bin/install
 IMAGE_NAME := dotfiles
 IMAGE_ID := $(shell podman images | grep $(IMAGE_NAME) | awk '{ print $$3 }' | grep -v '^$$')
 CONTAINER_ID := $(shell podman ps -a | grep $(IMAGE_NAME) | awk '{ print $$1 }' | grep -v '^$$')
@@ -60,12 +61,15 @@ ssh:
 
 .PHONY: version
 version: rm build
-	@podman run -it $(IMAGE_NAME) /bin/zsh -c "cat .dotfiles/dotfiles.json | jq '.version' | tr -d '\"'; exec /bin/zsh"
+	@podman run -it $(IMAGE_NAME) /bin/zsh -c \
+	"cat .dotfiles/dotfiles.json | jq '.version' | tr -d '\"'; exec /bin/zsh"
 
 .PHONY: install
 install: rm build
-	@podman run -it $(IMAGE_NAME) /bin/zsh -c "cat .dotfiles/bin/install | python - -D; exec /bin/zsh"
+	@podman run -it $(IMAGE_NAME) /bin/zsh -c \
+	"cat $(INSTALL) | python - -D; exec /bin/zsh"
 
 .PHONY: prod
 prod: rm build
-	@podman run -it $(IMAGE_NAME) /bin/zsh -c "cat .dotfiles/bin/install | python; exec /bin/zsh"
+	@podman run -it $(IMAGE_NAME) /bin/zsh -c \
+	"cat $(INSTALL) | python; exec /bin/zsh"

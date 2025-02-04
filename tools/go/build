@@ -1,21 +1,13 @@
 #!/usr/bin/env python
 import argparse
-import sys
 from os import path, getcwd
 from subprocess import call
 
-def main():
-  parser = argparse.ArgumentParser()
-  parser.add_argument("-S", "--symlink", action="store", dest="symlink", default="", type=str)
-  parser.add_argument("-B", "--binary", action="store", dest="binary", default="", type=str)
-  args = parser.parse_args()
-
-  if args.symlink == "" or args.binary == "":
-    print("Failed to build. Missing build args.")
-    sys.exit(1)
-
-  build_path = path.join(args.symlink, args.binary)
-  call(f"go build -o ../../.build/{build_path} main.go", shell=True, cwd=path.join(getcwd(), "tools/go"))
-
 if __name__ == "__main__":
-  main()
+  parser = argparse.ArgumentParser()
+  parser.add_argument("-B", "--binary", action="store", dest="bin", required=True, type=str)
+
+  args = parser.parse_args()
+  cwd = path.join(getcwd(), "tools/go")
+
+  call(f"go build -o ../../.build/bin/{args.bin} main.go", shell=True, cwd=cwd)

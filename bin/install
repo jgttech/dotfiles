@@ -1,159 +1,109 @@
 #!/usr/bin/env python
-import argparse
-import subprocess
-import sys
 import os
+import sys
 import json
-from os import environ, path, access
-from shutil import which, copyfile
+import argparse
+from subprocess import run, call
+from os import environ, mkdir, path, access, remove, listdir
+from shutil import copyfile
 from time import time
 
-def main(repo: str, dependencies: list[str], default_build: str):
-  timestamp: int = int(time())
-  home: str = environ["HOME"]
-  paths: str = environ["PATH"]
-  zshrc: str = path.join(home, ".zshrc")
-  bin_dirs: list[str] = []
-  missing: list[str] = []
-  build: str = path.join(home, default_build)
-  version: str = ""
-  binary: str = ""
+HOME = environ["HOME"]
+PATH = environ["PATH"]
+BIN = path.join(HOME, ".local/bin")
+ZSHRC = path.join(HOME, ".zshrc")
+ZSHRC_BACKUP = path.join(HOME, f".zshrc.{int(time())}.backup")
 
-  parser = argparse.ArgumentParser(description="Dotfiles install script")
-  parser.add_argument(
-    "-D", "--dev",
-    action="store_true",
-    dest='dev',
-    default=False
-  )
-  parser.add_argument(
-    "-L", "--lang",
-    action="store",
-    dest="lang",
-    default="go"
-  )
-  parser.add_argument(
-    "-B", "--base",
-    action="store",
-    dest="base",
-    default=".dotfiles",
-    type=str
-  )
+installed = lambda pkg: True if run(
+  f"zsh -i -c \"which {pkg}\"",
+  shell=True,
+  capture_output=True,
+).returncode == 0 else False
 
-  args = parser.parse_args()
-  dependencies.append(args.lang)
-  base = path.join(home, args.base)
-  is_dev = args.dev
-  tools = path.join(base, "tools", args.lang)
+parser = argparse.ArgumentParser(description="Dotfiles install script")
+parser.add_argument("-D", "--dev", action="store_true", dest='dev', default=False)
+parser.add_argument("-L", "--lang", action="store", dest="lang", default="go")
+parser.add_argument("-I", "--install", action="store", dest="install", default=".dotfiles", type=str)
 
-  if not is_dev:
-    print(f"Cloning to {base}...")
-    subprocess.call(f"git clone {repo} {base}", shell=True)
+args = parser.parse_args()
+dev = args.dev
+lang = args.lang
+tools_builder = f"tools/{lang}/build"
+install_path = path.join(HOME, args.install)
+tools_path = path.join(install_path, tools_builder)
+tools_packages = path.join(install_path, "packages")
+dotfiles_json = path.join(install_path, "dotfiles.json")
+build_path = path.join(install_path, ".build")
+build_home = path.join(install_path, ".build/home")
+build_config = path.join(build_home, ".dotfiles.build.json")
+build_json = {
+  "version": "",
+  "binary": "",
+  "source": "",
+  "symlink": "",
+  "language": "",
+}
 
-  if not path.exists(base):
+if __name__ == "__main__":
+  repo="https://github.com/jgttech/dotfiles.v2.git"
+  deps=["git", "jq", "stow", "omz", "nvm", args.lang]
+  missing=[]
+
+  if not path.exists(tools_path):
+    print(f"Language not supported: {lang}")
+    sys.exit(1)
+
+  for dep in deps:
+    if not installed(dep):
+      missing.append(dep)
+
+  if len(missing):
+    print("Missing required dependencies:")
+    for dep in missing:
+      print(f"> {dep}")
+    sys.exit(1)
+
+  if BIN not in PATH:
+    for dir in PATH.split(":"):
+      if access(dir, os.W_OK | os.R_OK) and "sbin" not in dir:
+        BIN = dir
+        break
+
+  if not dev:
+    call(f"git clone {repo} {args.install}", shell=True)
+
+  if not path.exists(install_path):
     print("Failed to clone")
     sys.exit(1)
 
-  print("Finding PATH directories...")
-  for dir in paths.split(":"):
-    if access(dir, os.W_OK | os.R_OK) and "sbin" not in dir:
-      bin_dirs.append(dir)
+  if path.exists(ZSHRC):
+    copyfile(ZSHRC, ZSHRC_BACKUP)
+    remove(ZSHRC)
 
-  if len(bin_dirs) == 0:
-    print("No valid directory in PATH")
-    sys.exit(1)
+  with open(dotfiles_json, "r") as cfg:
+    data = json.load(cfg)
 
-  print("Checking required system packages...")
-  for dep in dependencies:
-    if dep != "omz" and dep != "nvm":
-      exists = which(dep)
+    build_json['version'] = data['version']
+    build_json['binary'] = data['binary']
 
-      if exists == None:
-        missing.append(dep)
-    else:
-      # For each of these special circumstances I need
-      # to simulate the ZSH environment and check for the
-      # required packages that way. Otherwise, it is less
-      # reliable and harder to consistently track.
-      if dep == "omz":
-        command = 'zsh -i -c "which omz && omz version"'
-        code = subprocess.run(command, shell=True, capture_output=True, text=True).returncode
+  call(f"python {tools_builder} --binary={build_json['binary']}", cwd=install_path, shell=True)
 
-        if code != 0:
-          missing.append(dep)
+  if not path.exists(build_home):
+    mkdir(build_home)
 
-      if dep == "nvm":
-        command = 'zsh -i -c "which nvm && nvm version"'
-        code = subprocess.run(command, shell=True, capture_output=True, text=True).returncode
+  with open(build_config, "w") as state:
+    build_json['source'] = install_path
+    build_json['language'] = lang
+    build_json['symlink'] = BIN
+    json.dump(build_json, state, indent=2)
 
-        if code != 0:
-          missing.append(dep)
+  call(f"stow -t {BIN} bin", shell=True, cwd=build_path)
 
-  if len(missing) > 0:
-    print("\nMissing required packages:")
+  stow_packages = []
 
-    for dep in missing:
-      print(f"> {dep}")
+  for pkg in listdir(tools_packages):
+    if path.isdir(path.join(tools_packages, pkg)):
+      stow_packages.append(pkg)
 
-    print("\nPlease install required packages and try again")
-    sys.exit(1)
-
-  if path.exists(zshrc):
-    print("Backing up existing .zshrc...")
-    copyfile(zshrc, path.join(home, f".zshrc.{timestamp}.backup"))
-
-  print("Determining build path...")
-  if build not in bin_dirs:
-    idx = 0
-
-    if bin_dirs[0][0] == "/":
-      idx = 1
-
-    build = bin_dirs[0][idx:]
-
-  print("Building dotfiles CLI...")
-  if path.exists(tools):
-    with open(path.join(base, "dotfiles.json"), 'r') as file:
-      data = json.load(file)
-      version = data["version"]
-      binary = data["binary"]
-
-    subprocess.call(
-      f"python {path.join(tools, "build")} --symlink={build} --binary={binary}",
-      cwd=path.join(os.getcwd(), args.base),
-      shell=True,
-    )
-
-    print(f"version: {version}")
-  else:
-    print("Failed to build dotfiles CLI")
-    sys.exit(1)
-
-if __name__ == "__main__":
-  main(
-    # Where to clone the repo from. Changing this changes
-    # which repo is cloned.
-    repo="https://github.com/jgttech/dotfiles.v2.git",
-
-    # The packages that the system needs to have to install.
-    # This can't be inside a JSON or other file because
-    # we need to check these before installing the dotfiles.
-    # These should only be what is required to install the
-    # dotfiles.
-    dependencies=["git", "stow", "omz", "nvm"],
-
-    # This is the default location where, under the HOME
-    # path of the user, the dotfiles will link the build
-    # to, to make it available in the PATH automatically.
-    #
-    # However, if this path is not found, it will check
-    # the PATH for user accessible directories and pick
-    # the first one it finds and try to link the build
-    # there so it is automatically available.
-    #
-    # Unfortunately, I have to use this approach because
-    # some systems will not have this in their PATH and
-    # instead of making the user modify their PATH I can
-    # just detect what options exist and use of those.
-    default_build=".local/bin"
-  )
+  if len(stow_packages):
+    call(f"stow -t {HOME} {" ".join(stow_packages)}", shell=True, cwd=tools_packages)
