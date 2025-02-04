@@ -5,11 +5,9 @@ WORKDIR /root
 COPY . /root/.dotfiles
 
 RUN yes | pacman -Syu
-RUN yes | pacman -S git wget curl jq stow zsh python
-
-RUN yes | pacman -S go
-# RUN yes | pacman -S zig
-# RUN yes | pacman -S odin
-
+RUN yes | pacman -S git wget curl jq stow zsh python vim neovim go zig odin ttf-meslo-nerd
 RUN sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 RUN wget -qO- "https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh" | bash
+RUN git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+RUN git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+RUN git clone --depth=1 https://github.com/romkatv/powerlevel10k.git "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k"
