@@ -1,13 +1,19 @@
 #!/usr/bin/env python
-from core.os import installed, get_bin
-from core.argv import parse
+from core.sys import configure
 
 if __name__ == "__main__":
-  argv = parse()
-  dir = get_bin()
+  setup = configure()
 
-  print(f"dev......: {argv.dev}")
-  print(f"lang.....: {argv.lang}")
-  print(f"path.....: {argv.path}")
-  print(f"bin......: {dir}")
-  print(f"git......: {installed("git")}")
+  # Perform any backup work needed
+  # to install the tools.
+  setup.backup()
+
+  print(f"bin............: {setup.bin}")
+  print(f"home...........: {setup.home}")
+
+  print(f"argv.dev.......: {setup.argv.dev}")
+  print(f"argv.lang......: {setup.argv.lang}")
+  print(f"argv.home......: {setup.argv.home}")
+
+  print(f"config.version.: {setup.config.version}")
+  print(f"config.binary..: {setup.config.binary}")

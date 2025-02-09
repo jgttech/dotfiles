@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+from shutil import rmtree
 from sys import exit, platform
 from os import path, environ
 from argparse import ArgumentParser
@@ -10,23 +11,23 @@ def installed(pkg: str) -> bool:
 parser = ArgumentParser(description="Dotfiles install script")
 parser.add_argument("-D", "--dev", action="store_true", dest='dev', default=False)
 parser.add_argument("-L", "--lang", action="store", dest="lang", default="go")
-parser.add_argument("-P", "--path", action="store", dest="path", default=".dotfiles")
+parser.add_argument("-H", "--home", action="store", dest="home", default=".dotfiles")
 
 if __name__ == "__main__":
-  HOME = environ["HOME"]
-  ARGS = parser.parse_args()
-  REPO="https://github.com/jgttech/dotfiles.v2.git"
-  DEPS=["git", "jq", "stow", "omz", "nvm", ARGS.lang]
   ARCHS=["linux", "darwin"]
-  MISSING=[]
-
-  dotfiles = path.join(HOME, ARGS.path)
-  exists = path.exists(dotfiles)
-  cwd = path.join(dotfiles, "bin/setup")
 
   if platform not in ARCHS:
     print(f"Unsupported system: {platform}")
     exit(1)
+
+  HOME = environ["HOME"]
+  ARGS = parser.parse_args()
+  REPO="https://github.com/jgttech/dotfiles.v2.git"
+  DEPS=["git", "jq", "stow", "omz", "nvm", ARGS.lang]
+  MISSING=[]
+
+  dotfiles_path = path.join(HOME, ARGS.home)
+  dotfiles_exists = path.exists(dotfiles_path)
 
   # Check for missing system dependencies.
   for dep in DEPS:
@@ -47,21 +48,36 @@ if __name__ == "__main__":
   # pull the latest, to make sure we are working
   # with the latest version.
   if not ARGS.dev:
-    if not exists:
-      call(f"git clone {REPO} {ARGS.install}", shell=True)
+    if not dotfiles_exists:
+      call(f"git clone {REPO} {dotfiles_path}", shell=True)
     else:
-      call(f"git pull", shell=True, cwd=dotfiles)
+      call(f"git pull", shell=True, cwd=dotfiles_path)
 
-  if not exists:
-    print(f"Unable to install dotfiles: {dotfiles}")
+  if not dotfiles_exists:
+    print(f"Unable to install dotfiles: {dotfiles_path}")
     exit(1)
 
-  cmd = "python . "
+  tools_path = path.join(dotfiles_path, "tools", ARGS.lang)
+  tools_exists = path.exists(tools_path)
+
+  if not tools_exists:
+    if not ARGS.dev and dotfiles_exists:
+      rmtree(dotfiles_path, ignore_errors=True)
+
+    print(f"Unsupported language: {ARGS.lang}")
+    exit(1)
+
+  setup_path = path.join(dotfiles_path, "bin/setup")
+  cmd = ["python ."]
 
   if ARGS.dev:
-    cmd += f"--dev "
+    cmd.append("--dev")
 
-  cmd += f"--lang={ARGS.lang} "
-  cmd += f"--path={dotfiles}"
+  if ARGS.lang != "":
+    cmd.append(f"--lang={ARGS.lang}")
 
-  call(cmd, shell=True, cwd=cwd)
+  if ARGS.home != "":
+    cmd.append(f"--home={ARGS.home}")
+
+  print(" ".join(cmd))
+  call(" ".join(cmd), shell=True, cwd=setup_path)
