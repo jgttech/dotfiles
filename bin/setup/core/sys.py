@@ -1,48 +1,76 @@
+from dataclasses import dataclass
 from os import access, environ, path, remove, R_OK, W_OK
 from shutil import copyfile
+from os import environ, path, listdir
+from subprocess import call
 from time import time
-from core.argv import parse, Argv
-from core.json import load_config, Config
+from core.args import Args
+from core.json import Config
 
-HOME = environ["HOME"]
-PATH = environ["PATH"]
+# The BackupState is used to keep track
+# of what was changed about the file system
+# before the dotfiles setup was completed.
+# This allows me the ability to restore the
+# system to the pre-setup state, if I want.
+@dataclass
+class BackupState:
+  zshrc = ""
 
-def configure():
-  # Parse the CLI arguments.
-  argv = parse()
+class Setup:
+  args: Args
+  config: Config
+  home: str
+  packages: str
+  bin: str
+  zshrc: str
+  zshrc_backup: str
+  backup = BackupState()
 
-  # Read the JSON config file.
-  config = load_config(argv.home)
+  def __init__(self, args: Args, config: Config) -> None:
+    HOME = environ["HOME"]
+    PATH = environ["PATH"]
 
-  class Setup:
-    argv: Argv
-    config: Config
-    bin: str
-    home: str
-    zshrc: str
-    zshrc_backup: str
+    self.args = args
+    self.config = config
+    self.home = path.join(HOME, args.home)
+    self.packages = path.join(self.home, "packages")
+    self.bin = path.join(HOME, ".local/bin")
+    self.zshrc = path.join(HOME, ".zshrc")
+    self.zshrc_backup = path.join(HOME, f".zshrc.{int(time())}.backup")
 
-    def __init__(self, argv: Argv, config: Config) -> None:
-      self.argv = argv
-      self.config = config
-      self.home = path.join(HOME, argv.home)
-      self.zshrc = path.join(HOME, ".zshrc")
-      self.zshrc_backup = path.join(HOME, f".zshrc.{int(time())}.backup")
-      self.bin = path.join(HOME, ".local/bin")
+    if self.bin not in PATH:
+      for dir in PATH.split(":"):
+        if access(dir, R_OK|W_OK) and "sbin" not in dir:
+          self.bin = dir
+          break
 
-      if self.bin not in PATH:
-        for dir in PATH.split(":"):
-          if access(dir, R_OK|W_OK) and "sbin" not in dir:
-            self.bin = dir
-            break
+    self.bin = path.join(self.bin)
 
-      self.bin = path.join(self.bin, config.binary)
+  # Backup anything that is needed to be backed-up
+  # before starting to overwrite things.
+  def system_backup(self):
+    if path.exists(self.zshrc):
+      self.backup.zshrc = self.zshrc_backup
+      copyfile(self.zshrc, self.zshrc_backup)
+      remove(self.zshrc)
 
-    def backup(self):
-      # Backup the existing ".zshrc" file,
-      # if it exists.
-      if path.exists(self.zshrc):
-        copyfile(self.zshrc, self.zshrc_backup)
-        remove(self.zshrc)
+  def link_packages(self):
+    base = path.abspath(path.join(self.home, ".."))
+    call(f"stow -t {base} {" ".join(listdir(self.packages))}", shell=True, cwd=self.packages)
 
-  return Setup(argv, config)
+  def build_cli(self):
+    lang = self.args.lang
+
+    tools_home = path.join(self.home, "tools", lang)
+    tools_script = path.join(tools_home, "build")
+    tools_script_exists = path.exists(tools_script)
+
+    if not tools_script_exists:
+      print(f"Failed to find '{lang}' build script.")
+      exit(1)
+
+    call(
+      f"python build --path={self.bin} --binary={self.config.binary}",
+      shell=True,
+      cwd=tools_home,
+    )

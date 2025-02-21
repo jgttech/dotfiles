@@ -1,19 +1,27 @@
 #!/usr/bin/env python
-from core.sys import configure
+from core.sys import Setup
+from core.args import parse
+from core.json import load_config
 
 if __name__ == "__main__":
-  setup = configure()
+  # Parse CLI arguments.
+  args = parse()
+
+  # Read the JSON config file.
+  config = load_config(args.home)
+
+  # Instantiate the installation setup.
+  install = Setup(args, config)
 
   # Perform any backup work needed
   # to install the tools.
-  setup.backup()
+  install.system_backup()
 
-  print(f"bin............: {setup.bin}")
-  print(f"home...........: {setup.home}")
+  # Calls "stow" to link system packages.
+  # from the "packages" directory within
+  # the dotfiles.
+  install.link_packages()
 
-  print(f"argv.dev.......: {setup.argv.dev}")
-  print(f"argv.lang......: {setup.argv.lang}")
-  print(f"argv.home......: {setup.argv.home}")
-
-  print(f"config.version.: {setup.config.version}")
-  print(f"config.binary..: {setup.config.binary}")
+  # Builds the CLI associated with the
+  # dotfiles.
+  install.build_cli()

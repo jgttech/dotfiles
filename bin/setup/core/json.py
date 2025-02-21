@@ -6,9 +6,12 @@ class Config:
   binary: str
 
 def load_config(home: str) -> Config:
-  config = Config()
+  HOME = environ["HOME"]
 
-  with open(path.join(environ["HOME"], home, "dotfiles.json"), "r") as file:
+  config = Config()
+  file_path = path.join(HOME, home, "dotfiles.json")
+
+  with open(file_path, "r") as file:
     data = load(file)
     config.version = data["version"]
     config.binary = data["binary"]

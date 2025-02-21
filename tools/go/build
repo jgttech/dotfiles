@@ -1,13 +1,49 @@
 #!/usr/bin/env python
-import argparse
-from os import path, getcwd
+from dataclasses import dataclass, fields
+from argparse import ArgumentParser
 from subprocess import call
+from os import getcwd, path
 
 if __name__ == "__main__":
-  parser = argparse.ArgumentParser()
-  parser.add_argument("-B", "--binary", action="store", dest="bin", required=True, type=str)
+  @dataclass
+  class Args:
+    binary: str = "dotfiles"
+    path: str = ""
 
-  args = parser.parse_args()
-  cwd = path.join(getcwd(), "tools/go")
+  parser = ArgumentParser(description="Dotfiles install script")
 
-  call(f"go build -o ../../.build/bin/{args.bin} main.go", shell=True, cwd=cwd)
+  for field in fields(Args):
+    field_name = field.name
+    field_type = field.type
+    field_abbr = field_name[0].capitalize()
+    field_default = field.default
+
+    if field_type == bool:
+      parser.add_argument(
+        f"-{field_abbr}",
+        f"--{field_name}",
+        action='store_true',
+        help=f"Enable {field_name}",
+        default=field_default
+      )
+    else:
+      parser.add_argument(
+        f"-{field_abbr}",
+        f"--{field_name}",
+        type=field_type,
+        help=f"{field_name} value",
+        default=field_default
+      )
+
+  args = Args(**vars(parser.parse_args()))
+
+  if args.path == "":
+    print("Missing CLI install path.")
+    exit(1)
+
+  cwd = getcwd()
+  root = path.abspath(cwd + "../../..")
+  bin = path.join(root, ".build")
+
+  call(f"go build -o ../../.build/bin/{args.binary} main.go", shell=True, cwd=cwd)
+  call(f"stow -t {args.path} bin", shell=True, cwd=bin)
