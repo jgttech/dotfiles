@@ -1,5 +1,11 @@
 #!/usr/bin/env bash
 set -euo pipefail
+
+# The current platform the user is running on.
+# This is used by some of the install utility
+# functions.
+current_platform=$(uname -s | tr '[:upper:]' '[:lower:]')
+
 # The required version of Python that must exist
 # in order for the installation to work properly.
 python_version="3.13"
@@ -92,7 +98,6 @@ installed() { zsh -i -c "which $1" &> /dev/null ; }
 
 # Checks if your platform is supported.
 supported_platform() {
-  local current_platform=$(uname -s | tr '[:upper:]' '[:lower:]')
   local supported_platforms=("$@")
 
   for platform in "${supported_platforms[@]}"; do
@@ -110,6 +115,26 @@ supported_platform() {
       return 0
     fi
   done
+
+  return 1
+}
+
+# Check if the platform matches whatever platform we are
+# looking for. This is done to allow platform specifc
+# commands to be run for things like reloading system fonts
+# and other platform specific needs.
+is_platform() {
+  local desired_platform="$1"
+
+  # Check if current platform contains the
+  # supported_platform platform string or if supported_platform
+  # platform contains the current platform string
+  if \
+    [[ "$current_platform" == *"$desired_platform"* ]] || \
+    [[ "$desired_platform" == *"$current_platform"* ]]; \
+  then
+    return 0
+  fi
 
   return 1
 }
@@ -311,14 +336,31 @@ python "$install_dir" \
   --binary="$binary" \
   --config="$cfg"
 
-echo "Reloading font cache..."
-# Reload font cache to load custom user
-# fonts into the system.
-fc-cache -f -v
+echo ""
+echo "Reloading fonts, please wait..."
 
-if [[ "$(fc-list | grep -c 'MesloLGS NF')" -le 0 ]]; then
-  echo "[WARNING]"
-  echo "Failed to load fonts for 'MesloLGS NF'"
+# Reload font cache to load custom user
+# fonts into the system. We want to this
+# even if the user does have an error because
+# it is possible that the fonts either did not
+# get installed or something else unexpected has
+# happened and this would, technically, reload
+# the system fonts so that if/when we check we
+# can be sure the latest version of the fonts
+# in the system are what we are looking at.
+if is_platform "linux"; then
+  fc-cache -f -v
+
+  # During dependency checking, we verify that "fontconfig"
+  # is installed, so this should work, as expected.
+  if [[ "$(fc-list | grep -c 'MesloLGS NF')" -le 0 ]]; then
+    echo "[WARNING]"
+    echo "Failed to load fonts for 'MesloLGS NF'"
+  fi
+elif is_platform "darwin"; then
+  atsutil databases –removeUser
+  atsutil server –shutdown
+  atsutil server –ping
 fi
 
 if [[ $? -ne 0 ]]; then
@@ -332,6 +374,5 @@ if [[ $? -ne 0 ]]; then
 
   exit 0
 else
-  echo -e "\n"
   echo "Done"
 fi

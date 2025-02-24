@@ -47,6 +47,7 @@ class Install:
 
     with open(build_config, "w") as fp:
       fp.write(dumps(asdict(self.build), indent=2))
+      fp.write("\n")
 
     call(f"stow -t {HOME} .build", shell=True, cwd=self.build.home)
 
