@@ -38,6 +38,19 @@ class Install:
     if path.exists(ZSHRC):
       self.build.zshrc = f".zshrc.{self.build.created_at}.backup"
 
+  def config(self):
+    build_dir = path.join(self.build.home, ".build")
+    build_config = path.join(build_dir, self.build_config)
+
+    if not path.exists(build_dir):
+      mkdir(build_dir)
+
+    with open(build_config, "w") as fp:
+      fp.write(dumps(asdict(self.build), indent=2))
+
+    call(f"stow -t {HOME} .build", shell=True, cwd=self.build.home)
+    call(f"cat {build_config}", shell=True, cwd=HOME)
+
   def backup(self):
     if self.build.zshrc != "":
       copyfile(ZSHRC, self.build.zshrc)
@@ -59,15 +72,3 @@ class Install:
     args.append(f"--cwd={cwd}")
 
     call(f"python build {" ".join(args)}", shell=True, cwd=cwd)
-
-  def config(self):
-    build_dir = path.join(self.build.home, ".build")
-    build_config = path.join(build_dir, self.build_config)
-
-    if not path.exists(build_dir):
-      mkdir(build_dir)
-
-    with open(build_config, "w") as fp:
-      fp.write(dumps(asdict(self.build), indent=2))
-
-    call(f"stow -t {HOME} .build", shell=True, cwd=self.build.home)
