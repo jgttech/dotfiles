@@ -17,3 +17,6 @@ if __name__ == "__main__":
   # Links all the dotfiles packages to
   # the system using GNU stow.
   install.stow()
+
+  # Display an installation summary.
+  install.summary()

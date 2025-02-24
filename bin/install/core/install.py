@@ -1,7 +1,7 @@
 from os import mkdir, path, remove, access, listdir, R_OK, W_OK
 from dataclasses import asdict
 from shutil import copyfile
-from subprocess import call
+from subprocess import call, Popen, PIPE, check_output
 from json import dumps
 from core.cfg import Json, Build
 from core.cli import Argv
@@ -49,7 +49,6 @@ class Install:
       fp.write(dumps(asdict(self.build), indent=2))
 
     call(f"stow -t {HOME} .build", shell=True, cwd=self.build.home)
-    call(f"cat {build_config}", shell=True, cwd=HOME)
 
   def backup(self):
     if self.build.zshrc != "":
@@ -72,3 +71,9 @@ class Install:
     args.append(f"--cwd={cwd}")
 
     call(f"python build {" ".join(args)}", shell=True, cwd=cwd)
+
+  def summary(self):
+    build_dir = path.join(self.build.home, ".build")
+    build_config = path.join(build_dir, self.build_config)
+
+    call(f"cat {build_config}", shell=True, cwd=HOME)

@@ -73,7 +73,7 @@ longoptions="home:,lang:,binary:,dev"
 # is MUCH easier to check for and fail before
 # getting into the setup process, which Python
 # handles.
-dependencies=("getopt" "python" "git" "jq" "stow" "omz" "nvm")
+dependencies=("getopt" "fontconfig" "python" "lua" "git" "jq" "stow" "omz" "nvm" "zip" "unzip")
 
 # Tracks what is missing to, if something is
 # missing, I can display the full list of what
@@ -224,8 +224,22 @@ fi
 
 # Check which script dependencies are needed.
 for dep in "${dependencies[@]}"; do
-  if ! installed "$dep"; then
-    missing+=("$dep")
+  # For whatever reason the "fc-cache",
+  # "fc-list", etc, all come from the "fontconfig"
+  # package. So when we are checking for that
+  # package we just need to make sure that one of
+  # the commands that becomes available exists to
+  # validate that "fontconfig" was installed.
+  if [[ "$dep" == "fontconfig" ]]; then
+    if ! installed "fc-list"; then
+      missing+=("$dep")
+    fi
+  # Outside "fontconfig" we cna use the typical
+  # approach of checking each package as usual.
+  else
+    if ! installed "$dep"; then
+      missing+=("$dep")
+    fi
   fi
 done
 
@@ -283,13 +297,10 @@ if [[ ! -d "$install_dir" ]]; then
   exit 1
 fi
 
-# echo "[CONFIG]"
-# echo "home...: $home_dir"
-# echo "tools..: $tools_dir"
-# echo "binary.: $binary"
-# echo ""
-echo "Installing..."
-echo ""
+echo "Installing NodeJS LTS..."
+zsh -i -c "nvm install --lts; nvm use --lts --default";
+
+echo "Installing dotfiles..."
 
 # Run the installation process using Python.
 # It is just WAY easier to do complex setup
@@ -299,6 +310,16 @@ python "$install_dir" \
   --tools="$tools_dir" \
   --binary="$binary" \
   --config="$cfg"
+
+echo "Reloading font cache..."
+# Reload font cache to load custom user
+# fonts into the system.
+fc-cache -f -v
+
+if [[ "$(fc-list | grep -c 'MesloLGS NF')" -le 0 ]]; then
+  echo "[WARNING]"
+  echo "Failed to load fonts for 'MesloLGS NF'"
+fi
 
 if [[ $? -ne 0 ]]; then
   echo "[ERROR]"
@@ -311,6 +332,6 @@ if [[ $? -ne 0 ]]; then
 
   exit 0
 else
-  echo ""
+  echo -e "\n"
   echo "Done"
 fi

@@ -5,11 +5,9 @@ WORKDIR /root
 COPY . /root/.dotfiles
 
 RUN yes | pacman -Syu
-RUN yes | pacman -S wget zsh git jq stow base-devel openssh
+RUN yes | pacman -S wget zsh git jq stow base-devel openssh fontconfig zip unzip lua python go
 
 # Language install
-RUN yes | pacman -S python
-RUN yes | pacman -S go
 # RUN yes | pacman -S odin
 # RUN yes | pacman -S zig
 
