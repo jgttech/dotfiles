@@ -1,7 +1,10 @@
 #!/usr/bin/env zsh
-DOTFILES_ZSH_HOME="$HOME/.config/zsh"
-source "$DOTFILES_ZSH_HOME/src/require.zsh"
+source "$DOTFILES_ZSHRC/utils/require.zsh"
 
-for dir in "$DOTFILES_ZSH_HOME/utils/"; do
-  echo "$dir"
+# The "core" path is where all the custom
+# ZSH utilities exist and are loaded from.
+for dir in "${DOTFILES_ZSHRC}/shell"/*; do
+  if [ -d "$dir" ]; then
+    require "$dir"
+  fi
 done

@@ -2,7 +2,7 @@
 function require {
   local dir="$1"
   local file="${2:-"main"}"
-  local import="$DOTFILES_ZSH_HOME/$dir/$file.zsh"
+  local import="${dir}/${file}.zsh"
 
   if [[ -f "$import" ]]; then
     source "$import"

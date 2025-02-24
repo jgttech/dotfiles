@@ -1,4 +1,4 @@
-INSTALL := .dotfiles/bin/install
+INSTALL := .dotfiles/bin/install.sh
 IMAGE_NAME := dotfiles
 IMAGE_ID := $(shell podman images | grep $(IMAGE_NAME) | awk '{ print $$3 }' | grep -v '^$$')
 CONTAINER_ID := $(shell podman ps -a | grep $(IMAGE_NAME) | awk '{ print $$1 }' | grep -v '^$$')
@@ -67,7 +67,12 @@ version: rm build
 .PHONY: install
 install: rm build
 	@podman run -it $(IMAGE_NAME) /bin/zsh -c \
-	"cat $(INSTALL) | python - -D; exec /bin/zsh"
+	"cat $(INSTALL) | bash -s -- --dev; exec /bin/zsh"
+
+# .PHONY: install
+# install: rm build
+# 	@podman run -it $(IMAGE_NAME) /bin/zsh -c \
+# 	"cat $(INSTALL) | python - -D; exec /bin/zsh"
 
 .PHONY: prod
 prod: rm build
