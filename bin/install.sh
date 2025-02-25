@@ -6,6 +6,10 @@ set -euo pipefail
 # functions.
 current_platform=$(uname -s | tr '[:upper:]' '[:lower:]')
 
+# This is the custom font that is installed
+# when stow links the packages into the system.
+font_family="MesloLGS NF"
+
 # The required version of Python that must exist
 # in order for the installation to work properly.
 python_version="3.13"
@@ -79,7 +83,28 @@ longoptions="home:,lang:,binary:,dev"
 # is MUCH easier to check for and fail before
 # getting into the setup process, which Python
 # handles.
-dependencies=("getopt" "fontconfig" "python" "lua" "git" "jq" "stow" "omz" "nvm" "zip" "unzip")
+#
+# If dependencies are missing, the user needs
+# to lookup their platforms approach to install
+# the missing dependencies. The one things this
+# install script does not handle is installing
+# dependencies. It just checks for them. This is
+# because maintianing install methods are various
+# Linux and MacOS distro's and/or versions is a
+# LOT of work and not what these tools are for.
+dependencies=( \
+  "getopt" \
+  "fontconfig" \
+  "python" \
+  "lua" \
+  "git" \
+  "jq" \
+  "stow" \
+  "omz" \
+  "nvm" \
+  "zip" \
+  "unzip" \
+)
 
 # Tracks what is missing to, if something is
 # missing, I can display the full list of what
@@ -183,7 +208,7 @@ if ! command -v "zsh" &> /dev/null; then
   echo ""
   echo "[ERROR]"
   echo "ZSH required to install dotfiles. Please,"
-  echo "Please install ZSH to continue."
+  echo "Please install ZSH and re-run the script."
   exit 1
 fi
 
@@ -223,7 +248,7 @@ while true; do
 
     *)
       echo "[ERROR]"
-      echo "Expected error while parsing install arguments."
+      echo "Unexpected error while parsing install arguments."
       exit 1
       ;;
   esac
@@ -231,7 +256,7 @@ done
 
 # If we do not have the acceptable Python
 # version, then we can't install the dotfiles.
-# So we need to check what they are.
+# So we need to verify what the Python version is.
 if ! supported_python_version "$python_version"; then
   exit 1
 fi
@@ -299,20 +324,20 @@ if [[ "$dev" == false ]]; then
     echo "configuration file."
     echo ""
     echo "Here is a command:"
-    echo "cat ~/$cfg | jq '.build.binary' | tr -d '\"'"
+    echo "cat ~/$cfg | jq '.binary' | tr -d '\"'"
     exit 0
   fi
-fi
-
-if [[ ! -d "$home_dir/$tools_dir" ]]; then
-  echo "[ERROR]"
-  echo "Language not supported: $lang"
-  exit 1
 fi
 
 if [[ ! -d "$home_dir" ]]; then
   echo "[ERROR]"
   echo "Failed. Unable to clone repo."
+  exit 1
+fi
+
+if [[ ! -d "$home_dir/$tools_dir" ]]; then
+  echo "[ERROR]"
+  echo "Failed. Language not supported: $lang"
   exit 1
 fi
 
@@ -336,7 +361,6 @@ python "$install_dir" \
   --binary="$binary" \
   --config="$cfg"
 
-echo ""
 echo "Reloading fonts, please wait..."
 
 # Reload font cache to load custom user
@@ -350,12 +374,13 @@ echo "Reloading fonts, please wait..."
 # in the system are what we are looking at.
 if is_platform "linux"; then
   fc-cache -f -v
+  cnt=$(fc-list | grep -c "$font_family")
 
   # During dependency checking, we verify that "fontconfig"
   # is installed, so this should work, as expected.
-  if [[ "$(fc-list | grep -c 'MesloLGS NF')" -le 0 ]]; then
+  if [[ "${cnt}" -le 0 ]]; then
     echo "[WARNING]"
-    echo "Failed to load fonts for 'MesloLGS NF'"
+    echo "Failed to load fonts for '$font_family'"
   fi
 elif is_platform "darwin"; then
   atsutil databases –removeUser
