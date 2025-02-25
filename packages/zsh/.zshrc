@@ -1,4 +1,5 @@
 DOTFILES_ZSHRC="${HOME}/.config/zsh"
+DOTFILES_BUILD_JSON="${HOME}/.dotfiles.build.json"
 DOTFILES_ZSHRC_MAIN="${DOTFILES_ZSHRC}/main.zsh"
 [[ -f "${DOTFILES_ZSHRC_MAIN}" ]] && source "${DOTFILES_ZSHRC_MAIN}";
 

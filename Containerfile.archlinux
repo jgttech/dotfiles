@@ -5,19 +5,10 @@ WORKDIR /root
 COPY . /root/.dotfiles
 
 RUN yes | pacman -Syu
-RUN yes | pacman -S wget zsh git jq stow base-devel openssh fontconfig zip unzip lua python go
+RUN yes | pacman -S wget zsh git jq stow base-devel openssh fontconfig zip unzip lua python go odin zig
 
-# Language install
-# RUN yes | pacman -S odin
-# RUN yes | pacman -S zig
-
-# ZSH install
 RUN sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-
-# ZSH plugins
 RUN git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
 RUN git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
 RUN git clone --depth=1 https://github.com/romkatv/powerlevel10k.git "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k"
-
-# NVM install
 RUN wget -qO- "https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh" | bash

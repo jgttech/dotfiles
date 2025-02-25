@@ -1,4 +1,10 @@
 #!/usr/bin/env zsh
+# Automatically try to update the tools.
+source "${DOTFILES_ZSHRC}/utils.zsh"
+
+# Automatically try to update the tools.
+source "${DOTFILES_ZSHRC}/update.zsh"
+
 # Iteraltes through all the directries and
 # automatically sources the "main.zsh" file
 # within each one.
