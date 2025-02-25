@@ -42,6 +42,12 @@ class Build:
   # when the install was run.
   zshrc: str = ""
 
+  # The command that built the CLI. This gets used
+  # by the updating process to ensure that if/when
+  # the CLI gets rebuilt, it does so in the exact
+  # same way it was first created.
+  cli: str = ""
+
   # List of all the packages stow installed from
   # the repo packages. This should be all of them
   # and just serves as a config environment output.

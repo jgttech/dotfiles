@@ -71,7 +71,10 @@ class Install:
     args.append(f"--where={self.build.where}")
     args.append(f"--cwd={cwd}")
 
-    call(f"python build {" ".join(args)}", shell=True, cwd=cwd)
+    cmd = f"python build {" ".join(args)}"
+    self.build.cli = cmd
+
+    call(cmd, shell=True, cwd=cwd)
 
   def summary(self):
     build_dir = path.join(self.build.home, ".build")
