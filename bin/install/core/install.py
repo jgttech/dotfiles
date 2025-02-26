@@ -85,7 +85,6 @@ class Install:
     cwd = path.join(self.build.home, "packages")
     packages = self.build.packages
 
-    print(f"PACKGES: {packages}")
     call(f"stow -t {HOME} {" ".join(packages)}", shell=True, cwd=cwd)
 
   def cli(self):
