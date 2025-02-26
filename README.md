@@ -19,5 +19,5 @@ sudo pacman -S git wget jq stow zsh python go odin zig unzip zip getopt
 
 ```bash
 # By default, this installs into ~/.dotfiles
-wget -qO- "https://raw.githubusercontent.com/jgttech/dotfiles.v2/refs/heads/main/bin/install" | python
+wget -qO- "https://raw.githubusercontent.com/jgttech/dotfiles.v2/refs/heads/main/bin/install.sh" | python
 ```
