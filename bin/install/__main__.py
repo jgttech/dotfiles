@@ -4,6 +4,8 @@ from core import Install
 if __name__ == "__main__":
   install = Install()
 
+  print(f"system...: {install.system}")
+
   # Does any backup work needed
   # prior to installing the dotfiles.
   install.backup()

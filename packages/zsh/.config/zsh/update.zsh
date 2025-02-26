@@ -19,6 +19,8 @@ dotfiles_update() {
     update=true
   fi
 
+  echo "REBUILD: ${cli}"
+
   # If there was an updated change, the command
   # used to build the CLI is re-run exactly as it
   # was when the inital install happened, which will
