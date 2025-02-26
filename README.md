@@ -12,7 +12,7 @@ This quick setup shows a quick getting started by being able to copy-and-paste c
 
 ```bash
 # Installs all the prerequsites and supported languages.
-sudo pacman -S git wget jq stow zsh python go odin zig unzip zip getopt
+sudo pacman -S git wget jq stow zsh python go odin zig unzip zip getopt fontconfig base-devel
 ```
 
 # Installation
