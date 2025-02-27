@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
+# Check if python3 exists and use it, otherwise fallback to python
+python_cmd=$(command -v python3 || command -v python)
 
 # The current platform the user is running on.
 # This is used by some of the install utility
@@ -94,8 +96,6 @@ longoptions="home:,lang:,binary:,dev"
 # LOT of work and not what these tools are for.
 dependencies=( \
   "getopt" \
-  "fontconfig" \
-  "python" \
   "lua" \
   "git" \
   "jq" \
@@ -171,7 +171,7 @@ supported_python_version() {
   local required_version="$1"
   local required_major="${required_version%%.*}"
   local required_minor="${required_version#*.}"
-  local version=$(python --version 2>&1)
+  local version=$($python_cmd --version 2>&1)
 
   if [[ $version =~ Python[[:space:]]+([0-9]+)\.([0-9]+) ]]; then
     local major="${BASH_REMATCH[1]}"
@@ -212,8 +212,16 @@ if ! command -v "zsh" &> /dev/null; then
   exit 1
 fi
 
+# At one point, I was using gnu-getopt on macOS
+# for compatibility purposes. However, if gnu-getopt
+# is setup in your PATH properly, BEFORE the macOS
+# default BSD-based getopt, then the GNU-based getopt
+# an be used. For now, this is left in here this way
+# because I may need to change that back in the future.
+getopt_cmd="getopt"
+
 # Parse the CLI options.
-if ! argv=$(getopt --options=$options --longoptions=$longoptions --name "$0" -- "$@"); then
+if ! argv=$($getopt_cmd --options=$options --longoptions=$longoptions --name "$0" -- "$@"); then
   exit 1
 fi
 
@@ -270,6 +278,10 @@ fi
 # exist prior to installing the dotfiles.
 if [[ "$lang" != "ts" ]]; then
   dependencies+=("$lang")
+fi
+
+if is_platform "linux"; then
+  dependencies+=("fontconfig")
 fi
 
 # Check which script dependencies are needed.
@@ -355,7 +367,7 @@ echo "Installing dotfiles..."
 # Run the installation process using Python.
 # It is just WAY easier to do complex setup
 # with Python than it is in BASH.
-python "$install_dir" \
+$python_cmd "$install_dir" \
   --home="$home_dir" \
   --tools="$tools_dir" \
   --binary="$binary" \
