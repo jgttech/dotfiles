@@ -6,6 +6,7 @@ import (
 	"os"
 
 	"github.com/urfave/cli/v3"
+	"jgttech/dotfiles/cmds/purge"
 	"jgttech/dotfiles/cmds/version"
 	"jgttech/dotfiles/src/install"
 )
@@ -17,6 +18,7 @@ func main() {
 		Name: "dotfiles",
 		Commands: []*cli.Command{
 			version.Command(build),
+			purge.Command(build),
 		},
 	}
 

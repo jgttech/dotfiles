@@ -8,9 +8,11 @@ dotfiles_update() {
   local home=`dotfiles_json ".home"`
   local tools=`dotfiles_json ".tools"`
   local cli=`dotfiles_json ".cli"`
-  local current_hash=`git rev-parse HEAD`
 
   cd "${home}"
+
+  local current_hash=`git rev-parse HEAD`
+
   git pull &> /dev/null
   git fetch &> /dev/null
 
@@ -24,8 +26,10 @@ dotfiles_update() {
   # was when the inital install happened, which will
   # update the CLI to a newer version.
   if [[ "${updated}" == true ]]; then
+    echo "Updating, please wait..."
     cd "${home}/${tools}"
     eval "${cli}"
+    clear
   fi
 
   cd "${cwd}"
