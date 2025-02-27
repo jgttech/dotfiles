@@ -11,3 +11,4 @@ packages/alacritty/.config/alacritty/alacritty.toml
 packages/ghostty/.config/ghostty/config
 packages/zsh/.zsh.build
 __pycache__
+.local/state/
