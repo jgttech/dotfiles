@@ -7,7 +7,6 @@ import (
 
 	"github.com/urfave/cli/v3"
 	"jgttech/dotfiles/cmds/purge"
-	"jgttech/dotfiles/cmds/rebuild"
 	"jgttech/dotfiles/cmds/version"
 	"jgttech/dotfiles/src/install"
 )
@@ -20,7 +19,6 @@ func main() {
 		Commands: []*cli.Command{
 			version.Command(build),
 			purge.Command(build),
-			rebuild.Command(build),
 		},
 	}
 
