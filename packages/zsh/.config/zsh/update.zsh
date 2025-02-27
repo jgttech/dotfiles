@@ -14,7 +14,8 @@ dotfiles_update() {
 
   if [[ "$pull_output" != *"Already up to date"* ]]; then
     echo "Updating, please wait..."
-    dotfiles rebuild
+    cd "${home}/${tools}"
+    ${cli}
   fi
 
   cd "${cwd}"
