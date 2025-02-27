@@ -12,13 +12,15 @@ dotfiles_update() {
   cd "${home}"
 
   local current_hash=`git rev-parse HEAD`
+  echo "CURRENT HASH: ${current_hash}"
 
   git pull &> /dev/null
-  git fetch &> /dev/null
 
   local update_hash=`git rev-parse HEAD`
+  echo "UPDATE HASH: ${update_hash}"
+
   if [[ "${current_hash}" != "${update_hash}" ]]; then
-    update=true
+    updated=true
   fi
 
   # If there was an updated change, the command
