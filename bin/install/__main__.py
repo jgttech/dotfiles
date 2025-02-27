@@ -10,6 +10,10 @@ if __name__ == "__main__":
   # prior to installing the dotfiles.
   install.backup()
 
+  # Setup the terminal configurations.
+  install.ghostty()
+  install.alacritty()
+
   # Builds the dotfiles CLI.
   install.cli()
 

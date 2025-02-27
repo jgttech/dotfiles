@@ -101,6 +101,28 @@ class Install:
 
     call(cmd, shell=True, cwd=cwd)
 
+  def ghostty(self):
+    base = path.join(self.build.home, "packages/ghostty/.config/ghostty")
+    linux_file = path.join(base, "config.linux")
+    darwin_file = path.join(base, "config.darwin")
+    cfg_file = path.join(base, "config")
+
+    if "linux" in self.system:
+      copyfile(linux_file, cfg_file)
+    elif "darwin" in self.system:
+      copyfile(darwin_file, cfg_file)
+
+  def alacritty(self):
+    base = path.join(self.build.home, "packages/alacritty/.config/alacritty")
+    linux_file = path.join(base, "alacritty.linux.toml")
+    darwin_file = path.join(base, "alacritty.darwin.toml")
+    cfg_file = path.join(base, "alacritty.toml")
+
+    if "linux" in self.system:
+      copyfile(linux_file, cfg_file)
+    elif "darwin" in self.system:
+      copyfile(darwin_file, cfg_file)
+
   def summary(self):
     build_dir = path.join(self.build.home, ".build")
     build_config = path.join(build_dir, self.build_config)
