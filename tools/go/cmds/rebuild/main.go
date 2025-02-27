@@ -20,7 +20,7 @@ func Command(build *install.Build) *cli.Command {
 			sh := exec.Cmd(build.Cli, exec.Stdio)
 			sh.Dir = dir
 
-			fmt.Printf("DIR: %s\n", dir)
+			fmt.Println("IS IT WORKING?")
 
 			return sh.Run()
 		},
