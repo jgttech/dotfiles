@@ -77,4 +77,4 @@ install: rm build
 .PHONY: prod
 prod: rm build
 	@podman run -it $(IMAGE_NAME) /bin/zsh -c \
-	"cat $(INSTALL) | python; exec /bin/zsh"
+	"cat $(INSTALL) | bash -s; exec /bin/zsh"
