@@ -14,10 +14,8 @@ dotfiles_update() {
 
   if [[ "$pull_output" != *"Already up to date"* ]]; then
     echo "Updating, please wait..."
-    pwd
-    echo "cd ${tools}"
     cd "${tools}"
-    pwd
+    ls -la
     # ${cli}
   fi
 
