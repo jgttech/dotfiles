@@ -10,21 +10,12 @@ dotfiles_update() {
 
   cd "${home}"
 
-  local original_ref=$(git rev-parse HEAD)
+  local pull_output=$(git pull 2>&1)
 
-  git pull &> /dev/null
-
-  if [[ $(git rev-parse HEAD) != "$original_ref" ]]; then
+  if [[ "$pull_output" != *"Already up to date"* ]]; then
     echo "Updating, please wait..."
     dotfiles rebuild
   fi
-
-  # local pull_output=$(git pull)
-  #
-  # if [[ "$pull_output" != *"Already up to date"* ]]; then
-  #   echo "Updating, please wait..."
-  #   dotfiles rebuild
-  # fi
 
   cd "${cwd}"
 }
