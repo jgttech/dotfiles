@@ -73,4 +73,4 @@ install: rm build
 .PHONY: prod
 prod: rm build
 	@podman run -it $(IMAGE_NAME) /bin/zsh -c \
-	"wget -qO- '$(GITHUB_INSTALL)' | bash; exec /bin/zsh"
+	"wget -qO- $(GITHUB_INSTALL) | bash; exec /bin/zsh"
