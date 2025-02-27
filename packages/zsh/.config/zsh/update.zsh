@@ -20,7 +20,7 @@ dotfiles_update() {
     cd "${tools}"
 
     # Replacing 'python' in the cli command with the appropriate python command
-    local compat_cli=$(echo "$cli" | sed "s/^python/$python_cmd/")
+    local compat_cli=$(echo "$cli" | sed "s#^python#$python_cmd#")
 
     # Execute the command
     eval "$compat_cli"
