@@ -2,7 +2,7 @@ FROM archlinux:latest
 
 WORKDIR /root
 
-# COPY . /root/.dotfiles
+COPY . /root/.dotfiles
 
 RUN yes | pacman -Syu
 RUN yes | pacman -S wget zsh git jq stow base-devel openssh fontconfig zip unzip lua python go odin zig
