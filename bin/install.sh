@@ -19,6 +19,10 @@ python_version="3.13"
 # The repo to clone when installing dotfiles.
 repo="https://github.com/jgttech/dotfiles.v2.git"
 
+# Where the CLI is setup at within the dotfiles.
+# This path is linked, via stow, into the system.
+build_out=".build"
+
 # Which platforms this supports.
 platforms=("linux" "darwin")
 
@@ -33,7 +37,7 @@ platforms=("linux" "darwin")
 # reference about how the environment is setup. Therefore
 # editing this file will edit the shell environment for
 # the dotfiles that are currently built on the system.
-cfg=".dotfiles.build.json"
+config=".dotfiles.build.json"
 
 #############################################
 # CLI arguments and default values.
@@ -96,6 +100,7 @@ longoptions="home:,lang:,binary:,dev"
 # LOT of work and not what these tools are for.
 dependencies=( \
   "getopt" \
+  "base64" \
   "lua" \
   "git" \
   "jq" \
@@ -318,10 +323,6 @@ if [[ ${#missing[@]} -ne 0 ]]; then
   exit 1
 fi
 
-home_dir="$HOME/$home"
-tools_dir="tools/$lang"
-install_dir="$home_dir/bin/install"
-
 if [[ "$dev" == false ]]; then
   if [[ ! -d "$home_dir" ]]; then
     git clone "$repo" "$home_dir"
@@ -336,10 +337,16 @@ if [[ "$dev" == false ]]; then
     echo "configuration file."
     echo ""
     echo "Here is a command:"
-    echo "cat ~/$cfg | jq '.binary' | tr -d '\"'"
+    echo "cat ~/$config | jq '.binary' | tr -d '\"'"
     exit 0
   fi
 fi
+
+# The paths we need to build the commands used
+# to install the dotfiles.
+home_dir="$HOME/$home"
+tools_dir="tools/$lang"
+install_module="${home_dir}/bin/install.py"
 
 if [[ ! -d "$home_dir" ]]; then
   echo "[ERROR]"
@@ -353,25 +360,40 @@ if [[ ! -d "$home_dir/$tools_dir" ]]; then
   exit 1
 fi
 
-if [[ ! -d "$install_dir" ]]; then
+if [[ ! -f "$install_module" ]]; then
   echo "[ERROR]"
-  echo "Failed. Missing install scripts."
+  echo "Failed. Unable to invoke install module."
   exit 1
 fi
 
 echo "Installing NodeJS LTS..."
 zsh -i -c "nvm install --lts; nvm use --lts --default";
 
-echo "Installing dotfiles..."
-
-# Run the installation process using Python.
-# It is just WAY easier to do complex setup
-# with Python than it is in BASH.
-$python_cmd "$install_dir" \
+# Step 1:
+# Generates the environment config. This config
+# drives basically everything that has to do with
+# the dotfiles and the built-in CLI. Including
+# bulding the CLI, itself.
+${python_cmd} ${install_module} \
   --home="$home_dir" \
   --tools="$tools_dir" \
   --binary="$binary" \
-  --config="$cfg"
+  --config="$config" \
+  --out="$build_out"
+
+# Step 2:
+# Invokes the command that builds the dotfiles CLI
+# and symlinks it into the system.
+${python_cmd} ${home_dir}/${tools_dir}/build.py
+
+# Step 3:
+# Invokes the install command with the dotfiles CLI.
+# This links directly to the CLI binary/entrypoint
+# because this is more reliable than relying on the
+# symlink, though, that might change later. This will
+# do the work of managing and linking the packages in
+# the system.
+${home_dir}/${build_out}/cli/${binary} install
 
 echo "Reloading fonts, please wait..."
 

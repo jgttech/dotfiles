@@ -2,20 +2,18 @@ package purge
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/urfave/cli/v3"
-	// "jgttech/dotfiles/src/exec"
-	"jgttech/dotfiles/src/install"
+	"jgttech/dotfiles/src/cfg"
 )
 
-func Command(build *install.Build) *cli.Command {
+func Command(build *cfg.Build) *cli.Command {
 	return &cli.Command{
-		Name:        "purge",
-		Description: "Invokes the Python purge script.",
+		Name:  "purge",
+		Usage: "Unlinks all packages and deletes the dotfiles from the system.",
 		Action: func(ctx context.Context, cmd *cli.Command) error {
-			// sh := exec.Cmd("bash bin/purge.sh", exec.Stdio)
-			// sh.Dir = ""
-
+			fmt.Println("Purge")
 			return nil
 		},
 	}

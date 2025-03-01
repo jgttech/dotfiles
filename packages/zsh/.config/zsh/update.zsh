@@ -9,7 +9,7 @@ dotfiles_update() {
   local cwd=$(pwd)
   local home=$(dotfiles_json ".home")
   local tools=$(dotfiles_json ".tools")
-  local cli=$(dotfiles_json ".cli")
+  local cmd="${python_cmd} ${home}/${tools}/build.py"
 
   cd "${home}"
 
@@ -17,13 +17,13 @@ dotfiles_update() {
 
   if [[ "$pull_output" != *"Already up to date"* ]]; then
     echo "Updating, please wait..."
-    cd "${tools}"
+    eval "${cmd}"
 
     # Replacing 'python' in the cli command with the appropriate python command
-    local compat_cli=$(echo "$cli" | sed "s#^python#$python_cmd#")
+    # local compat_cli=$(echo "$cli" | sed "s#^python#$python_cmd#")
 
     # Execute the command
-    eval "$compat_cli"
+    # eval "$compat_cli"
   fi
 
   cd "${cwd}"
