@@ -323,8 +323,14 @@ if [[ ${#missing[@]} -ne 0 ]]; then
   exit 1
 fi
 
+# The paths we need to build the commands used
+# to install the dotfiles.
+home_dir="$HOME/$home"
+tools_dir="tools/$lang"
+install_module="${home_dir}/bin/install.py"
+
 if [[ "$dev" == false ]]; then
-  if [[ ! -d "$home_dir" ]]; then
+  if [[ ! -d "${home_dir}" ]]; then
     git clone "$repo" "$home_dir"
   else
     echo "[WARNING]"
@@ -341,12 +347,6 @@ if [[ "$dev" == false ]]; then
     exit 0
   fi
 fi
-
-# The paths we need to build the commands used
-# to install the dotfiles.
-home_dir="$HOME/$home"
-tools_dir="tools/$lang"
-install_module="${home_dir}/bin/install.py"
 
 if [[ ! -d "$home_dir" ]]; then
   echo "[ERROR]"
