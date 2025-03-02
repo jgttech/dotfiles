@@ -4,6 +4,7 @@ import (
 	"jgttech/dotfiles/src/cfg"
 	"jgttech/dotfiles/src/exceptions"
 	"jgttech/dotfiles/src/file"
+	"jgttech/dotfiles/src/os"
 	"path"
 )
 
@@ -12,6 +13,10 @@ func ghostty(build *cfg.Build) error {
 	linuxFile := path.Join(dir, "config.linux")
 	darwinFile := path.Join(dir, "config.darwin")
 	configFile := path.Join(dir, "config")
+
+	if os.Exists(configFile) {
+		return nil
+	}
 
 	var targetFile string
 

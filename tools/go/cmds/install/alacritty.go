@@ -4,6 +4,7 @@ import (
 	"jgttech/dotfiles/src/cfg"
 	"jgttech/dotfiles/src/exceptions"
 	"jgttech/dotfiles/src/file"
+	"jgttech/dotfiles/src/os"
 	"path"
 )
 
@@ -12,6 +13,10 @@ func alacritty(build *cfg.Build) error {
 	linuxFile := path.Join(dir, "alacritty.linux.toml")
 	darwinFile := path.Join(dir, "alacritty.darwin.toml")
 	configFile := path.Join(dir, "alacritty.toml")
+
+	if os.Exists(configFile) {
+		return nil
+	}
 
 	var targetFile string
 
