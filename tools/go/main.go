@@ -5,11 +5,13 @@ import (
 	"log"
 	"os"
 
-	"github.com/urfave/cli/v3"
 	"jgttech/dotfiles/cmds/install"
+	"jgttech/dotfiles/cmds/purge"
 	"jgttech/dotfiles/cmds/uninstall"
 	"jgttech/dotfiles/cmds/version"
 	"jgttech/dotfiles/src/cfg"
+
+	"github.com/urfave/cli/v3"
 )
 
 func main() {
@@ -18,6 +20,7 @@ func main() {
 		Commands: []*cli.Command{
 			install.Command(build),
 			uninstall.Command(build),
+			purge.Command(build),
 			version.Command(build),
 		},
 	}
