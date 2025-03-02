@@ -17,7 +17,7 @@ func main() {
 	app := cli.Command{
 		Commands: []*cli.Command{
 			install.Command(build),
-			uninstall.Command(),
+			uninstall.Command(build),
 			version.Command(build),
 		},
 	}

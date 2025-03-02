@@ -1,0 +1,5 @@
+package uninstall
+
+func zshrc() {
+
+}
