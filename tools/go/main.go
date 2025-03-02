@@ -16,7 +16,7 @@ func main() {
 	build := cfg.Load()
 	app := cli.Command{
 		Commands: []*cli.Command{
-			install.Command(),
+			install.Command(build),
 			version.Command(build),
 			purge.Command(build),
 		},
