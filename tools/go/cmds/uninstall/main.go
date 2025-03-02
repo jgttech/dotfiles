@@ -33,7 +33,7 @@ func Command(build *cfg.Build) *cli.Command {
 			}
 
 			// Resets the ZSHRC config from the backup that was created.
-			zshrc()
+			zshrc(build)
 
 			return nil
 		},
