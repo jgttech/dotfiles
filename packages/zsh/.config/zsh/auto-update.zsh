@@ -2,7 +2,7 @@
 # The purpose of using a function is to things
 # within a scoped context so that it does NOT
 # pollute the global context.
-dotfiles_update() {
+dotfiles-auto-update() {
   # Check if python3 exists and use it, otherwise fallback to python
   local python_cmd=$(command -v python3 || command -v python)
 
@@ -29,4 +29,4 @@ dotfiles_update() {
   cd "${cwd}"
 }
 
-dotfiles_update
+dotfiles-auto-update

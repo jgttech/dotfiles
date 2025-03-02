@@ -3,7 +3,7 @@
 source "${DOTFILES_ZSHRC}/utils.zsh"
 
 # Automatically try to update the tools.
-source "${DOTFILES_ZSHRC}/update.zsh"
+source "${DOTFILES_ZSHRC}/auto-update.zsh"
 
 # Iteraltes through all the directries and
 # automatically sources the "main.zsh" file
