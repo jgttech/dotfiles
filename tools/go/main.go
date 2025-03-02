@@ -7,6 +7,7 @@ import (
 
 	"github.com/urfave/cli/v3"
 	"jgttech/dotfiles/cmds/install"
+	"jgttech/dotfiles/cmds/uninstall"
 	"jgttech/dotfiles/cmds/version"
 	"jgttech/dotfiles/src/cfg"
 )
@@ -16,6 +17,7 @@ func main() {
 	app := cli.Command{
 		Commands: []*cli.Command{
 			install.Command(build),
+			uninstall.Command(),
 			version.Command(build),
 		},
 	}
