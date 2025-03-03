@@ -64,6 +64,20 @@ if __name__ == "__main__":
   if not path.exists(config_dir):
     makedirs(config_dir, exist_ok=True)
 
+  # Checks if the given string contains any of
+  # the ignore_paths within the string. It returns
+  # False if it failed and True, if is passed.
+  def is_valid(string: str) -> bool:
+    ignore_paths = ["sbin", "nvm", "oh-my-zsh"]
+    failed = False
+
+    for ignore in ignore_paths:
+      if ignore in string:
+        failed = True
+        break
+
+    return not failed
+
   # Detect a place to link the CLI to that we have
   # read and write access to. We use this location
   # to link the binary to the system for specialized
@@ -71,7 +85,7 @@ if __name__ == "__main__":
   # but NOT the CLI so they can be re-installed, for example.
   if BIN not in PATH:
     for entry in PATH.split(":"):
-      if "sbin" not in entry and access(entry, R_OK|W_OK):
+      if is_valid(entry) and access(entry, R_OK|W_OK):
         BIN = entry
         break
 
