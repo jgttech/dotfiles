@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 set -euo pipefail
+
 # Check if python3 exists and use it, otherwise fallback to python
 python_cmd=$(command -v python3 || command -v python)
 

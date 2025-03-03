@@ -4,6 +4,9 @@ IMAGE_ID := $(shell podman images | grep $(IMAGE_NAME) | awk '{ print $$3 }' | g
 CONTAINER_ID := $(shell podman ps -a | grep $(IMAGE_NAME) | awk '{ print $$1 }' | grep -v '^$$')
 GITHUB_INSTALL := https://raw.githubusercontent.com/jgttech/dotfiles.v2/refs/heads/main/bin/install.sh
 
+# Determine the Python command (python3 if available, otherwise python)
+PYTHON_CMD := $(shell command -v python3 || command -v python)
+
 .PHONY: build
 build: rmi
 	@echo "Building new image: $(IMAGE_NAME)"
@@ -60,17 +63,25 @@ ssh:
 		podman exec -it $(CONTAINER_ID) /bin/zsh; \
 	fi
 
+.PHONY: mode-dev
+mode-dev:
+	@$(PYTHON_CMD) bin/mode.py --mode=dev
+
+.PHONY: mode-prod
+mode-prod:
+	@$(PYTHON_CMD) bin/mode.py --mode=prod
+
 .PHONY: version
 version: rm build
 	@podman run -it $(IMAGE_NAME) /bin/zsh -c \
 	"cat .dotfiles/dotfiles.json | jq '.version' | tr -d '\"'; exec /bin/zsh"
 
-.PHONY: install
-install: rm build
+.PHONY: dev
+dev: mode-dev rm build
 	@podman run -it $(IMAGE_NAME) /bin/zsh -c \
 	"cat $(INSTALL) | bash -s -- --dev; exec /bin/zsh"
 
 .PHONY: prod
-prod: rm build
+prod: mode-prod rm build
 	@podman run -it $(IMAGE_NAME) /bin/zsh -c \
 	"wget -qO- $(GITHUB_INSTALL) | bash; exec /bin/zsh"
