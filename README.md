@@ -24,21 +24,20 @@ wget -qO- "https://raw.githubusercontent.com/jgttech/dotfiles.v2/refs/heads/main
 
 # Development
 
-Development is managed via a `Makefile` using a series of commands found there. But for ease of use, here is what you need to run certain types of operations.
+Development is managed via a `Makefile`. Nothing needs to be run manually.
 
 > Regular/Normal Development
 
-With this it copies the repo into the container (not with a volume, by choice) and it runs the installation process in isolation so you can see what happens when the install process is run, without dealing with the `wget` portion of the install process (where the install file is pulled from the repo directly).
+This will run the install process but without the `wget` portion. This is because updates to the GitHub raw content of a file takes time to update and would delay development. So for regular development it is entirely ignored and the install is done via copying the source code into the container the same way the code would be cloned from the install script.
 
 ```bash
-make install
+make dev
 ```
 
 > Production Testing
 
-With this approach, the repo is NOT copied into the container, the `wget` approach IS USED and we get to see what a user would see if they attempted to install the dotfiles on their system if it did not have them on it, at all.
+This is the same as `make dev` except it does use the GitHub raw content to load the install script from the `wget` command into `bash` and performs the install the exact same way a normal user would use the dotfiles. This is more a way to test the actuall install process, the exact same way a user would.
 
 ```bash
 make prod
 ```
-
