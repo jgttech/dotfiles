@@ -40,6 +40,10 @@ func Command(build *cfg.Build) *cli.Command {
 				return err
 			}
 
+			if err := os.RemoveAll(tmpRepo); err != nil {
+				return err
+			}
+
 			return nil
 		},
 	}
