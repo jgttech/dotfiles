@@ -6,6 +6,7 @@ import (
 	"os"
 
 	"jgttech/dotfiles/cmds/install"
+	"jgttech/dotfiles/cmds/owner"
 	"jgttech/dotfiles/cmds/purge"
 	"jgttech/dotfiles/cmds/uninstall"
 	"jgttech/dotfiles/cmds/version"
@@ -19,6 +20,7 @@ func main() {
 	app := cli.Command{
 		Commands: []*cli.Command{
 			install.Command(build),
+			owner.Command(build),
 			uninstall.Command(build),
 			purge.Command(build),
 			version.Command(build),
