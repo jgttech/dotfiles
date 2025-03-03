@@ -68,7 +68,7 @@ if __name__ == "__main__":
   # the ignore_paths within the string. It returns
   # False if it failed and True, if is passed.
   def is_valid(string: str) -> bool:
-    ignore_paths = ["sbin", "nvm", "oh-my-zsh"]
+    ignore_paths = ["sbin", "nvm", "oh-my-zsh", "gnu-getopt"]
     failed = False
 
     for ignore in ignore_paths:
