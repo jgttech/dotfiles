@@ -19,7 +19,7 @@ sudo pacman -S git wget jq stow zsh python go odin zig unzip zip getopt fontconf
 
 ```bash
 # By default, this installs into ~/.dotfiles
-wget -qO- "https://raw.githubusercontent.com/jgttech/dotfiles.v2/refs/heads/main/bin/install.sh" | bash
+wget -qO- "https://raw.githubusercontent.com/jgttech/dotfiles/refs/heads/main/bin/install.sh" | bash
 ```
 
 # Development
