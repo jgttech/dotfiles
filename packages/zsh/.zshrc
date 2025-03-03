@@ -13,6 +13,9 @@ if [[ -d "$HOME/.bun/bin" ]]; then
   export PATH="$HOME/.bun/bin:$PATH"
 fi
 
+# Bun completions.
+[ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
+
 # If the "~/.rustup" directory exists, then we can
 # add the Rust directory to our path.
 if [[ -d "$HOME/.rustup" ]]; then

@@ -72,7 +72,7 @@ vim.keymap.set('n', '<leader>sx', '<cmd>close<CR>', { desc = 'Close current spli
 -- vim.keymap.set('n', '<leader>o', '<cmd>Oil<cr>', { desc = 'Oil' })
 vim.keymap.set('n', '<M-o>', '<cmd>Oil<cr>', { desc = 'Oil' })
 
-vim.keymap.set('n', 'd', '"_d', { noremap = true })
-vim.keymap.set('n', 'D', '"_D', { noremap = true })
-vim.keymap.set('n', 'x', '"_x', { noremap = true })
-vim.keymap.set('n', 'X', '"_X', { noremap = true })
+-- vim.keymap.set('n', 'd', '"_d', { noremap = true })
+-- vim.keymap.set('n', 'D', '"_D', { noremap = true })
+-- vim.keymap.set('n', 'x', '"_x', { noremap = true })
+-- vim.keymap.set('n', 'X', '"_X', { noremap = true })
