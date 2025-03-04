@@ -13,7 +13,7 @@ if __name__ == "__main__":
   PATH = environ["PATH"]
   OS = system().lower()
   ZSHRC = path.join(HOME, ".zshrc")
-  BIN = path.join(HOME, "/.local/bin")
+  BIN = path.join(HOME, ".local/bin")
 
   # Unix timestamp.
   timestamp = str(int(time()))
