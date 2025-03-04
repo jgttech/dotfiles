@@ -144,4 +144,5 @@ source $ZSH/oh-my-zsh.sh
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-# export PATH="${PATH}:${HOME}/.local/bin"
+# Add this location to the PATH, if it exists.
+[[ -d "$HOME/.local/bin" ]] && { export PATH="${PATH}:${HOME}/.local/bin" ; };
