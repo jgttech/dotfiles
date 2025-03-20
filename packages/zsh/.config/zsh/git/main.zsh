@@ -1,12 +1,20 @@
 #!/usr/bin/env zsh
 alias li="ls -lah"
 alias add="git add"
-alias cm="git commit -m"
+# alias cm="git commit -m"
 alias commit="git commit"
 alias pull="git pull"
 alias push="git push"
 alias co="git checkout"
 alias status="git status"
+
+function cm {
+  if installed "better-commits"; then
+    better-commits
+  else
+    git commit -m $@
+  fi
+}
 
 function branch {
   git checkout -b $1
