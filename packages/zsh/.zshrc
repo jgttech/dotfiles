@@ -146,3 +146,6 @@ source $ZSH/oh-my-zsh.sh
 
 # Add this location to the PATH, if it exists.
 [[ -d "$HOME/.local/bin" ]] && { export PATH="${PATH}:${HOME}/.local/bin" ; };
+
+# bun completions
+[ -s "${HOME}/.bun/_bun" ] && source "${HOME}/.bun/_bun"

@@ -39,15 +39,15 @@ return {
   },
   -- Feeds the confirm Neovim plugin "formatters_by_ft".
   conform = {
-    javascript = { 'prettier', 'biome' },
-    typescript = { 'prettier', 'biome' },
-    javascriptreact = { 'prettier', 'biome' },
-    typescriptreact = { 'prettier', 'biome' },
-    css = { 'prettier', 'biome' },
-    html = { 'prettier', 'biome' },
-    json = { 'prettier', 'biome' },
-    yaml = { 'prettier', 'biome' },
-    markdown = { 'prettier', 'biome' },
+    javascript = { 'prettierd', 'biome', stop_after_first = true },
+    typescript = { 'prettierd', 'biome', stop_after_first = true },
+    javascriptreact = { 'prettierd', 'biome', stop_after_first = true },
+    typescriptreact = { 'prettierd', 'biome', stop_after_first = true },
+    css = { 'prettierd', 'biome', stop_after_first = true },
+    html = { 'prettierd', 'biome', stop_after_first = true },
+    json = { 'prettierd', 'biome', stop_after_first = true },
+    yaml = { 'prettierd', 'biome', stop_after_first = true },
+    markdown = { 'prettierd', 'biome', stop_after_first = true },
     python = { 'isort', 'black' },
     tailwindcss = { 'rustywind' },
     go = { 'gofmt', 'goimports' },
@@ -69,9 +69,10 @@ return {
     docker_compose_language_service = {},
     prismals = {},
     markdown_oxide = {},
+    prettierd = {},
     eslint_d = {
       settings = {
-        packageManager = 'yarn',
+        packageManager = 'npm',
       },
       on_attach = function(_, bufnr)
         vim.api.nvim_create_autocmd('BufReadPre', {
@@ -123,20 +124,20 @@ return {
               -- Even more generalized pattern
               -- { '[a-zA-Z0-9_]+`([^`]*)`', '[`"]([^`"]*)[`"]' },
 
-              { 'cva\\(([^)]*)\\)',   '["\'`]([^"\'`]*).*?["\'`]' },
-              { 'cx\\(([^)]*)\\)',    "(?:'|\"|`)([^']*)(?:'|\"|`)" },
-              ': `([^`]*)',           -- = `...`
-              '= `([^`]*)',           -- = `...`
-              'tw`([^`]*)',           -- tw`...`
-              '\\$`([^`]*)',          -- $`...`
-              'classes`([^`]*)',      -- classes`...`
-              'tw="([^"]*)',          -- <div tw="..." />
-              "tw='([^']*)",          -- <div tw='...' />
-              'tw={"([^"}]*)',        -- <div tw={"..."} />
-              "tw={'([^'}]*)",        -- <div tw={'...'} />
-              'tw={`([^`}]*)',        -- <div tw={`...`} />
-              'className="([^"]*)',   -- <div className="..." />
-              "className='([^']*)",   -- <div className='...' />
+              { 'cva\\(([^)]*)\\)', '["\'`]([^"\'`]*).*?["\'`]' },
+              { 'cx\\(([^)]*)\\)', "(?:'|\"|`)([^']*)(?:'|\"|`)" },
+              ': `([^`]*)', -- = `...`
+              '= `([^`]*)', -- = `...`
+              'tw`([^`]*)', -- tw`...`
+              '\\$`([^`]*)', -- $`...`
+              'classes`([^`]*)', -- classes`...`
+              'tw="([^"]*)', -- <div tw="..." />
+              "tw='([^']*)", -- <div tw='...' />
+              'tw={"([^"}]*)', -- <div tw={"..."} />
+              "tw={'([^'}]*)", -- <div tw={'...'} />
+              'tw={`([^`}]*)', -- <div tw={`...`} />
+              'className="([^"]*)', -- <div className="..." />
+              "className='([^']*)", -- <div className='...' />
               'className={"([^"}]*)', -- <div className={"..."} />
               "className={'([^'}]*)", -- <div className={'...'} />
               'className={`([^`}]*)', -- <div className={`...`} />

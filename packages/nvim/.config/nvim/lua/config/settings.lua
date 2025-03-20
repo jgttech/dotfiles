@@ -96,3 +96,12 @@ vim.g.have_nerd_font = false
 if vim.fn.has 'termguicolors' == 1 then
   vim.o.termguicolors = true
 end
+
+-- Enable vim-prettier autoformat on save
+-- vim.g['prettier#autoformat'] = true -- Auto format on save
+-- vim.g['prettier#config'] = {
+--   singleQuote = true,
+--   trailingComma = 'all',
+--   semi = true,
+--   printWidth = 80,
+-- }
