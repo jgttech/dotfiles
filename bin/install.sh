@@ -110,6 +110,9 @@ dependencies=( \
   "nvm" \
   "zip" \
   "unzip" \
+  "ripgrep" \
+  "fd" \
+  "fzf" \
 )
 
 # Tracks what is missing to, if something is

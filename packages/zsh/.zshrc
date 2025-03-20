@@ -149,3 +149,9 @@ source $ZSH/oh-my-zsh.sh
 
 # bun completions
 [ -s "${HOME}/.bun/_bun" ] && source "${HOME}/.bun/_bun"
+
+# Terraform autocomplete
+if installed "terraform"; then
+  autoload -U +X bashcompinit && bashcompinit
+  complete -o nospace -C /usr/local/bin/terraform terraform
+fi

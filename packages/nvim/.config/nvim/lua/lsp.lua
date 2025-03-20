@@ -70,6 +70,7 @@ return {
     prismals = {},
     markdown_oxide = {},
     prettierd = {},
+    terraformls = {},
     eslint_d = {
       settings = {
         packageManager = 'npm',
