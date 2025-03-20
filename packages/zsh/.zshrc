@@ -146,3 +146,12 @@ source $ZSH/oh-my-zsh.sh
 
 # Add this location to the PATH, if it exists.
 [[ -d "$HOME/.local/bin" ]] && { export PATH="${PATH}:${HOME}/.local/bin" ; };
+
+# bun completions
+[ -s "/Users/kyoma/.bun/_bun" ] && source "/Users/kyoma/.bun/_bun"
+
+# Terraform autocomplete
+if installed "terraform"; then
+  autoload -U +X bashcompinit && bashcompinit
+  complete -o nospace -C /usr/local/bin/terraform terraform
+fi
