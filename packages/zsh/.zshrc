@@ -145,10 +145,16 @@ source $ZSH/oh-my-zsh.sh
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 # Add this location to the PATH, if it exists.
-[[ -d "$HOME/.local/bin" ]] && { export PATH="${PATH}:${HOME}/.local/bin" ; };
+_LOCAL_BIN="$HOME/.local/bin"
+[[ -d "$_LOCAL_BIN" ]] && export PATH="${PATH}:$_LOCAL_BIN";
 
 # bun completions
-[ -s "${HOME}/.bun/_bun" ] && source "${HOME}/.bun/_bun"
+_BUN_BIN="$HOME/.bun/_bun"
+[ -s "$_BUN_BIN" ] && source "$_BUN_BIN";
+
+# LM Studio support
+_LM_STUDIO_BIN="$HOME/.lmstudio/bin"
+[[ -d "$_LM_STUDIO_BIN" ]] && export PATH="$PATH:$_LM_STUDIO_BIN";
 
 # Terraform autocomplete
 if installed "terraform"; then
