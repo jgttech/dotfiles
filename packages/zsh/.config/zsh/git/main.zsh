@@ -9,11 +9,13 @@ alias co="git checkout"
 alias status="git status"
 
 function cm {
-  if installed "better-commits"; then
-    better-commits
-  else
-    git commit -m $@
-  fi
+  # if installed "better-commits"; then
+  #   better-commits
+  # else
+  #   git commit -m $@
+  # fi
+
+  git commit -m $@
 }
 
 function branch {
@@ -42,10 +44,7 @@ function wip {
 function save {
   if [[ ! -z "$1" ]]; then
     git add .
-
-    cm "$1"
-
-    # git commit -m "$1"
+    git commit -m "$1"
     git push
   else
     echo "Must pass a message as a string."
