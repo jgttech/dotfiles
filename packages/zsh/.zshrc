@@ -155,9 +155,3 @@ _BUN_BIN="$HOME/.bun/_bun"
 # LM Studio support
 _LM_STUDIO_BIN="$HOME/.lmstudio/bin"
 [[ -d "$_LM_STUDIO_BIN" ]] && export PATH="$PATH:$_LM_STUDIO_BIN";
-
-# Terraform autocomplete
-if installed "terraform"; then
-  autoload -U +X bashcompinit && bashcompinit
-  complete -o nospace -C /usr/local/bin/terraform terraform
-fi
