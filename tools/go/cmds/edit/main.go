@@ -4,13 +4,14 @@ import (
 	"context"
 	"fmt"
 	"jgttech/dotfiles/src/assert"
+	"jgttech/dotfiles/src/cfg"
 	"os"
 
 	"github.com/urfave/cli/v3"
 )
 
 // dotfiles edit nvim
-func Command() *cli.Command {
+func Command(build *cfg.Build) *cli.Command {
 	return &cli.Command{
 		Name:  "edit",
 		Usage: "Loads the desired package directory into nvim.",
