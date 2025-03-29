@@ -3,22 +3,37 @@ package edit
 import (
 	"context"
 	"fmt"
-	"jgttech/dotfiles/src/assert"
 	"jgttech/dotfiles/src/cfg"
-	"os"
+	"jgttech/dotfiles/src/exec"
+	"path"
+	"slices"
 
 	"github.com/urfave/cli/v3"
 )
 
-// dotfiles edit nvim
 func Command(build *cfg.Build) *cli.Command {
+	var edit string
+
 	return &cli.Command{
 		Name:  "edit",
 		Usage: "Loads the desired package directory into nvim.",
-		Action: func(ctx context.Context, cmd *cli.Command) error {
-			fmt.Println("BASE:", assert.Must(os.Getwd()))
+		Action: func(ctx context.Context, c *cli.Command) error {
+			name := c.Args().First()
 
-			return nil
+			if name == "" {
+				edit = path.Join(build.Home, build.Tools)
+			}
+
+			if slices.Contains(build.Packages, name) {
+				edit = path.Join(build.Home, "packages", name)
+			}
+
+			if edit == "" {
+				fmt.Println(fmt.Sprintf("Nothing to edit for '%s'", name))
+				return nil
+			}
+
+			return exec.Cmd(fmt.Sprintf("nvim %s", edit), exec.Stdio).Run()
 		},
 	}
 }

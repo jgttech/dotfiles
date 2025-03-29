@@ -5,7 +5,7 @@ import (
 	"log"
 	"os"
 
-	// "jgttech/dotfiles/cmds/edit"
+	"jgttech/dotfiles/cmds/edit"
 	"jgttech/dotfiles/cmds/install"
 	"jgttech/dotfiles/cmds/owner"
 	"jgttech/dotfiles/cmds/purge"
@@ -26,7 +26,7 @@ func main() {
 			uninstall.Command(build),
 			purge.Command(build),
 			version.Command(build),
-			// edit.Command(build),
+			edit.Command(build),
 			rebuild.Command(build),
 		},
 	}
