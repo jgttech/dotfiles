@@ -20,6 +20,7 @@ import (
 func main() {
 	build := cfg.Load()
 	app := cli.Command{
+		Suggest: true,
 		Commands: []*cli.Command{
 			install.Command(build),
 			owner.Command(build),
