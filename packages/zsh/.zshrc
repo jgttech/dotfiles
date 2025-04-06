@@ -7,15 +7,6 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-# If the "~/.bun/bin" directory exists then add it
-# to the PATH.
-if [[ -d "$HOME/.bun/bin" ]]; then
-  export PATH="$HOME/.bun/bin:$PATH"
-fi
-
-# Bun completions.
-[ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
-
 # If the "~/.rustup" directory exists, then we can
 # add the Rust directory to our path.
 if [[ -d "$HOME/.rustup" ]]; then
@@ -141,16 +132,22 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
+# If the "~/.bun/bin" directory exists then add it
+# to the PATH.
+if [[ -d "$HOME/.bun/bin" ]]; then
+  export PATH="$HOME/.bun/bin:$PATH"
+fi
+
+# bun completions
+_BUN_BIN="$HOME/.bun/_bun"
+[ -s "$_BUN_BIN" ] && source "$_BUN_BIN";
+
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 # Add this location to the PATH, if it exists.
 _LOCAL_BIN="$HOME/.local/bin"
 [[ -d "$_LOCAL_BIN" ]] && export PATH="${PATH}:$_LOCAL_BIN";
-
-# bun completions
-_BUN_BIN="$HOME/.bun/_bun"
-[ -s "$_BUN_BIN" ] && source "$_BUN_BIN";
 
 # LM Studio support
 _LM_STUDIO_BIN="$HOME/.lmstudio/bin"
