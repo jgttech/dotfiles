@@ -15,29 +15,32 @@
 
 -- Useful plugin to show you pending keybinds.
 return {
-  'folke/which-key.nvim',
-  event = 'VimEnter', -- Sets the loading event to 'VimEnter'
+  "folke/which-key.nvim",
+  dependencies = {
+    "lukas-reineke/indent-blankline.nvim",
+  },
+  event = "VimEnter", -- Sets the loading event to 'VimEnter'
   config = function() -- This is the function that runs, AFTER loading
-    require('ibl').setup()
-    require('which-key').setup()
+    require("ibl").setup()
+    require("which-key").setup()
   end,
   keys = {
-    { '<leader>c', group = '[C]ode' },
-    { '<leader>c_', hidden = true },
-    { '<leader>d', group = '[D]ocument' },
-    { '<leader>d_', hidden = true },
-    { '<leader>r', group = '[R]ename' },
-    { '<leader>r_', hidden = true },
-    { '<leader>s', group = '[S]earch' },
-    { '<leader>s_', hidden = true },
-    { '<leader>w', group = '[W]orkspace' },
-    { '<leader>w_', hidden = true },
+    { "<leader>c", group = "[C]ode" },
+    { "<leader>c_", hidden = true },
+    { "<leader>d", group = "[D]ocument" },
+    { "<leader>d_", hidden = true },
+    { "<leader>r", group = "[R]ename" },
+    { "<leader>r_", hidden = true },
+    { "<leader>s", group = "[S]earch" },
+    { "<leader>s_", hidden = true },
+    { "<leader>w", group = "[W]orkspace" },
+    { "<leader>w_", hidden = true },
     {
-      '<leader>?',
+      "<leader>?",
       function()
-        require('which-key').show { global = false }
+        require("which-key").show({ global = false })
       end,
-      desc = 'Buffer Local Keymaps (which-key)',
+      desc = "Buffer Local Keymaps (which-key)",
     },
   },
 }

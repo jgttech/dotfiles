@@ -1,13 +1,13 @@
 return {
-  'akinsho/toggleterm.nvim',
-  version = '*',
+  "akinsho/toggleterm.nvim",
+  version = "*",
   config = true,
   opts = {
     open_mapping = [[<M-\>]],
-    direction = 'float',
+    direction = "float",
     float_opts = {
-      title_pos = 'center',
-      border = 'curved',
+      title_pos = "center",
+      border = "curved",
     },
   },
 }

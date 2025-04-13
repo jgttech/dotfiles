@@ -16,7 +16,7 @@ func Command(build *cfg.Build) *cli.Command {
 
 	return &cli.Command{
 		Name:  "edit",
-		Usage: "Loads the desired package directory into nvim.",
+		Usage: "Loads the CLI into nvim.",
 		Action: func(ctx context.Context, c *cli.Command) error {
 			name := c.Args().First()
 
