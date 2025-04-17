@@ -5,8 +5,7 @@
 -- Primarily focused on configuring the debugger for Go, but can
 -- be extended to other languages as well. That's why it's called
 -- kickstart.nvim and not kitchen-sink.nvim ;)
-local keys = require("utils.keys")
-local merge = require("utils.merge")
+local tbl = require("utils.table")
 
 return {
   "mfussenegger/nvim-dap",
@@ -30,7 +29,8 @@ return {
   config = function()
     local dap = require("dap")
     local dapui = require("dapui")
-    local ensure_installed = merge(keys(require("lsp.mason")), { "delve" })
+    local lspconfig = require("lspconfig")
+    local ensure_installed = tbl.merge(tbl.keys(require("lsp.mason")(lspconfig)), { "delve" })
 
     require("mason-nvim-dap").setup({
       -- Makes a best effort to setup the various debuggers with

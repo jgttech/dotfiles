@@ -24,6 +24,7 @@ return {
       end,
     },
     { "nvim-telescope/telescope-ui-select.nvim" },
+    { "luckasRanarison/tailwind-tools.nvim",    name = "tailwind-tools" },
 
     -- Useful for getting pretty icons, but requires special font.
     --  If you already have a Nerd Font, or terminal set up with fallback fonts
@@ -72,6 +73,7 @@ return {
     -- Enable telescope extensions, if they are installed
     pcall(require("telescope").load_extension, "fzf")
     pcall(require("telescope").load_extension, "ui-select")
+    pcall(require("telescope").load_extension, "tailwind")
 
     -- See `:help telescope.builtin`
     local builtin = require("telescope.builtin")
@@ -85,6 +87,7 @@ return {
     vim.keymap.set("n", "<leader>sr", builtin.resume, { desc = "[S]earch [R]esume" })
     vim.keymap.set("n", "<leader>s.", builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
     vim.keymap.set("n", "<leader><leader>", builtin.buffers, { desc = "[ ] Find existing buffers" })
+    vim.keymap.set("n", "<leader>tc", "<cmd>Telescope tailwind classes<CR>", { desc = "Search Tailwind classes" })
 
     -- Slightly advanced example of overriding default behavior and theme
     vim.keymap.set("n", "<leader>/", function()

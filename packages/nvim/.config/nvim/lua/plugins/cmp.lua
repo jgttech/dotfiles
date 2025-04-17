@@ -29,12 +29,18 @@ return {
     --    for various frameworks/libraries/etc. but you will have to
     --    set up the ones that are useful for you.
     -- 'rafamadriz/friendly-snippets',
+
+    "roobert/tailwindcss-colorizer-cmp.nvim",
   },
   config = function()
     -- See `:help cmp`
     local cmp = require("cmp")
     local luasnip = require("luasnip")
     luasnip.config.setup({})
+
+    -- require("tailwindcss-colorizer-cmp").setup({
+    --   color_square_width = 2,
+    -- })
 
     cmp.setup({
       snippet = {
@@ -101,6 +107,9 @@ return {
         { name = "nvim_lsp" },
         { name = "luasnip" },
         { name = "path" },
+      },
+      formatting = {
+        format = require("tailwindcss-colorizer-cmp").formatter,
       },
     })
   end,

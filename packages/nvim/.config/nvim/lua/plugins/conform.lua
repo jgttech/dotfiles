@@ -1,4 +1,4 @@
-local merge = require("utils.merge")
+local tbl = require("utils.table")
 
 return {
   "stevearc/conform.nvim",
@@ -7,7 +7,7 @@ return {
 
     conform.setup({
       notify_on_error = false,
-      formatters_by_ft = merge(require("lsp.conform"), {
+      formatters_by_ft = tbl.merge(require("lsp.conform"), {
         lua = { "stylua" },
       }),
       default_format_opts = {

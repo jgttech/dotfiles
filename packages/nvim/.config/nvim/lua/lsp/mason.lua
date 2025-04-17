@@ -1,85 +1,87 @@
-return {
-  gopls = {},
-  ols = {},
-  zls = {},
-  pyright = {},
-  rust_analyzer = {},
-  ts_ls = {},
-  bashls = {},
-  biome = {},
-  cssls = {},
-  dockerls = {},
-  docker_compose_language_service = {},
-  prismals = {},
-  markdown_oxide = {},
-  prettierd = {},
-  terraformls = {},
-  eslint_d = {
-    settings = {
-      packageManager = "npm",
-    },
-    on_attach = function(_, bufnr)
-      vim.api.nvim_create_autocmd("BufReadPre", {
-        buffer = bufnr,
-        command = "EslintFixAll",
-      })
-    end,
-  },
-  html = {},
-  jsonls = {
-    settings = {
-      json = {
-        schemas = require("schemastore").json.schemas(),
-        validate = { enable = true },
+return function()
+  return {
+    gopls = {},
+    ols = {},
+    zls = {},
+    pyright = {},
+    rust_analyzer = {},
+    ts_ls = {},
+    bashls = {},
+    biome = {},
+    cssls = {},
+    dockerls = {},
+    docker_compose_language_service = {},
+    prismals = {},
+    markdown_oxide = {},
+    prettierd = {},
+    terraformls = {},
+    eslint_d = {
+      settings = {
+        packageManager = "npm",
       },
+      on_attach = function(_, bufnr)
+        vim.api.nvim_create_autocmd("BufReadPre", {
+          buffer = bufnr,
+          command = "EslintFixAll",
+        })
+      end,
     },
-  },
-  yamlls = {
-    settings = {
-      yaml = {
-        schemaStore = {
-          enable = false,
-          url = "",
+    html = {},
+    jsonls = {
+      settings = {
+        json = {
+          schemas = require("schemastore").json.schemas(),
+          validate = { enable = true },
         },
-        schemas = require("schemastore").yaml.schemas(),
       },
     },
-  },
-  tailwindcss = {
-    filetypes = {
-      "typescript",
-      "typescriptreact",
-      "javascript",
-      "javascriptreact",
-      "templ",
-      "css",
-      "html",
-    },
-    settings = {
-      tailwindCSS = {
-        experimental = {
-          classRegex = {
-            { "[a-zA-Z]+`([^`]*)`", "([^`]*)" },
-            { "cva\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]" },
-            { "cx\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)" },
-            ": `([^`]*)", -- : `...`
-            "= `([^`]*)", -- = `...`
-            "tw`([^`]*)", -- tw`...`
-            "\\$`([^`]*)", -- $`...`
-            "classes`([^`]*)", -- classes`...`
-            'tw="([^"]*)', -- <div tw="..." />
-            "tw='([^']*)", -- <div tw='...' />
-            'tw={"([^"}]*)', -- <div tw={"..."} />
-            "tw={'([^'}]*)", -- <div tw={'...'} />
-            "tw={`([^`}]*)", -- <div tw={`...`} />
-            'className="([^"]*)', -- <div className="..." />
-            "className='([^']*)", -- <div className='...' />
-            'className={"([^"}]*)', -- <div className={"..."} />
-            "className={'([^'}]*)", -- <div className={'...'} />
-            "className={`([^`}]*)", -- <div className={`...`} />
+    yamlls = {
+      settings = {
+        yaml = {
+          schemaStore = {
+            enable = false,
+            url = "",
           },
+          schemas = require("schemastore").yaml.schemas(),
         },
       },
     },
-  },
-}
+    -- tailwindcss = {
+    --   filetypes = {
+    --     "typescript",
+    --     "typescriptreact",
+    --     "javascript",
+    --     "javascriptreact",
+    --     "templ",
+    --     "css",
+    --     "html",
+    --   },
+    --   settings = {
+    --     tailwindCSS = {
+    --       experimental = {
+    --         classRegex = {
+    --           { "[a-zA-Z]+`([^`]*)`", "([^`]*)" },
+    --           { "cva\\(([^)]*)\\)",   "[\"'`]([^\"'`]*).*?[\"'`]" },
+    --           { "cx\\(([^)]*)\\)",    "(?:'|\"|`)([^']*)(?:'|\"|`)" },
+    --           ": `([^`]*)",           -- : `...`
+    --           "= `([^`]*)",           -- = `...`
+    --           "tw`([^`]*)",           -- tw`...`
+    --           "\\$`([^`]*)",          -- $`...`
+    --           "classes`([^`]*)",      -- classes`...`
+    --           'tw="([^"]*)',          -- <div tw="..." />
+    --           "tw='([^']*)",          -- <div tw='...' />
+    --           'tw={"([^"}]*)',        -- <div tw={"..."} />
+    --           "tw={'([^'}]*)",        -- <div tw={'...'} />
+    --           "tw={`([^`}]*)",        -- <div tw={`...`} />
+    --           'className="([^"]*)',   -- <div className="..." />
+    --           "className='([^']*)",   -- <div className='...' />
+    --           'className={"([^"}]*)', -- <div className={"..."} />
+    --           "className={'([^'}]*)", -- <div className={'...'} />
+    --           "className={`([^`}]*)", -- <div className={`...`} />
+    --         },
+    --       },
+    --     },
+    --   },
+    -- },
+  }
+end

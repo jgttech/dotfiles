@@ -1,4 +1,4 @@
-local merge = require("utils.merge")
+local tbl = require("utils.table")
 
 return { -- LSP Configuration & Plugins
   "neovim/nvim-lspconfig",
@@ -11,13 +11,15 @@ return { -- LSP Configuration & Plugins
 
     -- Useful status updates for LSP.
     -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
-    { "j-hui/fidget.nvim", opts = {} },
+    { "j-hui/fidget.nvim",       opts = {} },
 
     -- `neodev` configures Lua LSP for your Neovim config, runtime and plugins
     -- used for completion, annotations and signatures of Neovim apis
-    { "folke/neodev.nvim", opts = {} },
+    { "folke/neodev.nvim",       opts = {} },
   },
   config = function()
+    local lspconfig = require("lspconfig")
+
     -- Brief aside: **What is LSP?**
     --
     -- LSP is an initialism you've probably heard, but might not understand what it is.
@@ -157,7 +159,7 @@ return { -- LSP Configuration & Plugins
     --  - capabilities (table): Override fields in capabilities. Can be used to disable certain LSP features.
     --  - settings (table): Override the default settings passed when initializing the server.
     --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
-    local servers = merge(require("lsp.mason"), {
+    local servers = tbl.merge(require("lsp.mason")(lspconfig), {
       lua_ls = {
         -- cmd = {...},
         -- filetypes = { ...},
