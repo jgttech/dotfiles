@@ -1,0 +1,34 @@
+return {
+  -- dir = "~/Projects/tailwind-tools.nvim",
+  -- name = "tailwind-tools",
+  -- opts = {
+  --   server = {
+  --     -- Detects the paths, adds them to tailwind_tools_cache, and
+  --     -- loads them from tailwind_tools_cache, when necessary.
+  --     settings = {
+  --       experimental = {
+  --         classRegex = {
+  --           { "[a-zA-Z]+`([^`]*)`", "([^`]*)" },
+  --           { "cva\\(([^)]*)\\)",   "[\"'`]([^\"'`]*).*?[\"'`]" },
+  --           { "cx\\(([^)]*)\\)",    "(?:'|\"|`)([^']*)(?:'|\"|`)" },
+  --           ": `([^`]*)",           -- : `...`
+  --           "= `([^`]*)",           -- = `...`
+  --           "tw`([^`]*)",           -- tw`...`
+  --           "\\$`([^`]*)",          -- $`...`
+  --           "classes`([^`]*)",      -- classes`...`
+  --           'tw="([^"]*)',          -- <div tw="..." />
+  --           "tw='([^']*)",          -- <div tw='...' />
+  --           'tw={"([^"}]*)',        -- <div tw={"..."} />
+  --           "tw={'([^'}]*)",        -- <div tw={'...'} />
+  --           "tw={`([^`}]*)",        -- <div tw={`...`} />
+  --           'className="([^"]*)',   -- <div className="..." />
+  --           "className='([^']*)",   -- <div className='...' />
+  --           'className={"([^"}]*)', -- <div className={"..."} />
+  --           "className={'([^'}]*)", -- <div className={'...'} />
+  --           "className={`([^`}]*)", -- <div className={`...`} />
+  --         },
+  --       },
+  --     },
+  --   },
+  -- },
+}
