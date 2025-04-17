@@ -14,7 +14,9 @@ cache.sort = function()
     end
   end
 
-  table.sort(keys, function(a, b) return #a > #b end)
+  table.sort(keys, function(a, b)
+    return #a > #b
+  end)
 
   return keys
 end
@@ -43,7 +45,7 @@ local valid_packages = {
   "tailwindcss",
   "@[^/]+/tailwindcss",
   "@[^/]+/tailwind",
-  "@[^/]+/tw"
+  "@[^/]+/tw",
 }
 
 return {
@@ -153,7 +155,7 @@ return {
             "className={`([^`}]*)", -- <div className={`...`} />
           },
         },
-      }
-    }
-  }
+      },
+    },
+  },
 }
