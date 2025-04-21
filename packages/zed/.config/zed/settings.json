@@ -2,5 +2,9 @@
   "theme": "Kanagawa Wave",
   "buffer_font_family": "MesloLGS NF",
   "vim_mode": true,
-  "buffer_font_size": 15
+  "buffer_font_size": 15,
+  "features": {
+    "edit_prediction_provider": "copilot",
+    "auto_complete": true
+  }
 }
