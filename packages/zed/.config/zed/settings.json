@@ -6,5 +6,6 @@
   "features": {
     "edit_prediction_provider": "copilot",
     "auto_complete": true
-  }
+  },
+  "lsp_highlight_debounce": 150
 }
