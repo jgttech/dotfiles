@@ -22,12 +22,12 @@ vim.keymap.set("n", "Q", "<nop>")
 -- Search and replace
 vim.keymap.set("n", "<leader>sa", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
 
-function goto_prev()
-  vim.diagnostic.jump({ count = -1, float = true })
+local function goto_prev()
+    vim.diagnostic.jump({ count = -1, float = true })
 end
 
-function goto_next()
-  vim.diagnostic.jump({ count = 1, float = true })
+local function goto_next()
+    vim.diagnostic.jump({ count = 1, float = true })
 end
 
 -- Diagnostic keymaps
