@@ -1,3 +1,5 @@
+DOTFILES_DIR=".dotfiles"
+DOTFILES_HOME="${HOME}/${DOTFILES_DIR}"
 DOTFILES_ZSHRC="${HOME}/.config/zsh"
 DOTFILES_BUILD_JSON="${HOME}/.dotfiles.build.json"
 DOTFILES_ZSHRC_MAIN="${DOTFILES_ZSHRC}/main.zsh"
