@@ -4,7 +4,7 @@ return {
   "stevearc/conform.nvim",
   config = function()
     local conform = require("conform")
-    local config = require("techvim.lsp.conform")
+    local config = require("techvim.lsp.conform")()
 
     conform.setup({
       notify_on_error = false,

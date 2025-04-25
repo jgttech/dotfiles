@@ -1,4 +1,4 @@
-local jump = require("techvim.diagnostic.jump")
+local jump = require("techvim.utils.jump")
 
 vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
 
