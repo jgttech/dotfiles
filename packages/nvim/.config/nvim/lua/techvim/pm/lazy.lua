@@ -36,8 +36,3 @@ require("lazy").setup({
 
 -- Load the colorscheme here
 vim.cmd.colorscheme("kanagawa")
-
-require("full-border"):setup {
-  -- Available values: ui.Border.PLAIN, ui.Border.ROUNDED
-  type = ui.Border.ROUNDED,
-}
