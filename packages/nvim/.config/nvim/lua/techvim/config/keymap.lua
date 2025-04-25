@@ -1,4 +1,4 @@
-local jump = require("techvim.utils.jump")
+local macros = require("techvim.utils.macros")
 
 vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
 
@@ -25,8 +25,8 @@ vim.keymap.set("n", "Q", "<nop>")
 vim.keymap.set("n", "<leader>sa", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
 
 -- Diagnostic keymaps
-vim.keymap.set("n", "[d", jump.prev, { desc = "Go to previous [D]iagnostic message" })
-vim.keymap.set("n", "]d", jump.next, { desc = "Go to next [D]iagnostic message" })
+vim.keymap.set("n", "[d", macros.goto_prev, { desc = "Go to previous [D]iagnostic message" })
+vim.keymap.set("n", "]d", macros.goto_next, { desc = "Go to next [D]iagnostic message" })
 vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, { desc = "Show diagnostic [E]rror messages" })
 vim.keymap.set("n", "<leader>f", vim.diagnostic.setloclist, { desc = "Open diagnostic Quick[f]ix list" })
 
@@ -63,3 +63,4 @@ vim.keymap.set("n", "<leader>sx", "<cmd>close<CR>", { desc = "Close current spli
 
 -- Oil
 vim.keymap.set("n", "-", "<cmd>Oil<cr>", { desc = "Oil" })
+vim.keymap.set("n", "<leader>-", macros.oil_cwd, { desc = "Oil" })

@@ -42,6 +42,7 @@ return {
 
     -- Optionally exclude specific directories (e.g., .git)
     table.insert(vimgrep_arguments, "--glob")
+    table.insert(vimgrep_arguments, "--follow")
     table.insert(vimgrep_arguments, "!**/.git/*")
     table.insert(vimgrep_arguments, "--glob")
     table.insert(vimgrep_arguments, "!**/node_modules/*")
@@ -49,15 +50,23 @@ return {
     -- [[ Configure Telescope ]]
     -- See `:help telescope` and `:help telescope.setup()`
     require("telescope").setup({
-      defaults = {
-        vimgrep_arguments = vimgrep_arguments,
-      },
-      picker = {
-        find_files = {
-          hidden = true,
-          find_command = { "rg", "--files", "--hidden", "--glob", "!**/.git/*" },
-        }
-      },
+      -- defaults = {
+      --   vimgrep_arguments = vimgrep_arguments,
+      -- },
+      -- picker = {
+      --   find_files = {
+      --     hidden = true,
+      --     find_command = {
+      --       "rg",
+      --       "--files",
+      --       "--follow",
+      --       "--no-ignore",
+      --       "--hidden",
+      --       "--glob", "!**/.git/*",
+      --       "--glob", "!**/node_modules/*",
+      --     },
+      --   },
+      -- },
       extensions = {
         ["ui-select"] = {
           require("telescope.themes").get_dropdown(),
