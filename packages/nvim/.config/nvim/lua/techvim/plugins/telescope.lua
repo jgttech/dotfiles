@@ -43,6 +43,8 @@ return {
     -- Optionally exclude specific directories (e.g., .git)
     table.insert(vimgrep_arguments, "--glob")
     table.insert(vimgrep_arguments, "!**/.git/*")
+    table.insert(vimgrep_arguments, "--glob")
+    table.insert(vimgrep_arguments, "!**/node_modules/*")
 
     -- [[ Configure Telescope ]]
     -- See `:help telescope` and `:help telescope.setup()`
