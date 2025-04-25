@@ -3,9 +3,26 @@
   "buffer_font_family": "MesloLGS NF",
   "vim_mode": true,
   "buffer_font_size": 15,
+  "file_scan_inclusions": ["**/.git"],
   "features": {
-    "edit_prediction_provider": "copilot",
+    "edit_prediction_provider": "none",
     "auto_complete": true
   },
-  "lsp_highlight_debounce": 150
+  "lsp_highlight_debounce": 150,
+  "git": {
+    "git_gutter": "tracked_files",
+    "inline_blame": {
+      "enabled": true
+    }
+  },
+  "indent_guides": {
+    "enabled": true
+  },
+  "languages": {
+    "Python": {
+      "indent_guides": {
+        "enabled": true
+      }
+    }
+  }
 }
