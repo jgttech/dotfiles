@@ -7,6 +7,7 @@ alias pull="git pull"
 alias push="git push"
 alias co="git checkout"
 alias status="git status"
+alias lg="lazygit"
 
 function cm {
   # if installed "better-commits"; then
