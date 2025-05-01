@@ -1,7 +1,6 @@
 package cfg
 
 import (
-	"fmt"
 	"jgttech/dotfiles/src/assert"
 	_os "jgttech/dotfiles/src/os"
 	"os"
