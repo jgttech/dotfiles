@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"os"
 	"path"
-	"runtime"
 	"strings"
 
 	"jgttech/dotfiles/src/cfg"
@@ -14,14 +13,7 @@ import (
 	"github.com/urfave/cli/v3"
 )
 
-// We use this information to do various OS
-// specific install processes.
-var (
-	HOME     = os.Getenv("HOME")
-	OS       = strings.ToLower(runtime.GOOS)
-	isLinux  = strings.Contains(OS, "linux")
-	isDarwin = strings.Contains(OS, "darwin")
-)
+var HOME = os.Getenv("HOME")
 
 func Command(build *cfg.Build) *cli.Command {
 	return &cli.Command{

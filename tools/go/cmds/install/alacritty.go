@@ -20,14 +20,14 @@ func alacritty(build *cfg.Build) error {
 
 	var targetFile string
 
-	if isLinux {
+	if os.IS_LINUX {
 		targetFile = linuxFile
-	} else if isDarwin {
+	} else if os.IS_DARWIN {
 		targetFile = darwinFile
 	}
 
 	if targetFile == "" {
-		return exceptions.FileNotFound(configFile + "." + OS)
+		return exceptions.FileNotFound(configFile + "." + os.UNAME)
 	}
 
 	if _, err := file.Copy(targetFile, configFile); err != nil {
