@@ -35,23 +35,28 @@ func (build *Build) SyncPackages() {
 		}
 	}
 
-	if len(packages) > 0 {
+	if !update {
+		// Check if any of the build config packages are
+		// missing from the detected packages.
 		for pkg := range slices.Values(build.Packages) {
 			if !slices.Contains(packages, pkg) {
-				idx := slices.Index(build.Packages, pkg)
-				build.Packages = slices.Delete(build.Packages, idx, idx+1)
-
-				if !update {
-					update = true
-				}
+				update = true
+				break
 			}
 		}
 
-		fmt.Println("Checking for dotfiles package updates.")
-
-		if update {
-			build.Packages = packages
-			build.Save()
+		// Check if any of the detected packages are missing
+		// from the build config packages.
+		for pkg := range slices.Values(packages) {
+			if !slices.Contains(build.Packages, pkg) {
+				update = true
+				break
+			}
 		}
+	}
+
+	if update {
+		build.Packages = packages
+		build.Save()
 	}
 }
