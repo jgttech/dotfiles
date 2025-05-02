@@ -1,5 +1,7 @@
 package cfg
 
-func (build *Build) Save() {
+import "fmt"
 
+func (build *Build) Save() {
+	fmt.Println("UPDATING PACKAGES")
 }

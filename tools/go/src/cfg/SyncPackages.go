@@ -15,7 +15,6 @@ func (build *Build) SyncPackages() {
 	dir := path.Join(build.Home, "packages")
 	entries := assert.Must(os.ReadDir(dir))
 	packages := []string{}
-	// missing := []string{}
 
 	for pkg := range slices.Values(entries) {
 		name := pkg.Name()
@@ -48,6 +47,8 @@ func (build *Build) SyncPackages() {
 				}
 			}
 		}
+
+		fmt.Println("Checking for dotfiles package updates.")
 
 		if update {
 			build.Packages = packages
