@@ -24,49 +24,32 @@ return {
       end,
     },
     { "nvim-telescope/telescope-ui-select.nvim" },
-    { "luckasRanarison/tailwind-tools.nvim",    name = "tailwind-tools" },
+    { "luckasRanarison/tailwind-tools.nvim", name = "tailwind-tools" },
 
     -- Useful for getting pretty icons, but requires special font.
     --  If you already have a Nerd Font, or terminal set up with fallback fonts
     --  you can enable this
-    -- { 'nvim-tree/nvim-web-devicons' }
+    { "nvim-tree/nvim-web-devicons" },
   },
   config = function()
-    local telescope_config = require("telescope.config")
-
-    -- Clone the default Telescope configuration
-    local vimgrep_arguments = { unpack(telescope_config.values.vimgrep_arguments) }
-
-    -- Include hidden files in searches
-    table.insert(vimgrep_arguments, "--hidden")
-
-    -- Optionally exclude specific directories (e.g., .git)
-    table.insert(vimgrep_arguments, "--glob")
-    table.insert(vimgrep_arguments, "--follow")
-    table.insert(vimgrep_arguments, "!**/.git/*")
-    table.insert(vimgrep_arguments, "--glob")
-    table.insert(vimgrep_arguments, "!**/node_modules/*")
-
     -- [[ Configure Telescope ]]
     -- See `:help telescope` and `:help telescope.setup()`
     require("telescope").setup({
-      -- defaults = {
-      --   vimgrep_arguments = vimgrep_arguments,
-      -- },
-      -- picker = {
-      --   find_files = {
-      --     hidden = true,
-      --     find_command = {
-      --       "rg",
-      --       "--files",
-      --       "--follow",
-      --       "--no-ignore",
-      --       "--hidden",
-      --       "--glob", "!**/.git/*",
-      --       "--glob", "!**/node_modules/*",
-      --     },
-      --   },
-      -- },
+      pickers = {
+        find_files = {
+          -- Include hidden files (dot files) and ignore .git
+          hidden = true, -- Show hidden files (e.g., .config, .gitignore)
+          no_ignore = true, -- Ignore .gitignore and include all files
+          file_ignore_patterns = { "^.git/" }, -- Exclude .git directory
+        },
+        live_grep = {
+          -- Enable searching in hidden files for live_grep
+          additional_args = function()
+            return { "--hidden", "--no-ignore" }
+          end,
+          file_ignore_patterns = { "^.git/" }, -- Exclude .git directory
+        },
+      },
       extensions = {
         ["ui-select"] = {
           require("telescope.themes").get_dropdown(),
@@ -81,12 +64,13 @@ return {
 
     -- See `:help telescope.builtin`
     local builtin = require("telescope.builtin")
+
     vim.keymap.set("n", "<leader>sq", builtin.help_tags, { desc = "[S]earch [H]elp" })
     vim.keymap.set("n", "<leader>sk", builtin.keymaps, { desc = "[S]earch [K]eymaps" })
     vim.keymap.set("n", "<leader>sf", builtin.find_files, { desc = "[S]earch [F]iles" })
     vim.keymap.set("n", "<leader>ss", builtin.builtin, { desc = "[S]earch [S]elect Telescope" })
     vim.keymap.set("n", "<leader>sw", builtin.grep_string, { desc = "[S]earch current [W]ord" })
-    vim.keymap.set("n", "<leader>sg", builtin.live_grep, { desc = "[S]earch by [G]rep" })
+    vim.keymap.set("n", "<leader>sg", "<cmd>Telescope live_grep<cr>", { desc = "[S]earch by [G]rep" })
     vim.keymap.set("n", "<leader>sd", builtin.diagnostics, { desc = "[S]earch [D]iagnostics" })
     vim.keymap.set("n", "<leader>sr", builtin.resume, { desc = "[S]earch [R]esume" })
     vim.keymap.set("n", "<leader>s.", builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
