@@ -33,7 +33,13 @@ func Command(build *cfg.Build) *cli.Command {
 				return nil
 			}
 
-			return exec.Cmd(fmt.Sprintf("nvim %s", edit), exec.Stdio).Run()
+			return exec.
+				Cmd(
+					fmt.Sprintf("nvim %s", edit),
+					exec.Stdio,
+					exec.Dir(edit),
+				).
+				Run()
 		},
 	}
 }
