@@ -14,6 +14,7 @@ return function()
     biome = {},
     cssls = {},
     dockerls = {},
+    postgres_lsp = {},
     docker_compose_language_service = {},
     prismals = {},
     markdown_oxide = {},

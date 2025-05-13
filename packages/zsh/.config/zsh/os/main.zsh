@@ -4,3 +4,7 @@ if [[ $(uname) == "Darwin" ]]; then
 elif command -v pacman &> /dev/null; then
   source "${DOTFILES_ZSHRC}/os/archlinux.zsh"
 fi
+
+if [[ "$(uname -p)" == "arm" ]]; then
+  export PATH="$HOME/.config/nvim/bin:$PATH"
+fi
