@@ -1,5 +1,5 @@
 from cli import cli
-from cmds.version.command import version
+from cmds.version import version
 
 cli.add_command(version)
 
