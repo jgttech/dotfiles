@@ -1,24 +1,14 @@
 #!/usr/bin/env zsh
-# Automatically try to update the tools.
-source "${DOTFILES_ZSHRC}/utils.zsh"
+# Auto-load the .utils, first.
+for util in "${DOTFILES_ZSHRC}/.utils"/*; do
+  if [[ -f "$util" ]] && [[ -r "$util" ]]; then
+    source "$util"
+  fi
+done
 
-# Automatically try to update the tools.
-source "${DOTFILES_ZSHRC}/auto-update.zsh"
-
-# Iteraltes through all the directries and
-# automatically sources the "main.zsh" file
-# within each one.
-#
-# Adding a new utilities directory is as easy
-# as just creating a directory and then adding
-# a "main.zsh" file and it will get sourced
-# automatically when the shell is reloaded.
-for dir in "${DOTFILES_ZSHRC}"/*; do
-  if [[ -d "$dir" ]]; then
-    local main_file="$dir/main.zsh"
-
-    if [[ -f "$main_file" ]]; then
-      source "$main_file"
-    fi
+# Auto-load the .init scripts, next.
+for init in "${DOTFILES_ZSHRC}/.init"/*; do
+  if [[ -f "$init" ]] && [[ -r "$init" ]]; then
+    source "$init"
   fi
 done

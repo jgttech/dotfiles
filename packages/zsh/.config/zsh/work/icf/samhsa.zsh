@@ -1,13 +1,13 @@
 #!/usr/bin/env zsh
-function samhsa-ecr-login() {
+function icf-docker-login() {
   aws ecr get-login-password --profile=new-icf-samhsa | docker login --username AWS --password-stdin 522578921706.dkr.ecr.us-east-1.amazonaws.com
 }
 
-function samhsa-aws-sso() {
+function icf-aws-sso() {
   aws sso login --profile=new-icf-samhsa
 }
 
-function samhsa-login() {
-  samhsa-aws-sso
-  samhsa-ecr-login
+function icf-aws-login() {
+  icf-aws-sso
+  icf-docker-login
 }

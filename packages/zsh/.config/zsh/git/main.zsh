@@ -52,3 +52,6 @@ function save {
   fi
 }
 
+function get_default_branch {
+  GIT_DEFAULT_BRANCH=`git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/remotes/origin/@@'`
+}

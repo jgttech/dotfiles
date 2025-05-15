@@ -14,7 +14,13 @@ return function()
     biome = {},
     cssls = {},
     dockerls = {},
-    postgres_lsp = {},
+    postgres_lsp = {
+      cmd = { "postgrestools", "lsp-proxy" },
+      settings = {
+        filetypes = { "sql", "psql" },
+        root_markers = { "postgrestools.jsonc" },
+      },
+    },
     docker_compose_language_service = {},
     prismals = {},
     markdown_oxide = {},
