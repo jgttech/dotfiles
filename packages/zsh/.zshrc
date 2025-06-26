@@ -154,3 +154,5 @@ _LOCAL_BIN="$HOME/.local/bin"
 # LM Studio support
 _LM_STUDIO_BIN="$HOME/.lmstudio/bin"
 [[ -d "$_LM_STUDIO_BIN" ]] && export PATH="$PATH:$_LM_STUDIO_BIN";
+
+. "$HOME/.local/bin/env"

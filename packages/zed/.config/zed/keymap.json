@@ -4,9 +4,9 @@
     "bindings": {
       "shift-h": "pane::ActivatePreviousItem",
       "shift-l": "pane::ActivateNextItem",
-      "space q": "pane::CloseActiveItem",
-      "space l q": "pane::CloseItemsToTheLeft",
-      "space r q": "pane::CloseItemsToTheRight",
+      "q q": "pane::CloseActiveItem",
+      "alt q l": "pane::CloseItemsToTheLeft",
+      "alt q r": "pane::CloseItemsToTheRight",
       "ctrl-\\": [
         "workspace::OpenTerminal",
         {
@@ -18,10 +18,10 @@
   {
     "context": "Workspace",
     "bindings": {
-      "space h": "workspace::ActivatePaneLeft",
-      "space l": "workspace::ActivatePaneRight",
-      "space k": "workspace::ActivatePaneUp",
-      "space j": "workspace::ActivatePaneDown"
+      "alt-h": "workspace::ActivatePaneLeft",
+      "alt-l": "workspace::ActivatePaneRight",
+      "alt-k": "workspace::ActivatePaneUp",
+      "alt-j": "workspace::ActivatePaneDown"
     }
   }
 ]
