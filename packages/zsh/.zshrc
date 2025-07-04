@@ -155,4 +155,4 @@ _LOCAL_BIN="$HOME/.local/bin"
 _LM_STUDIO_BIN="$HOME/.lmstudio/bin"
 [[ -d "$_LM_STUDIO_BIN" ]] && export PATH="$PATH:$_LM_STUDIO_BIN";
 
-. "$HOME/.local/bin/env"
+[[ -f "$HOME/.local/bin/env" ]] && source "$HOME/.local/bin/env"
