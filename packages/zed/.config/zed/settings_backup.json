@@ -10,7 +10,8 @@
     "default_model": {
       "provider": "copilot_chat",
       "model": "gpt-4.1"
-    }
+    },
+    "version": "2"
   },
   "file_scan_exclusions": [],
   "theme": "Kanagawa Wave",
@@ -21,9 +22,6 @@
   "features": {
     "edit_prediction_provider": "none",
     "auto_complete": true
-  },
-  "terminal": {
-    "font_family": "MesloLGS NF"
   },
   "lsp_highlight_debounce": 150,
   "git": {

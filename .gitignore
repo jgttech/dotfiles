@@ -12,3 +12,4 @@ packages/ghostty/.config/ghostty/config
 packages/zsh/.zsh.build
 __pycache__
 .local/state/
+.mdb

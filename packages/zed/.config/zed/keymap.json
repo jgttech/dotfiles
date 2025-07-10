@@ -5,8 +5,8 @@
       "shift-h": "pane::ActivatePreviousItem",
       "shift-l": "pane::ActivateNextItem",
       "q q": "pane::CloseActiveItem",
-      "alt q l": "pane::CloseItemsToTheLeft",
-      "alt q r": "pane::CloseItemsToTheRight",
+      "alt-q l": "pane::CloseItemsToTheLeft",
+      "alt-q r": "pane::CloseItemsToTheRight",
       "ctrl-\\": [
         "workspace::OpenTerminal",
         {
