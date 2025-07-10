@@ -13,3 +13,4 @@ packages/zsh/.zsh.build
 __pycache__
 .local/state/
 .mdb
+packages/zed/.config/zed/prompts/
