@@ -4,6 +4,7 @@ return function()
   local yaml = schema.yaml.schemas()
 
   return {
+    astro = {},
     gopls = {},
     ols = {},
     zls = {},
@@ -57,6 +58,7 @@ return function()
         },
       },
     },
+    templ = {},
     -- tailwindcss = {
     --   filetypes = {
     --     "typescript",
