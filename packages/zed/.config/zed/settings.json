@@ -9,7 +9,7 @@
     "model_parameters": [],
     "default_model": {
       "provider": "anthropic",
-      "model": "claude-opus-4-latest"
+      "model": "claude-opus-4-1-thinking-latest"
     }
   },
   "file_scan_exclusions": [],
