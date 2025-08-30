@@ -7,12 +7,20 @@
       "q q": "pane::CloseActiveItem",
       "alt-q l": "pane::CloseItemsToTheLeft",
       "alt-q r": "pane::CloseItemsToTheRight",
+      "space s v": "pane::SplitRight",
+      "space s h": "pane::SplitDown",
       "ctrl-\\": [
         "workspace::OpenTerminal",
         {
           "working_directory": "current_project_directory"
         }
       ]
+    }
+  },
+  {
+    "context": "Terminal",
+    "bindings": {
+      "ctrl-\\": "pane::CloseActiveItem"
     }
   },
   {
