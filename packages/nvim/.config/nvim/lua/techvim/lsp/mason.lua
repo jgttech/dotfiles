@@ -25,7 +25,6 @@ return function()
     docker_compose_language_service = {},
     prismals = {},
     markdown_oxide = {},
-    prettierd = {},
     terraformls = {},
     eslint_d = {
       settings = {
