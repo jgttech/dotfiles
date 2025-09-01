@@ -1,3 +1,6 @@
+autoload -Uz compinit
+compinit
+
 DOTFILES_DIR=".dotfiles"
 DOTFILES_HOME="${HOME}/${DOTFILES_DIR}"
 DOTFILES_ZSHRC="${HOME}/.config/zsh"
