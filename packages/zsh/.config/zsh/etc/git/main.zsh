@@ -9,6 +9,7 @@ alias co="git checkout"
 alias status="git status"
 alias lg="lazygit"
 alias gs="git-switcher"
+alias cl="clone"
 
 function cm {
   # if installed "better-commits"; then
@@ -55,4 +56,16 @@ function save {
 
 function get_default_branch {
   GIT_DEFAULT_BRANCH=`git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/remotes/origin/@@'`
+}
+
+function clone {
+  local ssh_host="github.com"
+
+  if [[ $1 == *"ICF-Corp"* ]]; then
+    ssh_host="icf-corp"
+  elif [[ $1 == *"ICF-Next-Government"* ]]; then
+    ssh_host="icf-nextgov"
+  fi
+
+  git clone git@$ssh_host:$1
 }
