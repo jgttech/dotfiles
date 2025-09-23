@@ -22,7 +22,6 @@ return {
     local config = require("techvim.lsp.mason")()
     local dap = require("dap")
     local dapui = require("dapui")
-    local lspconfig = require("lspconfig")
     local ensure_installed = tbl.merge(tbl.keys(config), { "delve" })
 
     require("mason-nvim-dap").setup({

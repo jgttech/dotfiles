@@ -1,5 +1,16 @@
 return { -- LSP Configuration & Plugins
   "neovim/nvim-lspconfig",
+  init = function()
+    -- Suppress the deprecation warning from nvim-lspconfig until v3.0.0
+    -- This warning comes from the plugin itself, not our usage
+    local original_notify = vim.notify
+    vim.notify = function(msg, level, opts)
+      if type(msg) == "string" and msg:match("require%('lspconfig'%).*deprecated") then
+        return -- Suppress this specific deprecation warning
+      end
+      return original_notify(msg, level, opts)
+    end
+  end,
   dependencies = {
     -- Automatically install LSPs and related tools to stdpath for Neovim
     { "williamboman/mason.nvim", config = true }, -- NOTE: Must be loaded before dependants
@@ -205,7 +216,7 @@ return { -- LSP Configuration & Plugins
           -- by the server configuration above. Useful when disabling
           -- certain features of an LSP (for example, turning off formatting for tsserver)
           server.capabilities = vim.tbl_deep_extend("force", {}, capabilities, server.capabilities or {})
-          require("lspconfig")[server_name].setup(server)
+          lspconfig[server_name].setup(server)
         end,
       },
     })
