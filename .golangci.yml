@@ -1,0 +1,13 @@
+version: "2"
+linters:
+  enable:
+    - errcheck
+    - govet
+  exclusions:
+    rules:
+      - text: "ST1006:"
+        linters:
+          - staticcheck
+      - text: Error return value of `file.Close` is not checked
+        linters:
+          - errcheck
