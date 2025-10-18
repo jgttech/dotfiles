@@ -1,21 +1,24 @@
 FROM archlinux/archlinux:latest
 
 RUN \
-  pacman -Syu --noconfirm && \
-  pacman -S --noconfirm \
-  base-devel \
-  git \
-  github-cli \
-  curl \
-  wget \
-  stow \
-  vim \
-  go \
-  bash \
-  sudo \
-  man-db \
-  man-pages && \
   pacman -Syu --noconfirm
+
+# RUN \
+#   pacman -Syu --noconfirm && \
+#   pacman -S --noconfirm \
+#   base-devel \
+#   git \
+#   github-cli \
+#   curl \
+#   wget \
+#   stow \
+#   vim \
+#   go \
+#   bash \
+#   sudo \
+#   man-db \
+#   man-pages && \
+#   pacman -Syu --noconfirm
 
 RUN \
   useradd -m -G wheel -s /bin/bash user && \
