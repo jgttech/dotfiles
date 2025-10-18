@@ -2,7 +2,7 @@ install:
   #!/usr/bin/env bash
   aqua install
   lefthook install
-  just start
+  just runtime
 
   for file in "$(pwd)/bin/dev"/*; do
     bin="$(basename $file)"

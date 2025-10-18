@@ -28,8 +28,11 @@ func Command() *cli.Command {
 			}
 
 			for node := range slices.Values(nodes) {
-				x := strings.Split(node.Source(), env.HOME_TOOLS)
-				fmt.Println(x)
+				relativePath := strings.Split(node.Source(), env.HOME_TOOLS)[1][1:]
+				ctx := strings.Split(relativePath, env.SEP)
+				namespace, tool := ctx[0], ctx[1]
+
+				fmt.Println("->", namespace, tool)
 			}
 
 			return nil
