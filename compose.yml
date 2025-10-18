@@ -10,4 +10,4 @@ services:
     command: bash -c "sleep infinity"
     working_dir: /home/user
     volumes:
-      - .:/tmp/dotfiles
+      - .:$PROJECT_DOCKER_HOME
