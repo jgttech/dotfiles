@@ -484,3 +484,4 @@ rebar.lock
 # Personal project
 .build/
 .project/
+.claude/
