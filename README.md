@@ -6,6 +6,8 @@ Due to the hyper-personal nature of this kind of thing, I have decided to build 
 
 ## Prerequisites
 
+These manage everything needed to do development, including automatic loading and unloading of the development environment.
+
 - [direnv](https://direnv.net)
 - [aqua](https://aquaproj.github.io)
 - [just](https://just.systems/man/en)
