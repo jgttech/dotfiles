@@ -1,6 +1,7 @@
 set export
 set quiet
 
+import 'bin/just/build.just'
 import 'bin/just/clean.just'
 import 'bin/just/dotfiles.just'
 import 'bin/just/exec.just'

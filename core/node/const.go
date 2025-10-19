@@ -1,9 +1,10 @@
 package node
 
-type NodeType int
+type Type int
+type List []*Node
 
 const (
-	UnknownNode NodeType = iota
+	UnknownNode Type = iota
 	FileNode
 	DirNode
 )

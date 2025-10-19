@@ -7,8 +7,8 @@ import (
 	"slices"
 )
 
-func (node *Node) List() ([]*Node, error) {
-	var nodes []*Node
+func (node *Node) List() (List, error) {
+	var nodes List
 
 	if !node.exists {
 		return nodes, Error(

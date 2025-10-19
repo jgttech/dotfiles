@@ -3,7 +3,9 @@ package main
 import (
 	"context"
 	"dotfiles/cli/cmds/install"
-	"dotfiles/cli/cmds/version"
+	"dotfiles/cli/cmds/save"
+	"dotfiles/cli/cmds/uninstall"
+	"dotfiles/cli/core/sys"
 	"log"
 	"os"
 
@@ -14,9 +16,22 @@ func main() {
 	app := &cli.Command{
 		Name:  "dotfiles",
 		Usage: "Dotfiles CLI manager for my personal dotfiles",
+		Before: func(ctx context.Context, c *cli.Command) (context.Context, error) {
+			return ctx, nil
+		},
 		Commands: []*cli.Command{
-			version.Command(),
-			install.Command(),
+			sys.NewCommand(
+				install.Command(),
+				sys.WithDependencies("stow"),
+			),
+			sys.NewCommand(
+				uninstall.Command(),
+				sys.WithDependencies("stow"),
+			),
+			sys.NewCommand(
+				save.Command(),
+				sys.WithDependencies("claude"),
+			),
 		},
 	}
 

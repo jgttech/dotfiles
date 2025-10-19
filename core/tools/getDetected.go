@@ -1,7 +1,6 @@
 package tools
 
 import (
-	"dotfiles/cli/core/assert"
 	"dotfiles/cli/core/env"
 	"dotfiles/cli/core/node"
 	"path/filepath"
@@ -9,8 +8,11 @@ import (
 	"slices"
 )
 
-func Detect() ([]*node.Node, error) {
-	var tools []*node.Node
+// Returns a node.List (type for []*node.Node) containing
+// an instance that represents the location of each of the
+// dotfiles tools in the system.
+func getDetected() (node.List, error) {
+	var tools node.List
 
 	sources := []string{
 		filepath.Join(env.HOME_TOOLS, "shared"),
@@ -18,7 +20,11 @@ func Detect() ([]*node.Node, error) {
 	}
 
 	for source := range slices.Values(sources) {
-		element := assert.Must(node.New(source))
+		element, err := node.New(source)
+
+		if err != nil {
+			return tools, err
+		}
 
 		if element.Exists() {
 			subelements, err := element.List()

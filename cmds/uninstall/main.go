@@ -1,4 +1,4 @@
-package install
+package uninstall
 
 import (
 	"context"
@@ -10,11 +10,11 @@ import (
 
 func Command() *cli.Command {
 	return &cli.Command{
-		Name:    "install",
-		Aliases: []string{"i"},
-		Usage:   "Detect system and install appropriate dotfiles packages",
+		Name:    "uninstall",
+		Aliases: []string{"u"},
+		Usage:   "Detect system and remove appropriate dotfiles packages",
 		Action: func(ctx context.Context, c *cli.Command) error {
-			err := tools.Link()
+			err := tools.Unlink()
 
 			if err == nil {
 				fmt.Println("Done")

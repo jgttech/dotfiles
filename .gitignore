@@ -2,7 +2,6 @@
 # ======================
 
 # macOS
-.project/
 .DS_Store
 .AppleDouble
 .LSOverride
@@ -481,3 +480,7 @@ cargo.lock
 pubspec.lock
 mix.lock
 rebar.lock
+
+# Personal project
+.build/
+.project/
