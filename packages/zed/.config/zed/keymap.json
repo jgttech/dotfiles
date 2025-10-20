@@ -26,10 +26,10 @@
   {
     "context": "Workspace",
     "bindings": {
-      "alt-h": "workspace::ActivatePaneLeft",
-      "alt-l": "workspace::ActivatePaneRight",
-      "alt-k": "workspace::ActivatePaneUp",
-      "alt-j": "workspace::ActivatePaneDown"
+      "space h": "workspace::ActivatePaneLeft",
+      "space l": "workspace::ActivatePaneRight",
+      "space k": "workspace::ActivatePaneUp",
+      "space j": "workspace::ActivatePaneDown"
     }
   }
 ]
