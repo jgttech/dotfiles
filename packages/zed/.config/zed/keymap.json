@@ -4,7 +4,7 @@
     "bindings": {
       "shift-h": "pane::ActivatePreviousItem",
       "shift-l": "pane::ActivateNextItem",
-      "q q": "pane::CloseActiveItem",
+      "space q": "pane::CloseActiveItem",
       "alt-q l": "pane::CloseItemsToTheLeft",
       "alt-q r": "pane::CloseItemsToTheRight",
       "space s v": "pane::SplitRight",

@@ -1,52 +1,41 @@
 {
-  "hide_mouse": "on_typing",
-  "current_line_highlight": "all",
+  "agent_buffer_font_size": 12,
+  "agent": {
+    "dock": "bottom"
+  },
+  "edit_predictions": {
+    "mode": "eager"
+  },
+  "vim_mode": true,
   "telemetry": {
     "diagnostics": false,
     "metrics": false
   },
-  "relative_line_numbers": true,
-  "formatter": "language_server",
-  "format_on_save": "language_server",
-  "agent": {
-    "always_allow_tool_actions": true,
-    "default_profile": "write",
-    "model_parameters": [],
-    "default_model": {
-      "provider": "copilot_chat",
-      "model": "gpt-4.1"
-    },
-    "inline_assistant_model": {
-      "provider": "anthropic",
-      "model": "claude-opus-4-1-thinking-latest"
-    }
+  "theme": "Kanagawa Wave",
+  "hide_mouse": "on_typing",
+  "minimap": {
+    "current_line_highlight": "all"
   },
+  "relative_line_numbers": true,
+  "remove_trailing_whitespace_on_save": true,
+  "format_on_save": "on",
+  "file_scan_exclusions": [],
   "toolbar": {
     "breadcrumbs": true
   },
-  "file_scan_exclusions": [],
-  "theme": "Kanagawa Wave",
-  "buffer_font_family": "MesloLGS NF",
-  "vim_mode": true,
   "buffer_font_size": 15,
-  "file_scan_inclusions": [
-    "**/.git"
-  ],
+  "buffer_font_family": "MesloLGS NF",
   "features": {
-    "edit_prediction_provider": "zed"
+    "edit_prediction_provider": "copilot"
   },
-  "terminal": {
-    "font_family": "MesloLGS NF"
-  },
-  "lsp_highlight_debounce": 150,
   "git": {
     "git_gutter": "tracked_files",
     "inline_blame": {
       "enabled": true
     }
   },
-  "indent_guides": {
-    "enabled": true
+  "terminal": {
+    "font_family": "MesloLGS NF"
   },
   "languages": {
     "Python": {
