@@ -3,7 +3,6 @@ package main
 import (
 	"context"
 	"dotfiles/cli/cmds/install"
-	"dotfiles/cli/cmds/save"
 	"dotfiles/cli/cmds/uninstall"
 	"dotfiles/cli/core/sys"
 	"log"
@@ -40,10 +39,6 @@ func main() {
 			sys.NewCommand(
 				uninstall.Command(),
 				sys.WithDependencies("stow"),
-			),
-			sys.NewCommand(
-				save.Command(),
-				sys.WithDependencies("claude"),
 			),
 		},
 	}
