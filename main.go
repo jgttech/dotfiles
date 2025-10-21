@@ -24,7 +24,7 @@ func main() {
 				install.Command(),
 				sys.WithDependencies(
 					"stow",
-					"bun",
+					// "bun",
 					// "getopt",
 					// "base64",
 					// "lua",

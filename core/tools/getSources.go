@@ -3,6 +3,7 @@ package tools
 import (
 	"dotfiles/cli/core/env"
 	"dotfiles/cli/core/stow"
+	"dotfiles/cli/core/tui/spinner"
 	"path/filepath"
 	"slices"
 	"strings"
@@ -41,10 +42,13 @@ func getSources(options ...stow.Option) (stow.List, error) {
 		return list, err
 	}
 
+	spinner.Start("Detecting sources...")
+
 	for node := range slices.Values(nodes) {
 		rel, err := filepath.Rel(env.HOME_TOOLS, node.Source())
 
 		if err != nil {
+			spinner.StopWithFailure("Failed detecting sources")
 			return list, err
 		}
 
@@ -66,5 +70,6 @@ func getSources(options ...stow.Option) (stow.List, error) {
 	list = append(list, linux)
 	list = append(list, macos)
 
+	spinner.StopWithSuccess("Detected sources")
 	return list, err
 }

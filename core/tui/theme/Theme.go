@@ -7,7 +7,7 @@ const (
 	CHECK_ICON = "✓"
 
 	// The X for failure messages.
-	CLOSE_ICON = "𐄂"
+	CLOSE_ICON = "✕"
 
 	// The diamond for info messages.
 	DIAMOND_ICON = "❖"

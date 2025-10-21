@@ -2,6 +2,7 @@ package tools
 
 import (
 	"dotfiles/cli/core/stow"
+	"dotfiles/cli/core/tui/spinner"
 	"os"
 	"slices"
 )
@@ -20,11 +21,15 @@ func Link() error {
 		return err
 	}
 
+	spinner.Start("Linking tools...")
+
 	for source := range slices.Values(sources) {
 		if err = source.Run(); err != nil && !stow.IsMissingPackages(err) {
+			spinner.StopWithFailure("Failed to while creating links")
 			return err
 		}
 	}
 
+	spinner.StopWithSuccess("Links created")
 	return nil
 }

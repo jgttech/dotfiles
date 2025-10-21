@@ -1,11 +1,13 @@
 package spinner
 
-func StopWithSuccess(msg string) {
+import "fmt"
+
+func StopWithSuccess(msg string, a ...any) {
 	if !isActive() {
 		return
 	}
 
 	SetSuccess()
-	SetMsg(msg)
+	SetMsg(fmt.Sprintf(msg, a...))
 	cleanup()
 }

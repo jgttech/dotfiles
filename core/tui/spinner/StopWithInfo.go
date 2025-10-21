@@ -2,12 +2,12 @@ package spinner
 
 import "fmt"
 
-func StopWithFailure(msg string, a ...any) {
+func StopWithInfo(msg string, a ...any) {
 	if !isActive() {
 		return
 	}
 
-	SetFailure()
+	SetInfo()
 	SetMsg(fmt.Sprintf(msg, a...))
 	cleanup()
 }

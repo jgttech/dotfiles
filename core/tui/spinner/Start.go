@@ -9,7 +9,7 @@ import (
 	"dotfiles/cli/core/tui/spinner/tui"
 )
 
-func Start(msg string) {
+func Start(msg string, a ...any) {
 	var attempts uint8
 
 	for state != nil {
@@ -22,7 +22,7 @@ func Start(msg string) {
 		}
 	}
 
-	model := tui.New(msg)
+	model := tui.New(fmt.Sprintf(msg, a...))
 	program := tea.NewProgram(model)
 
 	state = &_state{}

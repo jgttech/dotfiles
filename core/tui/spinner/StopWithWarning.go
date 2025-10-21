@@ -1,11 +1,13 @@
 package spinner
 
-func StopWithWarning(msg string) {
+import "fmt"
+
+func StopWithWarning(msg string, a ...any) {
 	if !isActive() {
 		return
 	}
 
 	SetWarning()
-	SetMsg(msg)
+	SetMsg(fmt.Sprintf(msg, a...))
 	cleanup()
 }
