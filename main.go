@@ -22,7 +22,20 @@ func main() {
 		Commands: []*cli.Command{
 			sys.NewCommand(
 				install.Command(),
-				sys.WithDependencies("stow"),
+				sys.WithDependencies(
+					"stow",
+					"bun",
+					// "getopt",
+					// "base64",
+					// "lua",
+					// "git",
+					// "jq",
+					// "zip",
+					// "unzip",
+					// "ripgrep",
+					// "fd",
+					// "fzf",
+				),
 			),
 			sys.NewCommand(
 				uninstall.Command(),

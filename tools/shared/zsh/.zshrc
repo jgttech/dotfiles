@@ -1,3 +1,7 @@
+if command -v direnv >/dev/null 2>&1; then
+  eval "$(direnv hook zsh)"  # or zsh, fish, etc.
+fi
+
 DOTFILES_DIR=".dotfiles"
 DOTFILES_HOME="${HOME}/${DOTFILES_DIR}"
 DOTFILES_ZSHRC="${HOME}/.config/zsh"
@@ -156,7 +160,3 @@ _LM_STUDIO_BIN="$HOME/.lmstudio/bin"
 [[ -d "$_LM_STUDIO_BIN" ]] && export PATH="$PATH:$_LM_STUDIO_BIN";
 
 [[ -f "$HOME/.local/bin/env" ]] && source "$HOME/.local/bin/env"
-
-if command -v direnv >/dev/null 2>&1; then
-  eval "$(direnv hook zsh)"  # or zsh, fish, etc.
-fi
