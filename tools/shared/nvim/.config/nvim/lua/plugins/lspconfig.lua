@@ -1,14 +1,45 @@
 return { -- LSP Configuration & Plugins
   "neovim/nvim-lspconfig",
   init = function()
-    -- Suppress the deprecation warning from nvim-lspconfig until v3.0.0
-    -- This warning comes from the plugin itself, not our usage
+    -- =============================================================================
+    -- DEPRECATION WARNING SUPPRESSIONS
+    -- =============================================================================
+    -- These suppressions hide warnings from upstream plugins that haven't been
+    -- updated for Neovim 0.11 yet. Remove these when the plugins are fixed.
+    --
+    -- TODO: Periodically check if these can be removed by running:
+    --   :Lazy update
+    --   :checkhealth vim.deprecated
+    -- =============================================================================
+
+    -- Suppress vim.notify warnings (for non-snacks notifications)
     local original_notify = vim.notify
     vim.notify = function(msg, level, opts)
-      if type(msg) == "string" and msg:match("require%('lspconfig'%).*deprecated") then
-        return -- Suppress this specific deprecation warning
+      if type(msg) == "string" then
+        -- TODO: Remove when lspconfig v3.0.0 is released
+        -- REASON: lspconfig warns about upcoming v3 API changes
+        -- CHECK: https://github.com/neovim/nvim-lspconfig/releases
+        if msg:match("require%('lspconfig'%).*deprecated") then
+          return
+        end
       end
       return original_notify(msg, level, opts)
+    end
+
+    -- Suppress vim.deprecate() warnings for jump_to_location
+    -- This catches deprecation at the source before it reaches notifications
+    local original_deprecate = vim.deprecate
+    vim.deprecate = function(name, alternative, version, plugin, backtrace)
+      if name and type(name) == "string" then
+        -- TODO: Remove when Telescope fixes jump_to_location usage
+        -- REASON: Telescope uses vim.lsp.util.jump_to_location (deprecated in 0.11)
+        -- ISSUE: https://github.com/nvim-telescope/telescope.nvim/issues/3439
+        -- CHECK: Try pressing 'gd' - if no warning appears, this can be removed
+        if name:match("jump_to_location") then
+          return
+        end
+      end
+      return original_deprecate(name, alternative, version, plugin, backtrace)
     end
   end,
   dependencies = {

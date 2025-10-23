@@ -35,10 +35,14 @@ local bubbles_theme = {
 
 return {
   "nvim-lualine/lualine.nvim",
-  dependencies = { "nvim-tree/nvim-web-devicons" },
+  dependencies = {
+    "nvim-tree/nvim-web-devicons",
+    "SmiteshP/nvim-navic",
+  },
   config = function()
     local lualine = require("lualine")
     local lazy_status = require("lazy.status")
+    local navic = require("nvim-navic")
 
     lualine.setup({
       options = {
@@ -54,7 +58,18 @@ return {
           { "mode", separator = { left = "", right = "" }, right_padding = 2 },
         },
         lualine_b = { "filename", "branch" },
-        lualine_c = { { "fileformat", color = { fg = colors.white } } },
+        lualine_c = {
+          { "fileformat", color = { fg = colors.white } },
+          {
+            function()
+              return navic.get_location()
+            end,
+            cond = function()
+              return navic.is_available()
+            end,
+            color = { fg = colors.light_purple },
+          },
+        },
         lualine_x = {
           {
             lazy_status.updates,
