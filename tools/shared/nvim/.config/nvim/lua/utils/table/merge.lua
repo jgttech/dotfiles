@@ -1,6 +1,4 @@
-local M = {}
-
-M.merge = function(t1, t2)
+local function merge(t1, t2)
   local t = {}
 
   -- Copy key-value pairs
@@ -21,14 +19,4 @@ M.merge = function(t1, t2)
   return t
 end
 
-M.keys = function(tbl)
-  local keys = {}
-
-  for k, _ in pairs(tbl or {}) do
-    table.insert(keys, k)
-  end
-
-  return keys
-end
-
-return M
+return merge

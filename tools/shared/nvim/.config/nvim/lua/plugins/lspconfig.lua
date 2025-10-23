@@ -27,7 +27,7 @@ return { -- LSP Configuration & Plugins
     { "folke/neodev.nvim",       opts = {} },
   },
   config = function()
-    local tbl = require("utils.table")
+    local tbl = require("utils.table.all")
     local config = require("lsp.mason")
     local lspconfig = require("lspconfig")
 

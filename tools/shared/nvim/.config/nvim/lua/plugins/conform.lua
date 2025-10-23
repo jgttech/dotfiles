@@ -1,4 +1,4 @@
-local tbl = require("utils.table")
+local tbl = require("utils.table.all")
 local config = require("lsp.conform")
 
 return {
