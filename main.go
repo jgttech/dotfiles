@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"dotfiles/cli/cmds/install"
+	"dotfiles/cli/cmds/save"
 	"dotfiles/cli/cmds/tool"
 	"dotfiles/cli/cmds/uninstall"
 	"dotfiles/cli/core/sys"
@@ -42,6 +43,10 @@ func main() {
 			sys.NewCommand(
 				tool.Command(),
 				sys.WithDependencies("nvim"),
+			),
+			sys.NewCommand(
+				save.Command(),
+				sys.WithDependencies("claude"),
 			),
 		},
 	}

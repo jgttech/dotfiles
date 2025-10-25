@@ -10,6 +10,7 @@ import 'bin/just/install.just'
 import 'bin/just/reload.just'
 import 'bin/just/run.just'
 import 'bin/just/runtime.just'
+import 'bin/just/save.just'
 
 default: install
 reinstall:
