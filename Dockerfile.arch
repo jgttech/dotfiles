@@ -5,11 +5,19 @@ RUN \
   pacman -S --noconfirm \
   base-devel \
   git \
+  lua \
   vim \
+  nvim \
   curl \
   wget \
   stow \
   go \
+  jq \
+  fd \
+  zip \
+  fzf \
+  ripgrep \
+  unzip \
   bash \
   sudo \
   man-db \

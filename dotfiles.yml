@@ -1,0 +1,21 @@
+# [About]
+# Configures where the CLI handles opening a given
+# tool. The key is the argument to the CLI command.
+# The value is where, relative to the "./tools",
+# the the IDE should be opened at.
+#
+# [Example]
+# dotfiles edit linux/fonts
+tools:
+  ghostty: shared/ghostty/.config/ghostty
+  git: shared/git
+  nvim: shared/nvim/.config/nvim
+  opencode: shared/opencode/.config/opencode
+  p10k: shared/p10k
+  tmux: shared/tmux
+  zed: shared/zed/.config/zed
+  zsh: shared/zsh/.config/zsh
+  linux/alacritty: linux/alacritty/.config/alacritty
+  linux/fonts: linux/.local/share/fonts
+  macos/alacritty: macos/alacritty/.config/alacritty
+  macos/fonts: macos/fonts/Library/Fonts

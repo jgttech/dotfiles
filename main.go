@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"dotfiles/cli/cmds/install"
+	"dotfiles/cli/cmds/tool"
 	"dotfiles/cli/cmds/uninstall"
 	"dotfiles/cli/core/sys"
 	"log"
@@ -23,22 +24,24 @@ func main() {
 				install.Command(),
 				sys.WithDependencies(
 					"stow",
-					// "bun",
-					// "getopt",
-					// "base64",
-					// "lua",
-					// "git",
-					// "jq",
-					// "zip",
-					// "unzip",
-					// "ripgrep",
-					// "fd",
-					// "fzf",
+					"base64",
+					"lua",
+					"git",
+					"jq",
+					"zip",
+					"unzip",
+					"rg",
+					"fd",
+					"fzf",
 				),
 			),
 			sys.NewCommand(
 				uninstall.Command(),
 				sys.WithDependencies("stow"),
+			),
+			sys.NewCommand(
+				tool.Command(),
+				sys.WithDependencies("nvim"),
 			),
 		},
 	}

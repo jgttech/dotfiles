@@ -5,6 +5,9 @@ linters:
     - govet
   exclusions:
     rules:
+      - text: "ST1005:"
+        linters:
+          - staticcheck
       - text: "ST1006:"
         linters:
           - staticcheck
