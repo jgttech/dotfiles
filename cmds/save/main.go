@@ -3,6 +3,7 @@ package save
 import (
 	"context"
 	"dotfiles/cli/core/exec"
+	"dotfiles/cli/core/tui/notice"
 	"dotfiles/cli/core/tui/spinner"
 	"fmt"
 	"strings"
@@ -85,7 +86,7 @@ func Command() *cli.Command {
 				return fmt.Errorf("Failed to create commit: %w", err)
 			}
 
-			fmt.Println("✓ Commit created successfully")
+			notice.Success("Saved")
 			return nil
 		},
 	}
