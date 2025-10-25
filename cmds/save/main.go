@@ -3,6 +3,7 @@ package save
 import (
 	"context"
 	"dotfiles/cli/core/exec"
+	"dotfiles/cli/core/tui/spinner"
 	"fmt"
 	"strings"
 
@@ -28,9 +29,11 @@ func Command() *cli.Command {
 		Name:  "save",
 		Usage: "Utilizes AI to generate a commit",
 		Action: func(ctx context.Context, c *cli.Command) error {
-			cmd := exec.Cmd("git add -A", exec.Stdio)
+			spinner.Start("Creating commit...")
+			cmd := exec.Cmd("git add -A")
 
 			if err := cmd.Run(); err != nil {
+				spinner.StopWithFailure("Failed to add changes")
 				return err
 			}
 
@@ -38,11 +41,12 @@ func Command() *cli.Command {
 			diff, err := cmd.Output()
 
 			if err != nil {
+				spinner.StopWithFailure("Failed to diff changes")
 				return err
 			}
 
 			if len(strings.TrimSpace(string(diff))) == 0 {
-				fmt.Println("No changes to commit")
+				spinner.StopWithInfo("No changes to commit")
 				return nil
 			}
 
@@ -53,14 +57,19 @@ func Command() *cli.Command {
 			bytes, err := cmd.Output()
 
 			if err != nil {
-				return fmt.Errorf("Failed to generate commit message: %w", err)
+				spinner.StopWithFailure("Failed to commit")
+				return fmt.Errorf("Failed to create commit message: %w", err)
 			}
 
 			message := strings.TrimSpace(string(bytes))
 
 			if message == "" {
+				spinner.StopWithFailure("No message to commit")
 				return fmt.Errorf("Received empty commit message")
 			}
+
+			spinner.StopWithSuccess("Commit created")
+			// --- END ---
 
 			fmt.Printf("\nCommit message:\n%s\n\n", message)
 
