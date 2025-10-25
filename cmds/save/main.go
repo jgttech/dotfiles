@@ -4,7 +4,6 @@ import (
 	"context"
 	"dotfiles/cli/core/exec"
 	"fmt"
-	"os"
 	"strings"
 
 	"github.com/urfave/cli/v3"
@@ -29,7 +28,7 @@ func Command() *cli.Command {
 		Name:  "save",
 		Usage: "Utilizes AI to generate a commit",
 		Action: func(ctx context.Context, c *cli.Command) error {
-			cmd := exec.Cmd("git add -A")
+			cmd := exec.Cmd("git add -A", exec.Stdio)
 
 			if err := cmd.Run(); err != nil {
 				return err
@@ -70,10 +69,8 @@ func Command() *cli.Command {
 					"git commit -m '%s'",
 					strings.ReplaceAll(message, "'", "'\\''"),
 				),
+				exec.Stdio,
 			)
-
-			commit.Stdout = os.Stdout
-			commit.Stderr = os.Stderr
 
 			if err := commit.Run(); err != nil {
 				return fmt.Errorf("Failed to create commit: %w", err)
