@@ -70,9 +70,7 @@ func Command() *cli.Command {
 			}
 
 			spinner.StopWithSuccess("Commit created")
-			// --- END ---
-
-			fmt.Printf("\nCommit message:\n%s\n\n", message)
+			fmt.Printf("Commit message:\n%s\n\n", message)
 
 			commit := exec.Cmd(
 				fmt.Sprintf(
