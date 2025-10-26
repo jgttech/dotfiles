@@ -12,4 +12,5 @@ install:
     fi
   done
 
+  direnv reload
   dotfiles

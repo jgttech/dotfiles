@@ -1,6 +1,6 @@
 services:
-  dotfiles:
-    image: dotfiles
+  dotfiles-dev:
+    image: dotfiles-dev
     build:
       dockerfile: Dockerfile.arch
     environment:
@@ -11,3 +11,13 @@ services:
     working_dir: /home/user
     volumes:
       - .:$PROJECT_DOCKER_HOME
+  dotfiles-prod:
+    image: dotfiles-prod
+    build:
+      dockerfile: Dockerfile.prod
+    environment:
+      - TERM=xterm-256color
+    tty: true
+    stdin_open: true
+    command: bash -c "sleep infinity"
+    working_dir: /home/user

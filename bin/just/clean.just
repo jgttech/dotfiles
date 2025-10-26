@@ -1,13 +1,18 @@
 clean:
   #!/usr/bin/env bash
-  docker compose kill --remove-orphans &> /dev/null
-  docker compose rm -f &> /dev/null
+  docker compose kill --remove-orphans
+  docker compose rm -f
 
-  id=$(docker images | grep dotfiles | awk '{ print $3 }')
+  devId=$(docker images | grep dotfiles-dev | awk '{ print $3 }')
+  prodId=$(docker images | grep dotfiles-prod | awk '{ print $3 }')
 
-  if [[ ! -z "$id" ]]; then
-    docker rmi "$id" -f &> /dev/null
-  fi
+  function rmi {
+    local id=$(docker images | grep "$1" | awk '{ print $3 }')
+    [[ ! -z "$id" ]] && docker rmi "$id" -f
+  }
+
+  rmi dotfiles-dev
+  rmi dotfiles-prod
 
   targets=(\
     "$PROJECT_DIR" \
@@ -15,7 +20,7 @@ clean:
   )
 
   for target in "${targets[@]}"; do
-    [[ -e "$target" ]] && rm -rfv "$target" &> /dev/null
+    [[ -e "$target" ]] && rm -rfv "$target"
   done
 
   exit 0
