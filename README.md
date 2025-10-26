@@ -1,3 +1,7 @@
+```bash
+wget -qO- "https://raw.githubusercontent.com/jgttech/dotfiles/refs/heads/v3/bin/install" | bash
+```
+
 # Personal Dotfiles
 
 When it comes to dotfiles and configruation you can carry from system to system, I have experienced some things that I like and don't. Ultimately, the problems that created the largest headaches for me was anything having to do with different file systems. Like trying to install fonts for macOS and Linux in ways that are automatically detected. The moment different file systems are introduced, logic is now required if I want to maintain configurations in 1 repo for multiple systems. However, I have tried several options that, ultimately, do not cleanly address these issues.

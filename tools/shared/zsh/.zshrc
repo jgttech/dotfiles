@@ -2,10 +2,13 @@ if command -v direnv >/dev/null 2>&1; then
   eval "$(direnv hook zsh)"  # or zsh, fish, etc.
 fi
 
-# Dotfiles environment
 export DOTFILES_HOME="$HOME/.dotfiles"
 export DOTFILES_BIN="$DOTFILES_HOME/.bin"
-export PATH="$DOTFILES_BIN:$PATH"
+export AQUA_ROOT_DIR="$HOME/.aqua/bin"
+export PATH="$DOTFILES_BIN:$AQUA_ROOT_DIR:$PATH"
+
+export DOTFILES_ZSH="$(dotfiles tool --path shared/zsh)"
+[[ -f "$DOTFILES_ZSH" ]] && source "$DOTFILES_ZSH"
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm

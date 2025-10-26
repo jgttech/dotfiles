@@ -9,5 +9,5 @@ reload:
   fi
 
   docker compose down dotfiles-dev --remove-orphans
-  just runtime
+  just runtime dotfiles-dev
   just exec "cd $PROJECT_DOCKER_HOME; go mod tidy"

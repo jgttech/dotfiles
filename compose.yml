@@ -21,3 +21,5 @@ services:
     stdin_open: true
     command: bash -c "sleep infinity"
     working_dir: /home/user
+    volumes:
+      - .:/tmp/dotfiles
