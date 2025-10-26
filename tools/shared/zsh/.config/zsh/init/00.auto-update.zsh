@@ -23,4 +23,4 @@ dotfiles-auto-update() {
   cd "${cwd}"
 }
 
-dotfiles-auto-update
+# dotfiles-auto-update

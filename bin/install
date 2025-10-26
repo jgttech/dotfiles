@@ -6,6 +6,10 @@ set -euo pipefail
 # functions.
 current_platform=$(uname -s | tr '[:upper:]' '[:lower:]')
 
+# This is the custom font that is installed
+# when stow links the packages into the system.
+font_family="MesloLGS NF"
+
 # The location to install the repo to. The
 # location is resolve relative to the users
 # $HOME environment variable. So everything
@@ -27,6 +31,7 @@ dependencies=( \
   "direnv" \
   "aqua" \
   "just" \
+  "omz" \
 )
 
 # Tracks what is missing to, if something is
@@ -48,7 +53,7 @@ installed() { zsh -i -c "which $1" &> /dev/null ; }
 # looking for. This is done to allow platform specifc
 # commands to be run for things like reloading system fonts
 # and other platform specific needs.
-is_platform() {
+function is_platform {
   local desired_platform="$1"
 
   # Check if current platform contains the
@@ -129,14 +134,15 @@ home_dir="$HOME/$home"
 # can be sure the latest version of the fonts
 # in the system are what we are looking at.
 if is_platform "linux"; then
-  fc-cache -f -v
-  cnt=$(fc-list | grep -c "$font_family")
+  fc-cache -f
+  cnt=$(fc-list | grep -c "$font_family" || true)
 
   # During dependency checking, we verify that "fontconfig"
   # is installed, so this should work, as expected.
   if [[ "${cnt}" -le 0 ]]; then
     echo "[WARNING]"
     echo "Failed to load fonts for '$font_family'"
+  fi
 elif is_platform "darwin"; then
   atsutil databases –removeUser
   atsutil server –shutdown
@@ -154,12 +160,29 @@ if [[ $? -ne 0 ]]; then
 
   exit 0
 else
-  export AQUA_ROOT_DIR="$HOME/.aqua/bin"
-
   wd="$(pwd)"
+  dev="${DOTFILES_DEV:-false}"
+
+  if [[ "$dev" == "true" ]]; then
+    cp -rv /tmp/dotfiles ~/.dotfiles
+  fi
+
+  cd "$home_dir"
+
+  source .envrc
+  just build
+
+  timstamp="$(date +%s)"
+  zshrc="$HOME/.zshrc"
+  [[ -f "$zshrc" ]] && mv "$zshrc" "$HOME/.zshrc.${timstamp}.bak"
+
+  .bin/dotfiles install
+
+  export AQUA_ROOT_DIR="$HOME/.aqua"
+
   cd "$HOME/.aqua"
   aqua install
-  cd "$wd"
 
+  cd "$wd"
   echo "Done"
 fi

@@ -1,6 +1,7 @@
 FROM archlinux/archlinux:latest
 
 RUN \
+  # Install system packages.
   pacman -Syu --noconfirm && \
   pacman -S --noconfirm \
   base-devel \
@@ -11,12 +12,16 @@ RUN \
   curl \
   wget \
   stow \
+  zsh \
   go \
   jq \
   fd \
   zip \
   fzf \
+  just \
+  direnv \
   ripgrep \
+  fontconfig \
   unzip \
   bash \
   sudo \
@@ -24,12 +29,30 @@ RUN \
   man-pages && \
   pacman -Syu --noconfirm
 
+# Create user BEFORE installing Homebrew
 RUN \
-  useradd -m -G wheel -s /bin/bash user && \
+  useradd -m -G wheel -s /bin/zsh user && \
   echo "user ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
 
+# Switch to non-root user
 USER user
 WORKDIR /home/user
+
+# Install Oh-My-Zsh
+RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+
+# Install Homebrew as non-root user with NONINTERACTIVE flag
+RUN NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+# Configure brew in shell
+RUN \
+  echo >> /home/user/.zshrc && \
+  echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> /home/user/.zshrc
+
+# Make brew available in current layer
+ENV PATH="/home/linuxbrew/.linuxbrew/bin:${PATH}"
+
+RUN brew install aqua
 
 RUN mkdir -p .config .local/bin .local/share
 

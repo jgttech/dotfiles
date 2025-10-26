@@ -8,7 +8,7 @@ export AQUA_ROOT_DIR="$HOME/.aqua/bin"
 export PATH="$DOTFILES_BIN:$AQUA_ROOT_DIR:$PATH"
 
 export DOTFILES_ZSH="$(dotfiles tool --path shared/zsh)"
-[[ -f "$DOTFILES_ZSH" ]] && source "$DOTFILES_ZSH"
+[[ -f "$DOTFILES_ZSH" ]] && source "$DOTFILES_ZSH/main.zsh"
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
