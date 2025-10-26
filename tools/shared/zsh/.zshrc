@@ -2,12 +2,10 @@ if command -v direnv >/dev/null 2>&1; then
   eval "$(direnv hook zsh)"  # or zsh, fish, etc.
 fi
 
-DOTFILES_DIR=".dotfiles"
-DOTFILES_HOME="${HOME}/${DOTFILES_DIR}"
-DOTFILES_ZSHRC="${HOME}/.config/zsh"
-DOTFILES_BUILD_JSON="${HOME}/.dotfiles.build.json"
-DOTFILES_ZSHRC_MAIN="${DOTFILES_ZSHRC}/main.zsh"
-[[ -f "${DOTFILES_ZSHRC_MAIN}" ]] && source "${DOTFILES_ZSHRC_MAIN}";
+# Dotfiles environment
+export DOTFILES_HOME="$HOME/.dotfiles"
+export DOTFILES_BIN="$DOTFILES_HOME/.bin"
+export PATH="$DOTFILES_BIN:$PATH"
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
@@ -159,4 +157,4 @@ _LOCAL_BIN="$HOME/.local/bin"
 _LM_STUDIO_BIN="$HOME/.lmstudio/bin"
 [[ -d "$_LM_STUDIO_BIN" ]] && export PATH="$PATH:$_LM_STUDIO_BIN";
 
-[[ -f "$HOME/.local/bin/env" ]] && source "$HOME/.local/bin/env"
+# [[ -f "$HOME/.local/bin/env" ]] && source "$HOME/.local/bin/env"

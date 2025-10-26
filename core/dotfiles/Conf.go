@@ -1,5 +1,5 @@
 package dotfiles
 
-type Dotfiles struct {
+type Conf struct {
 	Tools map[string]string `yaml:"tools"`
 }

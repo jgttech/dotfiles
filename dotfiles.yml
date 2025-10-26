@@ -7,14 +7,14 @@
 # [Example]
 # dotfiles edit linux/fonts
 tools:
-  ghostty: shared/ghostty/.config/ghostty
-  git: shared/git
-  nvim: shared/nvim/.config/nvim
-  opencode: shared/opencode/.config/opencode
-  p10k: shared/p10k
-  tmux: shared/tmux
-  zed: shared/zed/.config/zed
-  zsh: shared/zsh/.config/zsh
+  shared/ghostty: shared/ghostty/.config/ghostty
+  shared/git: shared/git
+  shared/nvim: shared/nvim/.config/nvim
+  shared/opencode: shared/opencode/.config/opencode
+  shared/p10k: shared/p10k
+  shared/tmux: shared/tmux
+  shared/zed: shared/zed/.config/zed
+  shared/zsh: shared/zsh/.config/zsh
   linux/alacritty: linux/alacritty/.config/alacritty
   linux/fonts: linux/.local/share/fonts
   macos/alacritty: macos/alacritty/.config/alacritty

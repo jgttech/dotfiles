@@ -7,8 +7,8 @@ import (
 	"github.com/goccy/go-yaml"
 )
 
-func Load() (*Dotfiles, error) {
-	conf := &Dotfiles{}
+func Load() (*Conf, error) {
+	conf := &Conf{}
 	bytes, err := os.ReadFile(env.DOTFILES_YAML)
 
 	if err != nil {
