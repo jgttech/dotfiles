@@ -2,7 +2,7 @@ services:
   dotfiles-dev:
     image: dotfiles-dev
     build:
-      dockerfile: Dockerfile.arch
+      dockerfile: Dockerfile.dev
     environment:
       - TERM=xterm-256color
     tty: true

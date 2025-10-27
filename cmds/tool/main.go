@@ -4,6 +4,7 @@ import (
 	"context"
 	"dotfiles/cli/core/dotfiles"
 	"dotfiles/cli/core/exec"
+	"dotfiles/cli/core/tui/theme"
 	"errors"
 	"fmt"
 
@@ -36,7 +37,18 @@ func Command() *cli.Command {
 			conf, err := dotfiles.Load()
 
 			if list {
-				return listTools(conf)
+				for key := range conf.Tools {
+					fmt.Printf(
+						"%s %s\n",
+						theme.
+							Info.
+							UnsetBackground().
+							Render(theme.RIGHT_ARROW_ICON),
+						key,
+					)
+				}
+
+				return nil
 			}
 
 			if err != nil {

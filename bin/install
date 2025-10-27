@@ -49,6 +49,15 @@ missing=()
 # So checking against ZSH is a requirement.
 installed() { zsh -i -c "which $1" &> /dev/null ; }
 
+function install_zsh_plugin {
+  local repo="$1"
+  local dir="$2"
+
+  if [[ ! -d "$dir" ]]; then
+    git clone "$repo" "$dir"
+  fi
+}
+
 # Check if the platform matches whatever platform we are
 # looking for. This is done to allow platform specifc
 # commands to be run for things like reloading system fonts
@@ -120,6 +129,20 @@ if [[ ${#missing[@]} -ne 0 ]]; then
   exit 1
 fi
 
+if ! installed "p10k"; then
+  git clone --depth=1 \
+    https://github.com/romkatv/powerlevel10k.git \
+    "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k"
+fi
+
+install_zsh_plugin \
+  https://github.com/zsh-users/zsh-autosuggestions \
+  "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-autosuggestions"
+
+install_zsh_plugin \
+  https://github.com/zsh-users/zsh-syntax-highlighting.git \
+  "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting"
+
 # The paths we need to build the commands used
 # to install the dotfiles.
 home_dir="$HOME/$home"
@@ -182,6 +205,13 @@ else
 
   cd "$HOME/.aqua"
   aqua install
+
+  $HOME/.aqua/bin/mise install
+  activate="$($HOME/.aqua/bin/mise activate)"
+
+  eval "$activate"
+  node --version
+  # npm i -g npm bun pnpm yarn
 
   cd "$wd"
   echo "Done"
