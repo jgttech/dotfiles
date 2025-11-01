@@ -7,7 +7,7 @@ export DOTFILES_BIN="$DOTFILES_HOME/.bin"
 export AQUA_ROOT_DIR="$HOME/.aqua/bin"
 export PATH="$DOTFILES_BIN:$AQUA_ROOT_DIR:$PATH"
 
-export DOTFILES_ZSH="$(dotfiles tool --path shared/zsh)"
+export DOTFILES_ZSH="$(dotfiles edit --path shared/zsh)"
 [[ -f "$DOTFILES_ZSH" ]] && source "$DOTFILES_ZSH/main.zsh"
 
 export NVM_DIR="$HOME/.nvm"

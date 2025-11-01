@@ -2,9 +2,9 @@ package main
 
 import (
 	"context"
+	"dotfiles/cli/cmds/edit"
 	"dotfiles/cli/cmds/install"
 	"dotfiles/cli/cmds/save"
-	"dotfiles/cli/cmds/tool"
 	"dotfiles/cli/cmds/uninstall"
 	"dotfiles/cli/core/sys"
 	"log"
@@ -46,7 +46,7 @@ func main() {
 				sys.WithDependencies("stow"),
 			),
 			sys.NewCommand(
-				tool.Command(),
+				edit.Command(),
 				sys.WithDependencies("nvim"),
 			),
 			sys.NewCommand(

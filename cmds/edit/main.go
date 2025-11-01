@@ -1,4 +1,4 @@
-package tool
+package edit
 
 import (
 	"context"
@@ -15,8 +15,8 @@ func Command() *cli.Command {
 	var list, path bool
 
 	return &cli.Command{
-		Name:    "tool",
-		Aliases: []string{"t"},
+		Name:    "edit",
+		Aliases: []string{"e"},
 		Usage:   "Opens IDE in that tools home path",
 		Flags: []cli.Flag{
 			&cli.BoolFlag{
