@@ -1,2 +1,2 @@
 save:
-  go run main.go save
+  just go run main.go save

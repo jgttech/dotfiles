@@ -192,26 +192,11 @@ else
 
   cd "$home_dir"
 
-  source .envrc
-  just build
-
   timstamp="$(date +%s)"
   zshrc="$HOME/.zshrc"
   [[ -f "$zshrc" ]] && mv "$zshrc" "$HOME/.zshrc.${timstamp}.bak"
 
-  .bin/dotfiles install
-
-  export AQUA_ROOT_DIR="$HOME/.aqua"
-
-  cd "$HOME/.aqua"
-  aqua install
-
-  $HOME/.aqua/bin/mise install
-  activate="$($HOME/.aqua/bin/mise activate)"
-
-  eval "$activate"
-  node --version
-  # npm i -g npm bun pnpm yarn
+  echo "WIP"
 
   cd "$wd"
   echo "Done"
