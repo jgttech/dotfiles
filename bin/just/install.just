@@ -1,17 +1,16 @@
 install:
   #!/usr/bin/env bash
+  # Ensure env is latest.
   direnv reload
+
+  # Install system tools.
   aqua install
+
+  # Install language tools.
   mise install
+
+  # Install githooks.
   lefthook install
 
-  for file in "$(pwd)/bin/dev"/*; do
-    bin="$(basename $file)"
-
-    if [[ ! -e "$PROJECT_BIN/$bin" ]]; then
-      ln -s "../../bin/dev/$bin" "$PROJECT_BIN/$bin" &> /dev/null
-    fi
-  done
-
-  # just runtime dotfiles-dev
-  # dotfiles
+  just runtime dotfiles-dev
+  dotfiles
