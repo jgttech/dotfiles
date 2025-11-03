@@ -1,2 +1,3 @@
-connect *args='':
-  docker compose exec dotfiles-dev bash {{args}}
+connect *container='':
+  #!/usr/bin/env bash
+  docker compose exec {{container}} bash

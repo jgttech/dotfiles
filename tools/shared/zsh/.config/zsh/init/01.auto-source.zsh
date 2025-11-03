@@ -14,7 +14,7 @@ dotfiles-auto-source() {
   setopt localoptions nullglob
 
   # Find all main.zsh files recursively.
-  local files=("$base/etc"/**/"main.zsh"(N))
+  local files=("$base/tools"/**/"main.zsh"(N))
 
   # No files found, stop here.
   if [[ ${#files[@]} -eq 0 ]]; then

@@ -32,6 +32,7 @@ USER user
 WORKDIR /home/user
 
 RUN mkdir -p .config .local/bin .local/share
+RUN touch .zshrc
 
 ENV HOME=/home/user
 ENV USER=user

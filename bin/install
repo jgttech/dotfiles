@@ -192,11 +192,16 @@ else
 
   cd "$home_dir"
 
-  timstamp="$(date +%s)"
-  zshrc="$HOME/.zshrc"
-  [[ -f "$zshrc" ]] && mv "$zshrc" "$HOME/.zshrc.${timstamp}.bak"
+  [[ ! -f ".envrc" ]] && {
+    echo "ERROR: Missing .envrc file."
+    exit 1
+  }
 
-  echo "WIP"
+  source .envrc
+  export PATH="$HOME/$home/.bin:$PATH"
+
+  just build
+  dotfiles install
 
   cd "$wd"
   echo "Done"

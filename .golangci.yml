@@ -14,3 +14,6 @@ linters:
       - text: Error return value of `file.Close` is not checked
         linters:
           - errcheck
+      - text: Error return value of `os.Setenv` is not checked
+        linters:
+          - errcheck

@@ -16,7 +16,7 @@ tools:
   shared/zed: shared/zed/.config/zed
   shared/zsh: shared/zsh/.config/zsh
   shared/mise: shared/mise/.config/mise
-  shared/aqua: shared/aqua/.aqua
+  shared/aqua: shared/aqua/.config/aqua
   linux/alacritty: linux/alacritty/.config/alacritty
   linux/fonts: linux/.local/share/fonts
   macos/alacritty: macos/alacritty/.config/alacritty

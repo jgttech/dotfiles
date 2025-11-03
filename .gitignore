@@ -485,3 +485,12 @@ rebar.lock
 .build/
 .project/
 .claude/
+tools/shared/aqua/.config/aqua/aqua-proxy
+tools/shared/aqua/.config/aqua/bin
+tools/shared/aqua/.config/aqua/internal
+tools/shared/aqua/.config/aqua/metadata
+tools/shared/aqua/.config/aqua/registries
+tools/shared/aqua/.config/aqua/registry-cache
+tools/shared/mise/.config/mise/data
+tools/shared/mise/.config/mise/cache
+tools/shared/mise/.config/mise/tmp

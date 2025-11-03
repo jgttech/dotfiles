@@ -4,11 +4,25 @@ fi
 
 export DOTFILES_HOME="$HOME/.dotfiles"
 export DOTFILES_BIN="$DOTFILES_HOME/.bin"
-export AQUA_ROOT_DIR="$HOME/.aqua/bin"
-export PATH="$DOTFILES_BIN:$AQUA_ROOT_DIR:$PATH"
+export AQUA_ROOT_DIR="$HOME/.config/aqua"
+export AQUA_GLOBAL_CONFIG="$AQUA_ROOT_DIR/aqua.yml:$AQUA_GLOBAL_CONFIG"
+export AQUA_ROOT_BIN="$AQUA_ROOT_DIR/bin"
+export PATH="$DOTFILES_BIN:$AQUA_ROOT_BIN:$PATH"
 
-export DOTFILES_ZSH="$(dotfiles edit --path shared/zsh)"
-[[ -f "$DOTFILES_ZSH" ]] && source "$DOTFILES_ZSH/main.zsh"
+export DOTFILES_ZSH_HOME="$(dotfiles edit --path shared/zsh)"
+export DOTFILES_ZSH="$DOTFILES_ZSH_HOME/main.zsh"
+[[ -f "$DOTFILES_ZSH" ]] && source "$DOTFILES_ZSH"
+
+# Activate mise if present.
+if is_installed "mise"; then
+  export DOTFILES_MISE_HOME="$(dotfiles edit --path shared/mise)"
+  export MISE_DATA_DIR="${DOTFILES_MISE_HOME}/data"
+  export MISE_CACHE_DIR="${DOTFILES_MISE_HOME}/cache"
+  export MISE_GLOBAL_CONFIG_FILE="${DOTFILES_MISE_HOME}/config.toml"
+  export MISE_TMP_DIR="${DOTFILES_MISE_HOME}/tmp"
+
+  eval "$(mise activate zsh)"
+fi
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
@@ -159,5 +173,3 @@ _LOCAL_BIN="$HOME/.local/bin"
 # LM Studio support
 _LM_STUDIO_BIN="$HOME/.lmstudio/bin"
 [[ -d "$_LM_STUDIO_BIN" ]] && export PATH="$PATH:$_LM_STUDIO_BIN";
-
-# [[ -f "$HOME/.local/bin/env" ]] && source "$HOME/.local/bin/env"
