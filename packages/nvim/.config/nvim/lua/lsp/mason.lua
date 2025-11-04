@@ -9,7 +9,30 @@ return {
   zls = {},
   pyright = {},
   rust_analyzer = {},
-  ts_ls = {},
+  ts_ls = {
+    -- Ensure ts_ls finds the project root by looking for these files
+    root_dir = require("lspconfig").util.root_pattern("tsconfig.json", "package.json", "jsconfig.json", ".git"),
+    -- Enable taking file changes from disk
+    init_options = {
+      preferences = {
+        -- This helps the LSP resolve path aliases more reliably
+        importModuleSpecifierPreference = "non-relative",
+      },
+    },
+    settings = {
+      typescript = {
+        -- Ensure path mappings from tsconfig are used
+        preferences = {
+          importModuleSpecifierPreference = "non-relative",
+        },
+      },
+      javascript = {
+        preferences = {
+          importModuleSpecifierPreference = "non-relative",
+        },
+      },
+    },
+  },
   bashls = {},
   biome = {},
   cssls = {},
