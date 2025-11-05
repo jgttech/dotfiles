@@ -64,6 +64,20 @@ func Command() *cli.Command {
 
 			message := strings.TrimSpace(string(bytes))
 
+			// Remove markdown code block backticks if present
+			if strings.HasPrefix(message, "```") {
+				// Remove opening backticks (``` or ```language)
+				lines := strings.Split(message, "\n")
+				if len(lines) > 0 {
+					lines = lines[1:] // Remove first line with ```
+				}
+				// Remove closing backticks
+				if len(lines) > 0 && strings.TrimSpace(lines[len(lines)-1]) == "```" {
+					lines = lines[:len(lines)-1] // Remove last line with ```
+				}
+				message = strings.TrimSpace(strings.Join(lines, "\n"))
+			}
+
 			if message == "" {
 				spinner.StopWithFailure("No message to commit")
 				return fmt.Errorf("Received empty commit message")
