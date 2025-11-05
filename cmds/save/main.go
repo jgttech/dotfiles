@@ -47,7 +47,7 @@ func Command() *cli.Command {
 				return err
 			}
 
-			cmd = exec.Cmd("git diff --staged")
+			cmd = exec.Cmd("git diff --staged", exec.Dir(wd))
 			diff, err := cmd.Output()
 
 			if err != nil {
@@ -61,7 +61,7 @@ func Command() *cli.Command {
 			}
 
 			prompt := fmt.Sprintf(template, string(diff))
-			cmd = exec.Cmd("claude -p --output-format text")
+			cmd = exec.Cmd("claude -p --output-format text", exec.Dir(wd))
 			cmd.Stdin = strings.NewReader(prompt)
 
 			bytes, err := cmd.Output()
@@ -73,17 +73,16 @@ func Command() *cli.Command {
 
 			message := strings.TrimSpace(string(bytes))
 
-			// Remove markdown code block backticks if present
 			if strings.HasPrefix(message, "```") {
-				// Remove opening backticks (``` or ```language)
 				lines := strings.Split(message, "\n")
 				if len(lines) > 0 {
-					lines = lines[1:] // Remove first line with ```
+					lines = lines[1:]
 				}
-				// Remove closing backticks
+
 				if len(lines) > 0 && strings.TrimSpace(lines[len(lines)-1]) == "```" {
-					lines = lines[:len(lines)-1] // Remove last line with ```
+					lines = lines[:len(lines)-1]
 				}
+
 				message = strings.TrimSpace(strings.Join(lines, "\n"))
 			}
 
@@ -100,6 +99,7 @@ func Command() *cli.Command {
 					"git commit -m '%s'",
 					strings.ReplaceAll(message, "'", "'\\''"),
 				),
+				exec.Dir(wd),
 				exec.Stdio,
 			)
 
