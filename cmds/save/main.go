@@ -6,6 +6,7 @@ import (
 	"dotfiles/cli/core/tui/notice"
 	"dotfiles/cli/core/tui/spinner"
 	"fmt"
+	"os"
 	"strings"
 
 	"github.com/urfave/cli/v3"
@@ -16,7 +17,7 @@ Generate a concise, conventional commit message for these changes.
 
 Follow these guidelines:
   - Use conventional commit format (feat:, fix:, docs:, refactor:, etc.)
-  - First line should be under 72 characters
+  - First line should be under 80 characters
   - Be specific and descriptive
   - Focus on the "what" and "why", not the "how"
   - Output ONLY the commit message, no explanations or additional text
@@ -31,7 +32,15 @@ func Command() *cli.Command {
 		Usage: "Utilizes AI to generate a commit",
 		Action: func(ctx context.Context, c *cli.Command) error {
 			spinner.Start("Creating commit...")
-			cmd := exec.Cmd("git add -A")
+
+			wd, err := os.Getwd()
+
+			if err != nil {
+				spinner.StopWithFailure("Failed to detect working directory")
+				return err
+			}
+
+			cmd := exec.Cmd("git add -A", exec.Dir(wd))
 
 			if err := cmd.Run(); err != nil {
 				spinner.StopWithFailure("Failed to add changes")
