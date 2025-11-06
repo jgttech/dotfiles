@@ -55,7 +55,7 @@ return {
       packageManager = "npm",
     },
     on_attach = function(_, bufnr)
-      vim.api.nvim_create_autocmd("BufReadPre", {
+      vim.api.nvim_create_autocmd("BufWritePre", {
         buffer = bufnr,
         command = "EslintFixAll",
       })
@@ -74,12 +74,13 @@ return {
     settings = {
       yaml = {
         schemaStore = {
+          -- Disable schemaStore to avoid CloudFormation tag errors
           enable = false,
           url = "",
         },
         schemas = yaml,
-        -- Disable validation to avoid CloudFormation tag errors
-        validate = false,
+        -- Keep validation enabled for syntax checking
+        validate = true,
       },
     },
   },
