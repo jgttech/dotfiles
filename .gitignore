@@ -14,3 +14,4 @@ __pycache__
 .local/state/
 .mdb
 packages/zed/.config/zed/prompts/
+.claude/
