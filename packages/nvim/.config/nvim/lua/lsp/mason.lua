@@ -10,8 +10,10 @@ return {
   pyright = {},
   rust_analyzer = {},
   ts_ls = {
-    -- Ensure ts_ls finds the project root by looking for these files
-    root_dir = require("lspconfig").util.root_pattern("tsconfig.json", "package.json", "jsconfig.json", ".git"),
+    -- Wrap in function to avoid circular dependency with lspconfig
+    root_dir = function(fname)
+      return require("lspconfig").util.root_pattern("tsconfig.json", "package.json", "jsconfig.json", ".git")(fname)
+    end,
     -- Enable taking file changes from disk
     init_options = {
       preferences = {
