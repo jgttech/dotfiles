@@ -60,10 +60,6 @@ vim.keymap.set("n", "<leader>sx", "<cmd>close<CR>", { desc = "Close current spli
 vim.keymap.set("n", "-", "<cmd>Oil<cr>", { desc = "Oil" })
 vim.keymap.set("n", "<leader>-", macros.oil_cwd, { desc = "Oil" })
 
--- Quit all
-vim.keymap.set("n", "QQ", "<cmd>qall!<cr>", { desc = "Close ALL Nvim" })
-vim.keymap.set("n", "qq", "<cmd>q!<cr>", { desc = "Close Nvim" })
-
 -- Buffer commands
 -- vim.keymap.set("n", "<leader>q", macros.close_buffer, { desc = "Close the current buffer" })
 vim.keymap.set("n", "bb", macros.close_buffer, { desc = "Close the current buffer" })
@@ -71,3 +67,9 @@ vim.keymap.set("n", "bb", macros.close_buffer, { desc = "Close the current buffe
 vim.keymap.set("n", "ba", macros.close_other_buffers, { desc = "Close all buffers except current one" })
 -- vim.keymap.set("n", "<leader>bm", macros.delete_buffer_menu, { desc = "Interactively choose how to delete buffers" })
 vim.keymap.set("n", "bi", macros.delete_buffer_menu, { desc = "Interactively choose how to delete buffers" })
+
+-- Quit all
+vim.keymap.set("n", "<leader>Q", "<cmd>qall!<cr>", { desc = "Close ALL Nvim" })
+-- vim.keymap.set("n", "<leader>q", "<cmd>q!<cr>", { desc = "Close Nvim", noremap = true })
+-- vim.keymap.set("n", "<leader>Q", "<cmd>qall!<cr>", { desc = "Close ALL Nvim" })
+-- vim.keymap.set("n", "<leader>q", "<cmd>q!<cr>", { desc = "Close Nvim" })
