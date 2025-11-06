@@ -40,10 +40,10 @@ return {
   cssls = {},
   dockerls = {},
   postgres_lsp = {
-    cmd = { "postgrestools", "", "lsp-proxy" },
+    cmd = { "postgres-language-server", "up", "--method", "stdio" },
     settings = {
       filetypes = { "sql", "psql" },
-      root_markers = { "postgrestools.jsonc" },
+      root_markers = { ".pg_lsp.toml" },
     },
   },
   docker_compose_language_service = {},
