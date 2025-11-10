@@ -58,11 +58,13 @@ vim.keymap.set("n", "<leader>sx", "<cmd>close<CR>", { desc = "Close current spli
 
 -- Oil
 vim.keymap.set("n", "-", "<cmd>Oil<cr>", { desc = "Oil" })
-vim.keymap.set("n", "<leader>-", macros.oil_cwd, { desc = "Oil" })
+-- vim.keymap.set("n", "<leader>-", macros.oil_cwd, { desc = "Oil" })
 
 -- Quit all
-vim.keymap.set("n", "QQ", "<cmd>qall!<cr>", { desc = "Close ALL Nvim" })
-vim.keymap.set("n", "qq", "<cmd>q!<cr>", { desc = "Close Nvim" })
+vim.keymap.set("n", "<C-Q>", "<cmd>qall!<cr>", { desc = "Close ALL Nvim" })
+vim.keymap.set("n", "<C-q>", "<cmd>q!<cr>", { desc = "Close Nvim" })
+-- vim.keymap.set("n", "<leader>Q", "<cmd>qall!<cr>", { desc = "Close ALL Nvim" })
+-- vim.keymap.set("n", "<leader>q", "<cmd>q!<cr>", { desc = "Close Nvim" })
 
 -- Buffer commands
 -- vim.keymap.set("n", "<leader>q", macros.close_buffer, { desc = "Close the current buffer" })
