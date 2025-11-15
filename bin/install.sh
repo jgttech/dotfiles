@@ -110,7 +110,7 @@ dependencies=( \
   "nvm" \
   "zip" \
   "unzip" \
-  "ripgrep" \
+  "rg" \
   "fd" \
   "fzf" \
 )
