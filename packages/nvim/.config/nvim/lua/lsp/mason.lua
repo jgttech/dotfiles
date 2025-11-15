@@ -38,6 +38,49 @@ return {
   bashls = {},
   biome = {},
   cssls = {},
+  tailwindcss = {
+    -- Tailwind CSS Language Server
+    -- Provides IntelliSense for Tailwind CSS classes
+    filetypes = {
+      "html",
+      "css",
+      "scss",
+      "javascript",
+      "javascriptreact",
+      "typescript",
+      "typescriptreact",
+      "vue",
+      "svelte",
+      "astro",
+      "templ",
+    },
+    settings = {
+      tailwindCSS = {
+        experimental = {
+          classRegex = {
+            -- Support for class attributes
+            { "class:\\s*?[\"'`]([^\"'`]*).*?[\"'`]", "[\"'`]([^\"'`]*).*?[\"'`]" },
+            -- Support for className attributes
+            { "className:\\s*?[\"'`]([^\"'`]*).*?[\"'`]", "[\"'`]([^\"'`]*).*?[\"'`]" },
+            -- Support for clsx/classnames utilities
+            { "(?:clsx|classnames|cn)\\(([^)]*)\\)", "(?:[\"'`]([^\"'`]*).*?[\"'`])" },
+            -- Support for template literals
+            { "[\"'`]([^\"'`]*)[\"'`]" },
+          },
+        },
+        validate = true,
+        lint = {
+          cssConflict = "warning",
+          invalidApply = "error",
+          invalidScreen = "error",
+          invalidVariant = "error",
+          invalidConfigPath = "error",
+          invalidTailwindDirective = "error",
+          recommendedVariantOrder = "warning",
+        },
+      },
+    },
+  },
   dockerls = {},
   postgres_lsp = {
     cmd = { "postgres-language-server", "up", "--method", "stdio" },

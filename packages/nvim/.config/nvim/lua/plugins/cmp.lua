@@ -38,9 +38,9 @@ return {
     local luasnip = require("luasnip")
     luasnip.config.setup({})
 
-    -- require("tailwindcss-colorizer-cmp").setup({
-    --   color_square_width = 2,
-    -- })
+    require("tailwindcss-colorizer-cmp").setup({
+      color_square_width = 2,
+    })
 
     cmp.setup({
       snippet = {
