@@ -41,3 +41,5 @@ This is the same as `make dev` except it does use the GitHub raw content to load
 ```bash
 make prod
 ```
+
+GTFO
