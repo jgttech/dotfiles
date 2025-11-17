@@ -16,13 +16,13 @@ func Cmd(cmd string, opts ...cmdOption) *exec.Cmd {
 		switch {
 		case ch == '\'' && !inDouble && !inBacktick:
 			inSingle = !inSingle
-			builder.WriteRune(ch)
+			// Don't write the quote character
 		case ch == '"' && !inSingle && !inBacktick:
 			inDouble = !inDouble
-			builder.WriteRune(ch)
+			// Don't write the quote character
 		case ch == '`' && !inSingle && !inDouble:
 			inBacktick = !inBacktick
-			builder.WriteRune(ch)
+			// Don't write the quote character
 		case ch == ' ' && !inSingle && !inDouble && !inBacktick:
 			if builder.Len() > 0 {
 				args = append(args, builder.String())
