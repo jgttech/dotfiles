@@ -38,7 +38,7 @@ func Command() *cli.Command {
 					return err
 				}
 
-				if err = npm(); err != nil {
+				if err = npm(conf); err != nil {
 					return err
 				}
 			}

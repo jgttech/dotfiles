@@ -1,22 +1,14 @@
 package install
 
 import (
+	"dotfiles/cli/core/dotfiles"
 	"dotfiles/cli/core/exec"
 	"fmt"
 	"strings"
 )
 
-func npm() error {
-	dependencies := []string{
-		"npm",
-		"pnpm",
-		"yarn",
-		"bun",
-		"@tailwindcss/language-server",
-		"@anthropic-ai/claude-code",
-	}
-
-	command := fmt.Sprintf("zsh -c \"source ~/.zshrc; npm i -g %s\"", strings.Join(dependencies, " "))
+func npm(conf *dotfiles.Conf) error {
+	command := fmt.Sprintf("zsh -c \"source ~/.zshrc; npm i -g %s\"", strings.Join(conf.Npm, " "))
 	cmd := exec.Cmd(command, exec.Stdio)
 
 	if err := cmd.Run(); err != nil {

@@ -21,3 +21,10 @@ tools:
   linux/fonts: linux/.local/share/fonts
   macos/alacritty: macos/alacritty/.config/alacritty
   macos/fonts: macos/fonts/Library/Fonts
+npm:
+  - "npm"
+  - "pnpm"
+  - "yarn"
+  - "bun"
+  - "@tailwindcss/language-server"
+  - "@anthropic-ai/claude-code"
