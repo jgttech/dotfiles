@@ -57,7 +57,7 @@ jobs:
           echo "Built: ${OUT}/${BINARY}"
 
       - name: Upload artifacts
-        uses: action/upload-artifact@v4
+        uses: actions/upload-artifact@v4
         with:
           path: ${{ env.OUT }}
           retention-days: 1
