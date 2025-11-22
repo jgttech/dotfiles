@@ -475,7 +475,6 @@ yarn.lock
 pnpm-lock.yaml
 composer.lock
 Gemfile.lock
-go.sum
 cargo.lock
 pubspec.lock
 mix.lock
