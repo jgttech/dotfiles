@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+# Branch to checkout
+branch="v3"
+
 # The current platform the user is running on.
 # This is used by some of the install utility
 # functions.
@@ -187,10 +190,13 @@ else
   dev="${DOTFILES_DEV:-false}"
 
   if [[ "$dev" == "true" ]]; then
-    cp -rv /tmp/dotfiles ~/.dotfiles
+    cp -rv /tmp/dotfiles "$home_dir"
+  else
+    git clone https://github.com/jgttech/dotfiles.git "$home_dir"
   fi
 
   cd "$home_dir"
+  git checkout "$branch"
 
   [[ ! -f ".envrc" ]] && {
     echo "ERROR: Missing .envrc file."
