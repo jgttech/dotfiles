@@ -9,6 +9,10 @@ on:
 permissions:
   contents: write
 
+env:
+  OUT: .build
+  NAME: dotfiles
+
 jobs:
   build:
     name: Build binaries
@@ -40,8 +44,6 @@ jobs:
 
       - name: Build binary
         env:
-          NAME: dotfiles
-          OUT: .build
           GOOS: ${{ matrix.goos }}
           GOARCH: ${{ matrix.goarch }}
           GOARM: ${{ matrix.GOARM }}
@@ -59,5 +61,6 @@ jobs:
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
+          name: dotfiles-${{ matrix.goos }}-${{ matrix.goarch }}${{ matrix.goarm && format('-v{0}', matrix.goarm) || '' }}
           path: ${{ env.OUT }}
           retention-days: 1
