@@ -57,16 +57,6 @@ The `<pm>` is a name of an available package manager that the CLI supports.
 
 The `<PM>` is a name of an available package manager that the CLI supports.
 
-```yaml
-platform:
-  <os>:
-    package-manager:
-      <method>: <pm>|<symbol>
-    depenencies:
-      <pm>:
-        <key>: <package>
-```
-
 ## `platform.<os>.pependencies.<pm>.<key>.<package>`
 
 The `<key>` is a common name you want to use for that package. The `<package>` is the exact package that the package manager needs to install to support installing that package.
