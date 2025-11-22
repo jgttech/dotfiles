@@ -45,8 +45,6 @@ RUN go install github.com/aquaproj/aqua/v2/cmd/aqua@latest
 RUN mkdir -p .config .local/bin .local/share
 RUN touch .zshrc
 
-COPY . /home/user/.dotfiles
-
 ENV HOME=/home/user
 ENV USER=user
 
