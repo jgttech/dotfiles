@@ -34,11 +34,6 @@ func main() {
 					"rg",
 					"fd",
 					"fzf",
-					// "bun",
-					// "node",
-					// "npm",
-					// "pnpm",
-					// "yarn",
 				),
 			),
 			sys.NewCommand(

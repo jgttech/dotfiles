@@ -21,6 +21,12 @@ tools:
   linux/fonts: linux/.local/share/fonts
   macos/alacritty: macos/alacritty/.config/alacritty
   macos/fonts: macos/fonts/Library/Fonts
+
+# [About]
+# The packages that will be globally installed using
+# the globally installed "npm" package. Everything in
+# here gets treated like it is part of the "npm i -g <packages>"
+# command.
 npm:
   - "npm"
   - "pnpm"

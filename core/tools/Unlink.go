@@ -3,6 +3,7 @@ package tools
 import (
 	"dotfiles/cli/core/stow"
 	"dotfiles/cli/core/tui/spinner"
+	"fmt"
 	"os"
 	"slices"
 )
@@ -23,10 +24,12 @@ func Unlink() error {
 	spinner.Start("Unlinking tools...")
 
 	for source := range slices.Values(sources) {
-		if err = source.Run(); err != nil && !stow.IsMissingPackages(err) {
-			spinner.StopWithFailure("Failed to while removing links")
-			return err
-		}
+		fmt.Println(source.Directory())
+
+		// if err = source.Run(); err != nil && !stow.IsMissingPackages(err) {
+		// 	spinner.StopWithFailure("Failed to while removing links")
+		// 	return err
+		// }
 	}
 
 	spinner.StopWithSuccess("Links removed")

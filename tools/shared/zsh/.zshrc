@@ -13,15 +13,12 @@ export DOTFILES_ZSH_HOME="$(dotfiles edit --path shared/zsh)"
 export DOTFILES_ZSH="$DOTFILES_ZSH_HOME/main.zsh"
 [[ -f "$DOTFILES_ZSH" ]] && source "$DOTFILES_ZSH"
 
-# Activate mise if present.
+# If we detect mise, we should load the ZSH config mise has.
 if is_installed "mise"; then
   export DOTFILES_MISE_HOME="$(dotfiles edit --path shared/mise)"
-  export MISE_DATA_DIR="${DOTFILES_MISE_HOME}/data"
-  export MISE_CACHE_DIR="${DOTFILES_MISE_HOME}/cache"
-  export MISE_GLOBAL_CONFIG_FILE="${DOTFILES_MISE_HOME}/config.toml"
-  export MISE_TMP_DIR="${DOTFILES_MISE_HOME}/tmp"
+  export DOTFILES_MISE_ZSHRC="$DOTFILES_MISE_HOME/config.zsh"
 
-  eval "$(mise activate zsh)"
+  [[ -f "$DOTFILES_MISE_ZSHRC" ]] && source "$DOTFILES_MISE_ZSHRC"
 fi
 
 export NVM_DIR="$HOME/.nvm"
