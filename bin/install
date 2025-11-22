@@ -207,7 +207,7 @@ else
   export PATH="$HOME/$home/.bin:$PATH"
 
   just install prod
-  # just build
+  just build
   # dotfiles install
 
   cd "$wd"
