@@ -10,7 +10,7 @@ permissions:
   contents: write
 
 env:
-  OUT: .build
+  OUT: dist
   NAME: dotfiles
 
 jobs:
