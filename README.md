@@ -1,43 +1,17 @@
-# Personal Dotfiles
+# Dotfiles
 
-My personal dotfiles.
+These are my personal dotfiles for my system. This repo uses my personal approach to tooling and setup for my preferred development tools on the OS's I personally use.
 
-## Prerequisites
+## About
 
-Required for development:
+The repo is with a Go CLI application for management of the dotfiles as well as all the dotfiles configs I like to use in the `tools` directory.
 
-- [direnv](https://direnv.net)
-- [aqua](https://aquaproj.github.io)
-- [just](https://just.systems/man/en)
+There is also a `dotfiles.yml` which I use as a small piece of state to tell me what the system needs in order for the dotfiles to be installed. On top of that the built-in CLI needs to be capable of being setup and built and using that, solely, to install and uninstall the dotfiles themselves.
 
-## Getting Started
+## Documentation
 
-Install project tools and dependencies:
+The documentation is broken down into the `docs/*` directory.
 
-```bash
-just
-```
+### [Dotfiles YAML Config](./docs/dotfiles-yaml-config)
 
-Test the development CLI:
-
-```bash
-dotfiles <args>
-```
-
-## How It Works
-
-This project uses `direnv` to automatically manage your development environment. When you enter this directory, tools are added to your `PATH`. When you leave, they are removed.
-
-All system packages and project dependencies are ephemeral and contained within the project directory. Removing the project removes everything except the prerequisites.
-
-The `dotfiles` command is a wrapper that runs within a persistent development container.
-
-## Architecture
-
-The toolchain follows this hierarchy: `direnv` > `just` > `aqua`
-
-- `direnv` automatically activates the `.envrc` file when entering this directory
-- `just` handles all task execution and command orchestration
-- `aqua` installs system packages locally within the project, not globally
-
-Everything flows from this foundation. For example, `aqua` installs `mise`, which then installs `go` at the project level.
+Tells you how to use the `dotfiles.yml` configuration.

@@ -1,5 +1,5 @@
 services:
-  dotfiles-dev:
+  dev:
     image: dotfiles-dev
     build:
       dockerfile: Dockerfile.dev
@@ -11,7 +11,7 @@ services:
     working_dir: /home/user
     volumes:
       - .:$PROJECT_DOCKER_HOME
-  dotfiles-prod:
+  prod:
     image: dotfiles-prod
     build:
       dockerfile: Dockerfile.prod

@@ -1,7 +1,0 @@
-#!/usr/bin/env bash
-cntr="${1:-dev}"
-
-[[ "$cntr" == "dev" ]] && cntr="dotfiles-dev"
-[[ "$cntr" == "prod" ]] && cntr="dotfiles-prod"
-
-just connect "$cntr"

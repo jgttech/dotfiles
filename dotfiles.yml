@@ -1,36 +1,29 @@
-# [About]
-# Configures where the CLI handles opening a given
-# tool. The key is the argument to the CLI command.
-# The value is where, relative to the "./tools",
-# the the IDE should be opened at.
-#
-# [Example]
-# dotfiles edit linux/fonts
-tools:
-  shared/ghostty: shared/ghostty/.config/ghostty
-  shared/git: shared/git
-  shared/nvim: shared/nvim/.config/nvim
-  shared/opencode: shared/opencode/.config/opencode
-  shared/p10k: shared/p10k
-  shared/tmux: shared/tmux
-  shared/zed: shared/zed/.config/zed
-  shared/zsh: shared/zsh/.config/zsh
-  shared/mise: shared/mise/.config/mise
-  shared/aqua: shared/aqua/.config/aqua
-  linux/alacritty: linux/alacritty/.config/alacritty
-  linux/fonts: linux/.local/share/fonts
-  macos/alacritty: macos/alacritty/.config/alacritty
-  macos/fonts: macos/fonts/Library/Fonts
+# DOCS: ./docs/dotfiles-yaml-config/platform.md
+platform:
+  linux:
+    package-manager:
+      default: detect
+      fallback: pacman
+    dependencies:
+      pacman:
+        direnv: direnv
+        aqua: aqua
+        just: just
+  macos:
+    package-manager:
+      default: detect
+      fallback: brew
+    dependencies:
+      brew:
+        direnv: direnv
+        aqua: aqua
+        just: just
 
-# [About]
-# The packages that will be globally installed using
-# the globally installed "npm" package. Everything in
-# here gets treated like it is part of the "npm i -g <packages>"
-# command.
-npm:
-  - "npm"
-  - "pnpm"
-  - "yarn"
-  - "bun"
-  - "@tailwindcss/language-server"
-  - "@anthropic-ai/claude-code"
+# DOCS: ./docs/dotfiles-yaml-config/tools.md
+tools:
+  - shared/ghostty/.config/ghostty
+  - shared/nvim/.config/nvim
+  - shared/opencode/.config/opencode
+  - shared/tmux
+  - shared/p10k
+  - shared/git

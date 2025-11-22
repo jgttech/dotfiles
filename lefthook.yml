@@ -1,7 +1,0 @@
-pre-commit:
-  jobs:
-    - name: Format
-      run: golangci-lint fmt
-
-    - name: Check
-      run: golangci-lint run ./...
