@@ -16,6 +16,8 @@ platform:
 
 This configures how the CLI handles the setup work required to get itself installed on your system.
 
+<br />
+
 ## Available Package Managers
 
 List of available packages managers in a central area here in the documentation to make it easy to update and maintain.
@@ -25,9 +27,13 @@ List of available packages managers in a central area here in the documentation 
 - `detect` (**`<symbol>`**)
   - This symbol tells the CLI to perform it's own internal check for a package manager. It will result in one of the available options or return the fallback option. If no fallback option is given, it will return an empty string.
 
+<br />
+
 ## `platform`
 
 Contains OS-specific configuration for supporting a particular platform.
+
+<br />
 
 ## `platform.<os>`
 
@@ -37,6 +43,8 @@ The `<os>` is the supported OS for the dotfiles. Each supported OS must be backe
 
 - `linux`
 - `macos`
+
+<br />
 
 ## `platform.<os>.package-manager.<method>`
 
@@ -49,13 +57,19 @@ The `<method>` is when a package manager should be used.
 - `fallback`
   - The fallback method for the package manager to be used if `default` fails to detect a package manager.
 
+<br />
+
 ## `platform.<os>.package-manager.<method>: <pm>|<symbol>`
 
 The `<pm>` is a name of an available package manager that the CLI supports.
 
+<br />
+
 ## `platform.<os>.dependencies.<pm>`
 
 The `<PM>` is a name of an available package manager that the CLI supports.
+
+<br />
 
 ## `platform.<os>.pependencies.<pm>.<key>.<package>`
 
