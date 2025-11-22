@@ -1,5 +1,7 @@
-install:
+install *argv='':
   #!/usr/bin/env bash
+  env_type="{{argv}}"
+
   # Ensure env is latest.
   direnv reload
   source .envrc
@@ -8,10 +10,12 @@ install:
   aqua install
 
   # Install language tools.
-  mise install
+  aqua exec -- mise install
 
   # Install githooks.
-  lefthook install
+  aqua exec -- lefthook install
 
-  just runtime dotfiles-dev
-  dotfiles
+  if [[ "$env_type" != "prod" ]]; then
+    just runtime dotfiles-dev
+    dotfiles
+  fi
