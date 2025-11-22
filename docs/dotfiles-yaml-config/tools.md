@@ -11,9 +11,13 @@ tools:
 
 This handles how the CLI knows which tools it can edit, has a namespaced property for them, and a value that configures where the root of the tools configuration is. This required because automatic detection is not clear and there could be anything under a tools configuration. So we need to configure where the user can be dropped in at so editing is smooth and fast.
 
+<br />
+
 ## `tools`
 
 Contains all the tools path context information for assisting in the editing and tracking of tools in the dotfiles.
+
+<br />
 
 ## `tools.<home>`
 
