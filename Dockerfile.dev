@@ -16,6 +16,7 @@ RUN \
   fd \
   zip \
   fzf \
+  zsh \
   ripgrep \
   unzip \
   bash \
@@ -31,6 +32,16 @@ RUN \
 USER user
 WORKDIR /home/user
 
+# Install Oh-My-Zsh
+RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+
+# Install Homebrew as non-root user with NONINTERACTIVE flag
+RUN NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+# Make Go binaries available in current layer
+ENV PATH="/home/user/go/bin:${PATH}"
+
+RUN go install github.com/aquaproj/aqua/v2/cmd/aqua@latest
 RUN mkdir -p .config .local/bin .local/share
 RUN touch .zshrc
 
@@ -38,4 +49,3 @@ ENV HOME=/home/user
 ENV USER=user
 
 CMD [ "/bin/bash" ]
-
