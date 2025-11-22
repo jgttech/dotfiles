@@ -57,6 +57,7 @@ jobs:
           go build -ldflags="-s -w" -o "${OUT}/${BINARY}"
 
           echo "Built: ${OUT}/${BINARY}"
+          ls -la ${OUT}
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
