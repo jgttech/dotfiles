@@ -18,6 +18,6 @@ prod:
   # docker compose exec dotfiles-prod bash -c "export DOTFILES_DEV=\"true\"; cat /tmp/dotfiles/bin/install | bash"
 
   # Testing using git repo.
-  docker compose exec dotfiles-prod bash -c "cat ~/.dotfiles/bin/install | bash"
+  docker compose exec dotfiles-prod bash -c "wget -qO- https://raw.githubusercontent.com/jgttech/dotfiles/refs/heads/v3/bin/install | bash"
 
   exit 0
