@@ -46,8 +46,9 @@ jobs:
         env:
           GOOS: ${{ matrix.goos }}
           GOARCH: ${{ matrix.goarch }}
-          GOARM: ${{ matrix.GOARM }}
+          GOARM: ${{ matrix.goarm }}
         run: |
+          mkdir -p "${OUT}"
           BINARY="${NAME}-${GOOS}-${GOARCH}"
 
           if [ "${GOARM}" != "" ]; then
@@ -57,7 +58,6 @@ jobs:
           go build -ldflags="-s -w" -o "${OUT}/${BINARY}"
 
           echo "Built: ${OUT}/${BINARY}"
-          ls -la ${OUT}
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
