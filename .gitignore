@@ -485,6 +485,7 @@ rebar.lock
 .build/
 .project/
 .claude/
+seed
 tools/shared/aqua/.config/aqua/aqua-proxy
 tools/shared/aqua/.config/aqua/bin
 tools/shared/aqua/.config/aqua/internal
@@ -496,4 +497,3 @@ tools/shared/mise/.config/mise/cache
 tools/shared/mise/.config/mise/tmp
 tools/shared/aqua/.config/aqua
 !tools/shared/aqua/.config/aqua/aqua.yml
-install.timestamp

@@ -16,17 +16,21 @@ func Command() *cli.Command {
 		Aliases: []string{"u"},
 		Usage:   "Detect system and remove appropriate dotfiles packages",
 		Action: func(ctx context.Context, c *cli.Command) error {
+			if err := zsh(); err != nil {
+				return err
+			}
+
 			err := tools.Unlink()
 
 			if err == nil {
 				fmt.Println("Done")
 			}
 
-			if _, err := os.Stat(env.HOME_TIMESTAMP); os.IsNotExist(err) {
+			if _, err := os.Stat(env.HOME_SEED); os.IsNotExist(err) {
 				return nil
 			}
 
-			err = os.Remove(env.HOME_TIMESTAMP)
+			err = os.Remove(env.HOME_SEED)
 			return err
 		},
 	}

@@ -16,7 +16,7 @@ func zsh() error {
 	}
 
 	if zshrc.Exists() {
-		if err = zshrc.Rename(fmt.Sprintf(".zshrc.%s.bak", env.TIMESTAMP)); err != nil {
+		if err = zshrc.Rename(fmt.Sprintf(".zshrc.%s.bak", env.SEED)); err != nil {
 			return err
 		}
 	}
