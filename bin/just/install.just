@@ -2,6 +2,7 @@ install:
   #!/usr/bin/env bash
   # Ensure env is latest.
   direnv reload
+  source .envrc
 
   # Install system tools.
   aqua install

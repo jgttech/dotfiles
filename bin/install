@@ -206,8 +206,9 @@ else
   source .envrc
   export PATH="$HOME/$home/.bin:$PATH"
 
-  just build
-  dotfiles install
+  # just
+  # just build
+  # dotfiles install
 
   cd "$wd"
   echo "Done"
