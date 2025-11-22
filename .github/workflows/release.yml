@@ -63,5 +63,5 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: dotfiles-${{ matrix.goos }}-${{ matrix.goarch }}${{ matrix.goarm && format('-v{0}', matrix.goarm) || '' }}
-          path: ${{ env.OUT }}
+          path: ${{ env.OUT }}/*
           retention-days: 1
