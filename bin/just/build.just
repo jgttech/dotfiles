@@ -1,14 +1,5 @@
 build:
   #!/usr/bin/env bash
-  # Ensure env is latest.
-  direnv reload
-
-  # Install system tools.
-  aqua install
-
-  # Install language tools.
-  mise install
-
   # Clean the build dir (should not exist in the first place)
   [[ -e "$PROJECT_BUILD_DIR" ]] && rm -rf "$PROJECT_BUILD_DIR"
 

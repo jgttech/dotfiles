@@ -17,6 +17,7 @@ RUN \
   zip \
   fzf \
   zsh \
+  just \
   ripgrep \
   unzip \
   bash \
