@@ -1,7 +1,6 @@
 package env
 
 import (
-	"fmt"
 	"os"
 	"path/filepath"
 )
@@ -17,7 +16,6 @@ var (
 		_, err := os.Stat(HOME_SEED)
 
 		if os.IsNotExist(err) {
-			fmt.Println(err)
 			return ""
 		}
 
