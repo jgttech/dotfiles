@@ -206,7 +206,7 @@ else
   source .envrc
   export PATH="$HOME/$home/.bin:$PATH"
 
-  # just
+  just
   # just build
   # dotfiles install
 
