@@ -1,0 +1,63 @@
+name: Build & Release
+
+on:
+  workflow_dispatch: {}
+  push:
+    tags:
+      - "v*.*.*"
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    name: Build binaries
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          # Linux builds
+          - goos: linux
+            goarch: amd64
+          - goos: linux
+            goarch: arm64
+          - goos: linux
+            goarch: arm
+            goarm: 7
+
+          # macOS builds
+          - goos: darwin
+            goarch: amd64
+          - goos: darwin
+            goarch: arm64
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-go@v5
+        with:
+          cache: true
+          go-version-file: "go.mod"
+
+      - name: Build binary
+        env:
+          NAME: dotfiles
+          OUT: .build
+          GOOS: ${{ matrix.goos }}
+          GOARCH: ${{ matrix.goarch }}
+          GOARM: ${{ matrix.GOARM }}
+        run: |
+          BINARY="${NAME}-${GOOS}-${GOARCH}"
+
+          if [ "${GOARM}" != "" ]; then
+            BINARY="${BINARY}-v${GOARM}"
+          fi
+
+          go build -ldflags="-s -w" -o "${OUT}/${BINARY}"
+
+          echo "Built: ${OUT}/${BINARY}"
+
+      - name: Upload artifacts
+        uses: action/upload-artifact@v4
+        with:
+          path: ${{ env.OUT }}
+          retention-days: 1

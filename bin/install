@@ -18,3 +18,72 @@ home=".dotfiles"
 # functions.
 current_platform=$(uname -s | tr '[:upper:]' '[:lower:]')
 
+# If dependencies are missing, the user needs
+# to lookup their platforms approach to install
+# the missing dependencies. The one things this
+# install script does not handle is installing
+# dependencies. It just checks for them. This is
+# because maintianing install methods are various
+# Linux and MacOS distro's and/or versions is a
+# LOT of work and not what these tools are for.
+dependencies=( \
+  "sh" \
+  "zsh" \
+  "curl" \
+
+  # Does get automatically installed because
+  # I use this to ephemerally configure the project
+  # system dependencies for use and can be easily
+  # removed, once installation is completed.
+  "pkgx" \
+)
+
+# Tracks what is missing to, if something is
+# missing, I can display the full list of what
+# is missing instead of failing on each missing
+# system package.
+missing=()
+
+# Unfortunately, I need to make sure that ZSH is
+# installed before continuing the installation
+# of the dotfiles because it is used to validate
+# the existence of packages on the system.
+if ! command -v "zsh" &> /dev/null; then
+  echo "[NOTE]"
+  echo "This install script uses ZSH to validate"
+  echo "the exsitence of packages your system"
+  echo "needs in order to function with these"
+  echo "dotfiles."
+  echo ""
+  echo "[ERROR]"
+  echo "ZSH required to install dotfiles. Please,"
+  echo "Please install ZSH and re-run the script."
+  exit 1
+fi
+
+# Check which script dependencies are needed.
+for dep in "${dependencies[@]}"; do
+  if ! installed "$dep"; then
+    if [[ "$dep" == "pkgx" ]]; then
+      curl https://pkgx.sh | sh
+    else
+      missing+=("$dep")
+    fi
+  fi
+done
+
+# If we have missing packages, fail the install
+# and display all the missing packages.
+if [[ ${#missing[@]} -ne 0 ]]; then
+  echo "[ERROR]"
+  echo "Missing (${#missing[@]}) required dependencies:"
+
+  for missing in "${missing[@]}"; do
+    echo " $missing"
+  done
+
+  exit 1
+fi
+
+echo "PKGX!!!!!!!!!!!!!!!"
+which pkgx
