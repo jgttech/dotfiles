@@ -14,6 +14,10 @@ func Command() *cli.Command {
 		Aliases: []string{"i"},
 		Usage:   "Detect system and install appropriate dotfiles packages",
 		Action: func(ctx context.Context, c *cli.Command) error {
+			if err := timestamp(); err != nil {
+				return err
+			}
+
 			if err := zsh(); err != nil {
 				return err
 			}

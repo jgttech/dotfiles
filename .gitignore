@@ -496,3 +496,4 @@ tools/shared/mise/.config/mise/cache
 tools/shared/mise/.config/mise/tmp
 tools/shared/aqua/.config/aqua
 !tools/shared/aqua/.config/aqua/aqua.yml
+install.timestamp

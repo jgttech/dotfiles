@@ -1,12 +1,11 @@
 package install
 
 import (
+	"dotfiles/cli/core/env"
 	"dotfiles/cli/core/node"
 	"fmt"
 	"os"
 	"path/filepath"
-	"strconv"
-	"time"
 )
 
 func zsh() error {
@@ -17,8 +16,7 @@ func zsh() error {
 	}
 
 	if zshrc.Exists() {
-		timestamp := strconv.Itoa(int(time.Now().UnixNano()))
-		if err = zshrc.Rename(fmt.Sprintf(".zshrc.%s.bak", timestamp)); err != nil {
+		if err = zshrc.Rename(fmt.Sprintf(".zshrc.%s.bak", env.TIMESTAMP)); err != nil {
 			return err
 		}
 	}
