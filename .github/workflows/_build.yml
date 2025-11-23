@@ -16,6 +16,10 @@ on:
         default: false
         type: boolean
 
+env:
+  OUT_DIR: ${{ inputs.out }}
+  BINARY_NAME: ${{ inputs.name }}
+
 jobs:
   build:
     name: Build binaries
