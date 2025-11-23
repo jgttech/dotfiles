@@ -15,3 +15,17 @@ The documentation is broken down into the `docs/*` directory.
 ### [Dotfiles YAML Config](./docs/dotfiles-yaml-config)
 
 Tells you how to use the `dotfiles.yml` configuration.
+
+## Getting Started
+
+> Install and setup the repo for development
+
+```bash
+just
+```
+
+> Testing the development CLI.
+
+```bash
+dotfiles version
+```
