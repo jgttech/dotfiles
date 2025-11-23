@@ -67,7 +67,7 @@ jobs:
           echo "Built: ${OUT_DIR}/${BINARY}"
 
       - name: Upload artifacts
-        if: ${{ inputs.upload }} == true
+        if: ${{ inputs.upload == true }}
         uses: actions/upload-artifact@v4
         with:
           name: dotfiles-${{ matrix.goos }}-${{ matrix.goarch }}${{ matrix.goarm && format('-v{0}', matrix.goarm) || '' }}
