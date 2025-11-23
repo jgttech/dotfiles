@@ -44,6 +44,7 @@ echo
 if [[ $REPLY =~ ^[Yy]$ ]]; then
   # Update version in the dotfiles.yml
   yq eval ".version = \"${new_version}\"" -i dotfiles.yml
+  echo
 
   # Generate a commit
   just save
