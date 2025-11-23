@@ -1,30 +1,32 @@
 # Dotfiles
 
-These are my personal dotfiles for my system. This repo uses my personal approach to tooling and setup for my preferred development tools on the OS's I personally use.
+Personal dotfiles managed by a custom Go CLI application. This repository contains configuration files and tools for development environments across multiple operating systems.
 
 ## About
 
-The repo is with a Go CLI application for management of the dotfiles as well as all the dotfiles configs I like to use in the `tools` directory.
+This repository consists of three main components:
 
-There is also a `dotfiles.yml` which I use as a small piece of state to tell me what the system needs in order for the dotfiles to be installed. On top of that the built-in CLI needs to be capable of being setup and built and using that, solely, to install and uninstall the dotfiles themselves.
+1. **Go CLI Application**: A command-line tool for managing dotfiles installation, configuration, and editing
+2. **Tool Configurations**: Configuration files stored in the `tools/` directory
+3. **Configuration State**: A `dotfiles.yml` file that defines system requirements and installation settings
+
+The CLI is designed to handle the complete lifecycle of dotfiles management, including installation, uninstallation, and editing operations.
 
 ## Documentation
 
-The documentation is broken down into the `docs/*` directory.
+Documentation is organized in the `docs/` directory:
 
-### [Dotfiles YAML Config](./docs/dotfiles-yaml-config)
-
-Tells you how to use the `dotfiles.yml` configuration.
+- [Dotfiles YAML Config](./docs/dotfiles-yaml-config) - Configuration file structure and usage
 
 ## Getting Started
 
-> Install and setup the repo for development
+Install and setup the repository for development:
 
 ```bash
 just
 ```
 
-> Testing the development CLI.
+Verify the CLI installation:
 
 ```bash
 dotfiles version

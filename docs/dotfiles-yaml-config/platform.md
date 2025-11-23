@@ -1,78 +1,66 @@
 # Dotfiles YAML Config: `platform`
 
-> General outline
+## Structure
 
 ```yaml
 platform:
   <os>:
     package-manager:
       <method>: <pm>|<symbol>
-    depenencies:
+    dependencies:
       <pm>:
         <key>: <package>
 ```
 
-## About
+## Overview
 
-This configures how the CLI handles the setup work required to get itself installed on your system.
-
-<br />
+The `platform` section configures OS-specific settings and dependencies required for the CLI to install and manage dotfiles on your system.
 
 ## Available Package Managers
 
-List of available packages managers in a central area here in the documentation to make it easy to update and maintain.
+The CLI supports the following package managers:
 
-- `pacman`
-- `brew`
-- `detect` (**`<symbol>`**)
-  - This symbol tells the CLI to perform it's own internal check for a package manager. It will result in one of the available options or return the fallback option. If no fallback option is given, it will return an empty string.
-
-<br />
+- `pacman` - Arch Linux package manager
+- `brew` - Homebrew package manager for macOS and Linux
+- `detect` - Special symbol that instructs the CLI to automatically detect the system package manager. Returns the detected package manager, the configured fallback option, or an empty string if no fallback is specified.
 
 ## `platform`
 
-Contains OS-specific configuration for supporting a particular platform.
-
-<br />
+Contains operating system-specific configuration for each supported platform.
 
 ## `platform.<os>`
 
-The `<os>` is the supported OS for the dotfiles. Each supported OS must be backed by the CLI, itself. These are not arbitrary values.
+Specifies the target operating system. Supported values are defined by the CLI implementation and are not arbitrary.
 
-> Available OS's
+**Supported Operating Systems:**
 
 - `linux`
 - `macos`
 
-<br />
-
 ## `platform.<os>.package-manager.<method>`
 
-The `<method>` is when a package manager should be used.
+Defines the package manager selection method for the operating system.
 
-> Available Methods
+**Available Methods:**
 
-- `default`
-  - The default method for the package manager to be used.
-- `fallback`
-  - The fallback method for the package manager to be used if `default` fails to detect a package manager.
-
-<br />
+- `default` - The primary package manager to use
+- `fallback` - The package manager to use if the default cannot be detected or is unavailable
 
 ## `platform.<os>.package-manager.<method>: <pm>|<symbol>`
 
-The `<pm>` is a name of an available package manager that the CLI supports.
-
-<br />
+The value is either a package manager name or a special symbol (such as `detect`).
 
 ## `platform.<os>.dependencies.<pm>`
 
-The `<PM>` is a name of an available package manager that the CLI supports.
+Groups dependencies by package manager. The `<pm>` must be a supported package manager name.
 
-<br />
+## `platform.<os>.dependencies.<pm>.<key>: <package>`
 
-## `platform.<os>.pependencies.<pm>.<key>.<package>`
+Maps a common dependency name to a package manager-specific package name.
 
-The `<key>` is a common name you want to use for that package. The `<package>` is the exact package that the package manager needs to install to support installing that package.
+- `<key>` - A common identifier for the dependency
+- `<package>` - The exact package name used by the specified package manager
 
-The use case would be for things that are not clear, like choosing to install the git source and build the package as opposed to using a pre-built binary. or maybe using a third-party alternative instead of whatever else. This creates a common interface over a package that can be installed by different names, in different package manager, behind the scenes with a common name.
+**Use Case:**
+
+This mapping allows for a consistent dependency interface across different package managers. For example, you can use a common key like `git-cli` that maps to `git` in one package manager and `git-core` in another. This is useful when package names differ across package managers or when choosing between different installation methods (e.g., source build vs. pre-built binary).

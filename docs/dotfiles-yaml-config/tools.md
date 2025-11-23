@@ -1,47 +1,47 @@
 # Dotfiles YAML Config: `tools`
 
-> General outline
+## Structure
 
 ```yaml
 tools:
   - <home>
 ```
 
-## About
+## Overview
 
-This handles how the CLI knows which tools it can edit, has a namespaced property for them, and a value that configures where the root of the tools configuration is. This required because automatic detection is not clear and there could be anything under a tools configuration. So we need to configure where the user can be dropped in at so editing is smooth and fast.
-
-<br />
+The `tools` section defines which tool configurations the CLI can manage. This is necessary because automatic detection is unreliable due to the variety of possible tool configurations. By explicitly declaring tool paths, the CLI can provide fast and accurate editing capabilities.
 
 ## `tools`
 
-Contains all the tools path context information for assisting in the editing and tracking of tools in the dotfiles.
-
-<br />
+Contains path information for all managed tool configurations in the dotfiles repository.
 
 ## `tools.<home>`
 
-The `<home>` is the path to the home directory for where the a tool exists, relative to the `tools/` directory.
+The `<home>` value is the path to a tool's configuration directory, relative to the `tools/` directory.
 
-> Example
+**Example:**
 
 ```yaml
 tools:
   - shared/foo/.config/foo
 ```
 
-This resolves, relative to the project root, to the path:
+This resolves to the following path relative to the project root:
 
-- `tools/shared/foo/.config/foo`
+```
+tools/shared/foo/.config/foo
+```
 
-If I wanted to invoke the `edit` operation on the CLI, we can run and of these:
+**Usage:**
+
+To edit a tool's configuration:
 
 ```bash
 dotfiles edit foo
 dotfiles edit shared/foo
 ```
 
-Or, if we just want to see the path to the source, we can run:
+To display the path to a tool's configuration:
 
 ```bash
 dotfiles edit foo --path

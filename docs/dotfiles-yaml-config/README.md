@@ -1,8 +1,8 @@
-# Dotfiles YAML Config
+# Dotfiles YAML Configuration
 
-The YAML config file that drives the configuration of the CLI.
+The `dotfiles.yml` file defines the system configuration and dependencies required for the dotfiles CLI to function correctly. This file specifies platform-specific settings and tool configuration paths.
 
-## `dotfiles.yml`
+## Configuration Sections
 
-- [`platform`](./platform.md)
-- [`tools`](./tools.md)
+- [`platform`](./platform.md) - Operating system and package manager configuration
+- [`tools`](./tools.md) - Tool paths and editing configuration
