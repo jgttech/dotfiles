@@ -47,6 +47,7 @@ if [[ $REPLY =~ ^[Yy]$ ]]; then
 
   # Generate a commit
   just save
+  echo
 
   # Push new version
   git push
