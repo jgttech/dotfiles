@@ -1,2 +1,32 @@
 #!/usr/bin/env bash
+set -euo pipefail
 
+service="prod"
+image="dotfiles-prod"
+
+echo "Removing existing prod container if it exists..."
+docker compose rm -sf ${service} 2>/dev/null || true
+
+# Check if prod image exists, build if not
+if [[ -z "$(docker images -q ${image})" ]]; then
+  echo "Prod image not found. Building..."
+  docker compose build ${service}
+else
+  echo "Using existing prod image."
+fi
+
+echo "Creating new prod container..."
+docker compose run -d --name dotfiles-${service} ${service} bash -c "sleep infinity"
+
+echo "Copying bin/install script into container..."
+docker compose cp bin/install ${service}:/home/user/install
+
+echo "Executing install script..."
+docker compose exec -T ${service} bash /home/user/install || true
+
+echo "Stopping container (leaving it available for debugging)..."
+docker compose stop ${service}
+
+echo "Done! Container stopped but preserved for debugging."
+echo "To inspect: docker compose exec ${service} bash"
+echo "To remove: docker compose rm -f ${service}"

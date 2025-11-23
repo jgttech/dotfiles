@@ -7,7 +7,6 @@ RUN \
   git \
   curl \
   wget \
-  go \
   man-db \
   man-pages && \
   pacman -Syu --noconfirm
