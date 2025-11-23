@@ -8,3 +8,4 @@ import "bin/just/release.just"
 import "bin/just/save.just"
 
 default: install
+reinstall: clean install
