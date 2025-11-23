@@ -22,7 +22,7 @@ env:
 
 jobs:
   build:
-    name: Build binaries
+    name: Build binary
     runs-on: ubuntu-latest
     strategy:
       matrix:

@@ -16,6 +16,7 @@ permissions:
 
 jobs:
   invoke_builder:
+    name: Builder
     uses: ./.github/workflows/_build.yml
     secrets: inherit
     with:

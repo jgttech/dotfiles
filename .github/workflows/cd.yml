@@ -13,6 +13,7 @@ jobs:
   # to ensure that it builds for all the supported platforms
   # correctly and we did not introduce a breaking change.
   invoke_builder:
+    name: Builder
     uses: ./.github/workflows/_build.yml
     secrets: inherit
     with:
@@ -24,6 +25,7 @@ jobs:
   # GitHub release so that the binary can be used with
   # the official installation method.
   invoke_releaser:
+    name: Releaser
     needs:
       - invoke_builder
     uses: ./.github/workflows/_release.yml
