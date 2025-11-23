@@ -43,9 +43,19 @@ release type="patch":
   echo
 
   if [[ $REPLY =~ ^[Yy]$ ]]; then
+    # Update version in the dotfiles.yml
+    yq eval ".version = \"${new_version}\"" -i dotfiles.yml
+
+    # Generate a commit
+    just save
+
+    # Push new version
+    git push
+
     git tag -a "${new_version}" -m "Release ${new_version}"
     git push origin "${new_version}"
-    echo "✓ Tagged and pushed ${new_version}"
+
+    echo -e "\n✓ Tagged and pushed ${new_version}"
   else
     echo "Cancelled"
     exit 0
