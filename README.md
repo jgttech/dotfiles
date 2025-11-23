@@ -29,5 +29,5 @@ just
 Verify the CLI installation:
 
 ```bash
-dotfiles version
+dev version
 ```

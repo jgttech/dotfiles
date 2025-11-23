@@ -6,6 +6,7 @@ image="dotfiles-prod"
 
 echo "Removing existing prod containers if any exist..."
 containers=$(docker compose ps -aq ${service} 2>/dev/null)
+
 if [ -n "$containers" ]; then
   docker rm -f $containers
 fi
