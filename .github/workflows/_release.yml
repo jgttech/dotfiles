@@ -21,7 +21,7 @@ jobs:
       - uses: actions/download-artifact@v4
         with:
           path: ${{ inputs.out }}/
-          pattern: ${{ inputs.name }}-
+          pattern: ${{ inputs.name }}-*
           merge-multiple: true
       - run: ls -R ${{ inputs.out }}/
       - name: Create Release
