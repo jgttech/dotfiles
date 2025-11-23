@@ -1,0 +1,35 @@
+name: Build Dotfiles CLI
+
+on:
+  workflow_call:
+    inputs:
+      out:
+        description: Directory where the binary should be placed
+        type: string
+        default: dist
+      name:
+        description: Name of the binary (NOT with arch metadata)
+        default: dotfiles
+        type: string
+
+jobs:
+  release:
+    name: Create GitHub Release
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          path: ${{ input.out }}/
+          pattern: ${{ input.name }}-
+          merge-multiple: true
+      - run: ls -R ${{ input.out }}/
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: ${{ input.out }}/*
+          draft: false
+          prerelease: false
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

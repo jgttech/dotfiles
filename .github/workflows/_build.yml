@@ -1,17 +1,20 @@
-name: Build & Release
+name: Build Dotfiles CLI
 
 on:
-  workflow_dispatch: {}
-  push:
-    tags:
-      - "v*.*.*"
-
-permissions:
-  contents: write
-
-env:
-  OUT: dist
-  NAME: dotfiles
+  workflow_call:
+    inputs:
+      out:
+        description: Directory where the binary should be placed
+        type: string
+        default: dist
+      name:
+        description: Name of the binary (NOT with arch metadata)
+        default: dotfiles
+        type: string
+      upload:
+        description: Whether or not to upload the build artifacts
+        default: false
+        type: boolean
 
 jobs:
   build:
@@ -48,20 +51,21 @@ jobs:
           GOARCH: ${{ matrix.goarch }}
           GOARM: ${{ matrix.goarm }}
         run: |
-          mkdir -p "${OUT}"
-          BINARY="${NAME}-${GOOS}-${GOARCH}"
+          mkdir -p "${OUT_DIR}"
+          BINARY="${BINARY_NAME}-${GOOS}-${GOARCH}"
 
           if [ "${GOARM}" != "" ]; then
             BINARY="${BINARY}-v${GOARM}"
           fi
 
-          go build -ldflags="-s -w" -o "${OUT}/${BINARY}"
+          go build -ldflags="-s -w" -o "${OUT_DIR}/${BINARY}"
 
-          echo "Built: ${OUT}/${BINARY}"
+          echo "Built: ${OUT_DIR}/${BINARY}"
 
       - name: Upload artifacts
+        if: ${{ inputs.upload }} == true
         uses: actions/upload-artifact@v4
         with:
           name: dotfiles-${{ matrix.goos }}-${{ matrix.goarch }}${{ matrix.goarm && format('-v{0}', matrix.goarm) || '' }}
-          path: ${{ env.OUT }}/*
+          path: ${{ env.OUT_DIR }}/*
           retention-days: 1

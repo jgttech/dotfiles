@@ -1,0 +1,24 @@
+name: Dofiles CI
+
+on:
+  push:
+    branches:
+      # GitHub Actions requires at least one branch defined without the ! character
+      # https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#example-including-and-excluding-branches-and-tags
+      - "**"
+      - "!main"
+  pull_request:
+    branches:
+      - "main"
+
+permissions:
+  contents: write
+
+jobs:
+  invoke_builder:
+    uses: ./.github/workflows/_build.yml
+    secrets: inherit
+    with:
+      out: ${{ vars.OUT_DIR }}
+      name: ${{ vars.BINARY_NAME }}
+      upload: false

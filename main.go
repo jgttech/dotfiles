@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"jgttech/dotfiles/cmds/git"
 	"jgttech/dotfiles/cmds/version"
 	"log"
 	"os"
@@ -15,6 +16,7 @@ func main() {
 		Usage: "Manages my personal dotfiles",
 		Commands: []*cli.Command{
 			version.Command,
+			git.Command,
 		},
 	}
 
