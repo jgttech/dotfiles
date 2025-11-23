@@ -55,9 +55,9 @@ install_binary() {
   binary_filename="${BINARY_NAME}-${os}-${arch}"
 
   echo -e "${YELLOW}Detecting platform...${NC}"
-  echo "  OS...........: $os"
-  echo "  Architecture.: $arch"
-  echo "  Binary.......: $binary_filename"
+  echo "  OS: $os"
+  echo "  Architecture: $arch"
+  echo "  Binary: $binary_filename"
   echo ""
 
   # Get version

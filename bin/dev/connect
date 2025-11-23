@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+cntr="${1:-dev}"
+
+if [ "$cntr" == "" ]; then
+  echo "No container service selected."
+  exit 0
+fi
+
+docker compose exec ${cntr} bash
