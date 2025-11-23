@@ -1,5 +1,4 @@
-version: v0.0.0
-
+version: v0.0.5
 # DOCS: ./docs/dotfiles-yaml-config/platform.md
 platform:
   linux:
@@ -20,7 +19,6 @@ platform:
         direnv: direnv
         aqua: aqua
         just: just
-
 # DOCS: ./docs/dotfiles-yaml-config/tools.md
 tools:
   - shared/ghostty/.config/ghostty
