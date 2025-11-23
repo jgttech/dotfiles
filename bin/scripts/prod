@@ -4,8 +4,11 @@ set -euo pipefail
 service="prod"
 image="dotfiles-prod"
 
-echo "Removing existing prod container if it exists..."
-docker compose rm -sf ${service} 2>/dev/null || true
+echo "Removing existing prod containers if any exist..."
+containers=$(docker compose ps -aq ${service} 2>/dev/null)
+if [ -n "$containers" ]; then
+  docker rm -f $containers
+fi
 
 # Check if prod image exists, build if not
 if [[ -z "$(docker images -q ${image})" ]]; then
@@ -16,17 +19,17 @@ else
 fi
 
 echo "Creating new prod container..."
-docker compose run -d --name dotfiles-${service} ${service} bash -c "sleep infinity"
-
-echo "Copying bin/install script into container..."
-docker compose cp bin/install ${service}:/home/user/install
+docker compose run -d ${service}
 
 echo "Executing install script..."
-docker compose exec -T ${service} bash /home/user/install || true
+docker compose exec -T ${service} bash < bin/install || true
 
-echo "Stopping container (leaving it available for debugging)..."
-docker compose stop ${service}
+# If arguments were provided, execute the dotfiles command
+if [ $# -gt 0 ]; then
+  echo "Running: dotfiles $@"
+  docker compose exec -T ${service} bash -c "export PATH=\"/home/user/.local/bin:\$PATH\" && dotfiles $*"
+fi
 
-echo "Done! Container stopped but preserved for debugging."
+echo "Done! Container is still running for debugging."
 echo "To inspect: docker compose exec ${service} bash"
-echo "To remove: docker compose rm -f ${service}"
+echo "To remove: docker compose rm -sf ${service}"
