@@ -36,7 +36,7 @@ release type="patch":
   new_version="v${MAJOR}.${MINOR}.${PATCH}"
 
   echo "Current version.: ${latest_tag}"
-  echo "New version.....: ${new_version}"
+  echo -e "New version.....: ${new_version}\n"
 
   # Prompt for confirmation
   read -p "Create and push tag ${new_version} (y/N) " -n 1 -r
