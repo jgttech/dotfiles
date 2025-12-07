@@ -54,34 +54,28 @@ jobs:
           direnv allow .
           direnv export gha > "$GITHUB_ENV"
 
-      - run: |
-          echo "PROJECT_DIR='$PROJECT_DIR'"
-          echo "PROJECT_SCRIPTS='$PROJECT_SCRIPTS'"
-          echo "BUILD_DIR='$BUILD_DIR'"
-          echo "BUILD_BIN='$BUILD_BIN'"
+      - uses: actions/setup-go@v5
+        with:
+          cache: false
+          go-version-file: "go.mod"
 
-      # - uses: actions/setup-go@v5
-      #   with:
-      #     cache: false
-      #     go-version-file: "go.mod"
-      #
-      # - name: Build binary
-      #   env:
-      #     GOOS: ${{ matrix.goos }}
-      #     GOARCH: ${{ matrix.goarch }}
-      #     GOARM: ${{ matrix.goarm }}
-      #   run: |
-      #     mkdir -p "${OUT_DIR}"
-      #     BINARY="${BINARY_NAME}-${GOOS}-${GOARCH}"
-      #
-      #     if [ "${GOARM}" != "" ]; then
-      #       BINARY="${BINARY}-v${GOARM}"
-      #     fi
-      #
-      #     go build -ldflags="-s -w" -o "${OUT_DIR}/${BINARY}"
-      #
-      #     echo "Built: ${OUT_DIR}/${BINARY}"
-      #
+      - name: Build binary
+        env:
+          GOOS: ${{ matrix.goos }}
+          GOARCH: ${{ matrix.goarch }}
+          GOARM: ${{ matrix.goarm }}
+        run: |
+          mkdir -p "${BUILD_DIR}"
+          BINARY="${BUILD_BIN}-${GOOS}-${GOARCH}"
+
+          if [ "${GOARM}" != "" ]; then
+            BINARY="${BINARY}-v${GOARM}"
+          fi
+
+          go build -ldflags="-s -w" -o "${BUILD_DIR}/${BINARY}"
+
+          echo "Built: ${BUILD_DIR}/${BINARY}"
+
       # - name: Upload artifacts
       #   if: inputs.upload
       #   uses: actions/upload-artifact@v4
