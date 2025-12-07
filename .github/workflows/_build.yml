@@ -44,32 +44,46 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: actions/setup-go@v5
-        with:
-          cache: false
-          go-version-file: "go.mod"
-
-      - name: Build binary
-        env:
-          GOOS: ${{ matrix.goos }}
-          GOARCH: ${{ matrix.goarch }}
-          GOARM: ${{ matrix.goarm }}
+      - name: Install direnv
         run: |
-          mkdir -p "${OUT_DIR}"
-          BINARY="${BINARY_NAME}-${GOOS}-${GOARCH}"
+          curl -sfL https://direnv.net/install.sh | bash
+          echo "$HOME/.local/bin" >> $GITHUB_PATH
 
-          if [ "${GOARM}" != "" ]; then
-            BINARY="${BINARY}-v${GOARM}"
-          fi
+      - name: Load environment variables
+        run: direnv allow .
 
-          go build -ldflags="-s -w" -o "${OUT_DIR}/${BINARY}"
+      - run: |
+          echo "PROJECT_DIR='$PROJECT_DIR'"
+          echo "PROJECT_SCRIPTS='$PROJECT_SCRIPTS'"
+          echo "BUILD_DIR='$BUILD_DIR'"
+          echo "BUILD_BIN='$BUILD_BIN'"
 
-          echo "Built: ${OUT_DIR}/${BINARY}"
-
-      - name: Upload artifacts
-        if: inputs.upload
-        uses: actions/upload-artifact@v4
-        with:
-          name: dotfiles-${{ matrix.goos }}-${{ matrix.goarch }}${{ matrix.goarm && format('-v{0}', matrix.goarm) || '' }}
-          path: ${{ env.OUT_DIR }}/*
-          retention-days: 1
+      # - uses: actions/setup-go@v5
+      #   with:
+      #     cache: false
+      #     go-version-file: "go.mod"
+      #
+      # - name: Build binary
+      #   env:
+      #     GOOS: ${{ matrix.goos }}
+      #     GOARCH: ${{ matrix.goarch }}
+      #     GOARM: ${{ matrix.goarm }}
+      #   run: |
+      #     mkdir -p "${OUT_DIR}"
+      #     BINARY="${BINARY_NAME}-${GOOS}-${GOARCH}"
+      #
+      #     if [ "${GOARM}" != "" ]; then
+      #       BINARY="${BINARY}-v${GOARM}"
+      #     fi
+      #
+      #     go build -ldflags="-s -w" -o "${OUT_DIR}/${BINARY}"
+      #
+      #     echo "Built: ${OUT_DIR}/${BINARY}"
+      #
+      # - name: Upload artifacts
+      #   if: inputs.upload
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: dotfiles-${{ matrix.goos }}-${{ matrix.goarch }}${{ matrix.goarm && format('-v{0}', matrix.goarm) || '' }}
+      #     path: ${{ env.OUT_DIR }}/*
+      #     retention-days: 1

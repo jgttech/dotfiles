@@ -1,0 +1,16 @@
+#
+# type: linux
+#
+# Ghosty config customizations.
+# To see all config options and documentation, run the following command
+# ghostty +show-config --default --docs
+#
+# Or visit https://ghostty.org/docs/config
+#
+
+theme = "Kanagawa Wave"
+font-size = 13
+font-family = "MesloLGS NF"
+shell-integration = zsh
+cursor-style = block
+cursor-style-blink = false

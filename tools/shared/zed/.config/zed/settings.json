@@ -1,0 +1,47 @@
+{
+  "agent_buffer_font_size": 12,
+  "agent": {
+    "dock": "bottom"
+  },
+  "edit_predictions": {
+    "mode": "eager"
+  },
+  "vim_mode": true,
+  "telemetry": {
+    "diagnostics": false,
+    "metrics": false
+  },
+  "theme": "Kanagawa Wave",
+  "hide_mouse": "on_typing",
+  "minimap": {
+    "current_line_highlight": "all"
+  },
+  "relative_line_numbers": true,
+  "remove_trailing_whitespace_on_save": true,
+  "format_on_save": "on",
+  "file_scan_exclusions": [],
+  "toolbar": {
+    "breadcrumbs": true
+  },
+  "buffer_font_size": 15,
+  "buffer_font_family": "MesloLGS NF",
+  "features": {
+    "edit_prediction_provider": "copilot"
+  },
+  "git": {
+    "git_gutter": "tracked_files",
+    "inline_blame": {
+      "enabled": true
+    }
+  },
+  "terminal": {
+    "font_family": "MesloLGS NF"
+  },
+  "languages": {
+    "Python": {
+      "indent_guides": {
+        "enabled": true
+      }
+    }
+  }
+}

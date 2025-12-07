@@ -1,0 +1,9 @@
+[tools]
+# bun = "latest"
+# elixir = "latest"
+node = "latest"
+deno = "latest"
+go = "latest"
+terraform = "latest"
+zig = "latest"
+aws-cli = "latest"
