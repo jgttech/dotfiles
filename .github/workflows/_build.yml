@@ -3,22 +3,10 @@ name: Build Dotfiles CLI
 on:
   workflow_call:
     inputs:
-      out:
-        description: Directory where the binary should be placed
-        type: string
-        default: dist
-      name:
-        description: Name of the binary (NOT with arch metadata)
-        default: dotfiles
-        type: string
       upload:
         description: Whether or not to upload the build artifacts
         default: false
         type: boolean
-
-env:
-  OUT_DIR: ${{ inputs.out }}
-  BINARY_NAME: ${{ inputs.name }}
 
 jobs:
   build:
@@ -42,8 +30,6 @@ jobs:
           - goos: darwin
             goarch: arm64
     steps:
-      - uses: actions/checkout@v4
-
       - name: Install direnv
         run: |
           curl -sfL https://direnv.net/install.sh | bash
@@ -53,6 +39,8 @@ jobs:
         run: |
           direnv allow .
           direnv export gha > "$GITHUB_ENV"
+
+      - uses: actions/checkout@v4
 
       - uses: actions/setup-go@v5
         with:
@@ -76,10 +64,10 @@ jobs:
 
           echo "Built: ${BUILD_DIR}/${BINARY}"
 
-      # - name: Upload artifacts
-      #   if: inputs.upload
-      #   uses: actions/upload-artifact@v4
-      #   with:
-      #     name: dotfiles-${{ matrix.goos }}-${{ matrix.goarch }}${{ matrix.goarm && format('-v{0}', matrix.goarm) || '' }}
-      #     path: ${{ env.OUT_DIR }}/*
-      #     retention-days: 1
+      - name: Upload artifacts
+        if: inputs.upload
+        uses: actions/upload-artifact@v4
+        with:
+          name: dotfiles-${{ matrix.goos }}-${{ matrix.goarch }}${{ matrix.goarm && format('-v{0}', matrix.goarm) || '' }}
+          path: ${{ env.BUILD_DIR }}/*
+          retention-days: 1

@@ -20,6 +20,4 @@ jobs:
     uses: ./.github/workflows/_build.yml
     secrets: inherit
     with:
-      out: ${{ vars.OUT_DIR }}
-      name: ${{ vars.BINARY_NAME }}
       upload: false

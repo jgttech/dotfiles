@@ -1,33 +1,35 @@
 name: Build Dotfiles CLI
 
 on:
-  workflow_call:
-    inputs:
-      out:
-        description: Directory where the binary should be placed
-        type: string
-        default: dist
-      name:
-        description: Name of the binary (NOT with arch metadata)
-        default: dotfiles
-        type: string
+  workflow_call: {}
 
 jobs:
   release:
     name: Create GitHub Release
     runs-on: ubuntu-latest
     steps:
+      - name: Install direnv
+        run: |
+          curl -sfL https://direnv.net/install.sh | bash
+          echo "$HOME/.local/bin" >> $GITHUB_PATH
+
+      - name: Load environment variables
+        run: |
+          direnv allow .
+          direnv export gha > "$GITHUB_ENV"
+
       - uses: actions/checkout@v4
+
       - uses: actions/download-artifact@v4
         with:
-          path: ${{ inputs.out }}/
-          pattern: ${{ inputs.name }}-*
+          path: ${{ env.BUILD_DIR }}/
+          pattern: ${{ env.BUILD_BIN }}-*
           merge-multiple: true
-      - run: ls -R ${{ inputs.out }}/
+      - run: ls -R ${{ env.BUILD_DIR }}/
       - name: Create Release
         uses: softprops/action-gh-release@v1
         with:
-          files: ${{ inputs.out }}/*
+          files: ${{ env.BUILD_DIR }}/*
           draft: false
           prerelease: false
           generate_release_notes: true
