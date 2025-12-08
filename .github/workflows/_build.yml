@@ -30,6 +30,8 @@ jobs:
           - goos: darwin
             goarch: arm64
     steps:
+      - uses: actions/checkout@v4
+
       - name: Install direnv
         run: |
           curl -sfL https://direnv.net/install.sh | bash
@@ -39,8 +41,6 @@ jobs:
         run: |
           direnv allow .
           direnv export gha > "$GITHUB_ENV"
-
-      - uses: actions/checkout@v4
 
       - uses: actions/setup-go@v5
         with:

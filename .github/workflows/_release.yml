@@ -8,6 +8,8 @@ jobs:
     name: Create GitHub Release
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
+
       - name: Install direnv
         run: |
           curl -sfL https://direnv.net/install.sh | bash
@@ -17,8 +19,6 @@ jobs:
         run: |
           direnv allow .
           direnv export gha > "$GITHUB_ENV"
-
-      - uses: actions/checkout@v4
 
       - uses: actions/download-artifact@v4
         with:
