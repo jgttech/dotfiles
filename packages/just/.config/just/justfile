@@ -1,0 +1,7 @@
+set export
+set quiet
+
+import "cmds/save.just"
+
+default:
+  echo "HELLO WORLD"

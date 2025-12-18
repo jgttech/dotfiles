@@ -44,13 +44,18 @@ function wip {
   git push
 }
 
+# function save {
+#   just -g save
+# }
+
 function save {
   if [[ ! -z "$1" ]]; then
     git add .
     git commit -m "$1"
     git push
   else
-    echo "Must pass a message as a string."
+    echo "Generating a commit, please wait..."
+    just -g save
   fi
 }
 
