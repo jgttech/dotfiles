@@ -13,12 +13,11 @@ dotfiles-auto-update() {
 
   cd "${home}"
 
-  local pull_output=$(git pull 2>&1)
-
-  if [[ "$pull_output" != *"Already up to date"* ]]; then
-    echo "Updating, please wait..."
-    eval "${cmd}"
-  fi
+  #local pull_output=$(git pull 2>&1)
+  #if [[ "$pull_output" != *"Already up to date"* ]]; then
+  #  echo "Updating, please wait..."
+  #  eval "${cmd}"
+  #fi
 
   cd "${cwd}"
 }
