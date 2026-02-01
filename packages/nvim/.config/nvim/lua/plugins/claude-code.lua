@@ -5,9 +5,9 @@ return {
   },
   config = function()
     require("claude-code").setup({
-      window = {
-        position = "float"
-      }
+      -- window = {
+      --   position = "float",
+      -- },
     })
-  end
+  end,
 }
