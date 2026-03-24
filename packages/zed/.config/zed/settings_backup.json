@@ -1,42 +1,121 @@
 {
+  "context_servers": {
+    "mcp-server-context7": {
+      "enabled": true,
+      "settings": {
+        "context7_api_key": "${CONTEXT7_API_KEY}"
+      }
+    }
+  },
+  "agent_buffer_font_size": 12,
   "agent": {
-    "inline_assistant_model": {
-      "provider": "copilot_chat",
-      "model": "gpt-4.1"
-    },
-    "always_allow_tool_actions": true,
-    "default_profile": "write",
-    "model_parameters": [],
     "default_model": {
       "provider": "copilot_chat",
-      "model": "gpt-4.1"
+      "model": "gpt-4.1",
+      "enable_thinking": false
     },
-    "version": "2"
+    "favorite_models": [],
+    "model_parameters": []
   },
-  "file_scan_exclusions": [],
-  "theme": "Kanagawa Wave",
-  "buffer_font_family": "MesloLGS NF",
+  "edit_predictions": {
+    "mode": "eager"
+  },
   "vim_mode": true,
-  "buffer_font_size": 15,
-  "file_scan_inclusions": ["**/.git"],
-  "features": {
-    "edit_prediction_provider": "none",
-    "auto_complete": true
+  "telemetry": {
+    "diagnostics": false,
+    "metrics": false
   },
-  "lsp_highlight_debounce": 150,
+  "theme": "Kanagawa Wave",
+  "hide_mouse": "on_typing",
+  "minimap": {
+    "current_line_highlight": "all"
+  },
+  "relative_line_numbers": true,
+  "remove_trailing_whitespace_on_save": true,
+  "format_on_save": "on",
+  "file_scan_exclusions": [],
+  "toolbar": {
+    "breadcrumbs": true
+  },
+  "buffer_font_size": 15,
+  "buffer_font_family": "MesloLGS NF",
+  "features": {
+    "edit_prediction_provider": "copilot"
+  },
   "git": {
     "git_gutter": "tracked_files",
     "inline_blame": {
       "enabled": true
     }
   },
-  "indent_guides": {
-    "enabled": true
+  "terminal": {
+    "font_family": "MesloLGS NF"
   },
   "languages": {
     "Python": {
       "indent_guides": {
         "enabled": true
+      }
+    }
+  },
+  "lsp": {
+    "yaml-language-server": {
+      "settings": {
+        "yaml": {
+          "customTags": [
+            "!And scalar",
+            "!And mapping",
+            "!And sequence",
+            "!If scalar",
+            "!If mapping",
+            "!If sequence",
+            "!Not scalar",
+            "!Not mapping",
+            "!Not sequence",
+            "!Equals scalar",
+            "!Equals mapping",
+            "!Equals sequence",
+            "!Or scalar",
+            "!Or mapping",
+            "!Or sequence",
+            "!FindInMap scalar",
+            "!FindInMap mapping",
+            "!FindInMap sequence",
+            "!Base64 scalar",
+            "!Base64 mapping",
+            "!Base64 sequence",
+            "!Cidr scalar",
+            "!Cidr mapping",
+            "!Cidr sequence",
+            "!Ref scalar",
+            "!Ref mapping",
+            "!Ref sequence",
+            "!Sub scalar",
+            "!Sub mapping",
+            "!Sub sequence",
+            "!GetAtt scalar",
+            "!GetAtt mapping",
+            "!GetAtt sequence",
+            "!GetAZs scalar",
+            "!GetAZs mapping",
+            "!GetAZs sequence",
+            "!ImportValue scalar",
+            "!ImportValue mapping",
+            "!ImportValue sequence",
+            "!Select scalar",
+            "!Select mapping",
+            "!Select sequence",
+            "!Split scalar",
+            "!Split mapping",
+            "!Split sequence",
+            "!Join scalar",
+            "!Join mapping",
+            "!Join sequence",
+            "!Condition scalar",
+            "!Condition mapping",
+            "!Condition sequence"
+          ]
+        }
       }
     }
   }

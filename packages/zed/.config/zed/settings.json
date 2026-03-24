@@ -9,9 +9,16 @@
   },
   "agent_buffer_font_size": 12,
   "agent": {
-    "dock": "bottom"
+    "default_model": {
+      "provider": "copilot_chat",
+      "model": "gpt-4.1",
+      "enable_thinking": false
+    },
+    "favorite_models": [],
+    "model_parameters": []
   },
   "edit_predictions": {
+    "provider": "copilot",
     "mode": "eager"
   },
   "vim_mode": true,
@@ -24,7 +31,7 @@
   "minimap": {
     "current_line_highlight": "all"
   },
-  "relative_line_numbers": true,
+  "relative_line_numbers": "enabled",
   "remove_trailing_whitespace_on_save": true,
   "format_on_save": "on",
   "file_scan_exclusions": [],
@@ -33,9 +40,6 @@
   },
   "buffer_font_size": 15,
   "buffer_font_family": "MesloLGS NF",
-  "features": {
-    "edit_prediction_provider": "copilot"
-  },
   "git": {
     "git_gutter": "tracked_files",
     "inline_blame": {
