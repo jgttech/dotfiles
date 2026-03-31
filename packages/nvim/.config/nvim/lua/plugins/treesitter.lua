@@ -125,7 +125,14 @@ return {
       },
     })
 
-    require("nvim-ts-autotag").setup()
+    require("nvim-ts-autotag").setup({
+      per_filetype = {
+        ["markdown"] = {
+          enable_close = false,
+          enable_rename = false,
+        },
+      },
+    })
     -- There are additional nvim-treesitter modules that you can use to interact
     -- with nvim-treesitter. You should go explore a few and see what interests you:
     --   - Incremental selection: Included, see `:help nvim-treesitter-incremental-selection-mod`
