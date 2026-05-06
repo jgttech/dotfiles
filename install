@@ -1,8 +1,12 @@
 #!/usr/bin/env bash
 set -euo pipefail
+repo="https://github.com/jgttech/dotfiles.git"
+
+# Which branch to checkout.
+branch="${1:-"latest"}"
 
 # Where to download it to.
-repo="${1:-"$HOME/.dotfiles"}"
+dir="${2:-"$HOME/.dotfiles"}"
 
 # This function uses a ZSH sub-process to check it a
 # binary/package exists on the system. This is required
@@ -46,9 +50,10 @@ if [[ ${#missing[@]} -ne 0 ]]; then
   exit 1
 fi
 
-if [[ -d "" ]]; then
+if [[ ! -d "$dir" ]]; then
+  git clone $repo $dir
 fi
 
-git clone git@github.com:jgttech/dotfiles.git $repo && \
-cd $repo && \
+cd $dir
+git checkout $branch
 just link
