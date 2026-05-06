@@ -6,6 +6,8 @@ Private dotfiles that contains my system configuration and support for work and 
 
 These are the basic requirements so use the dotfiles locally.
 
+- [git](https://git-scm.com) (usually already installed)
+- [yq](https://github.com/mikefarah/yq/#install)
 - [devbox](https://www.jetify.com/docs/devbox/installing-devbox)
 - [just](https://just.systems/man/en)
 
@@ -30,26 +32,15 @@ bash install
 
 ## Getting Started
 
-> Setup an initial build and install devbox depenencies.
+> [!TIP]
+>
+> These commads are the common commands for managing the dotfiles. For other commands, use `just` to see what is available if it is not listed here.
 
-```bash
-just build
-```
-
-> Install the dotfiles, locally.
-
-```bash
-just install
-```
-
-> Uninstall the dotfiles, locally, but does NOT delete the source code.
-
-```bash
-just uninstall
-```
-
-> Uninstall the dotfiles, locally, AND destroy the source by deleting it, after removing the symlinks.
-
-```bash
-just uninstall --purge
-```
+| Command | Description |
+|:-|:-|
+| `just build` | Build install assets for dotfiles. |
+| `just install` | Run build assets for installing dotfiles. |
+| `just uninstall` | Run build assets for removing dotfiles. |
+| `just uninstall --purge` | Run build assets for removing and deleting dotfiles from the system entirely. |
+| `just clean` | Delete local development resources/dependencies. |
+| `just clean --purge` | Delete local development resources/dependencies and remove devbox store.  |

@@ -1,16 +1,9 @@
 #!/usr/bin/env bash
 set -euo pipefail
-build=false
 
-while [[ $# -gt 0 ]]; do
-  case "$1" in
-    --build) build=true; shift ;;
-    *) shift ;;
-  esac
-done
-
-if $build; then
-  just build
+# Can't install without the fabric.
+if [[ ! -d "$DOTFILES_BUILD" ]]; then
+  script build "$@"
 fi
 
 dotfiles install

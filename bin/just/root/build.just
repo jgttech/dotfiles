@@ -1,5 +1,5 @@
 # Install the required dependencies to use the Dotfiles.
 [group("root")]
 [script]
-build:
+build *argv:
     script build $@

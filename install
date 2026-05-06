@@ -3,26 +3,55 @@ set -euo pipefail
 repo="https://github.com/jgttech/dotfiles.git"
 cwd="$(pwd)"
 
-# Which branch to checkout.
-branch="${1:-"latest"}"
-
 # Where to download it to.
 dir="${2:-"$HOME/.dotfiles"}"
 
-# This function uses a ZSH sub-process to check it a
-# binary/package exists on the system. This is required
-# because the configuration uses ZSH as the default shell.
-# If something it checked against the BASH shell (that
-# runs this install) then I can't properly detect what
-# the ZSH environment detects and can't guarentee compatibility.
-# So checking against ZSH is a requirement.
-installed() { zsh -i -c "which $1" &> /dev/null ; }
+# Which branch to checkout.
+branch="${1:-"latest"}"
+
+# The environment config for install.
+env_dotfiles="$dir/.env.dotfiles"
+
+# Common install locations a binary may live in that aren't yet on PATH —
+# typical right after a fresh install where the user hasn't restarted their shell.
+_extra_bindirs=(
+  "/opt/homebrew/bin"                     # Homebrew (Apple Silicon)
+  "/opt/homebrew/sbin"
+  "/usr/local/bin"                        # Homebrew (Intel) / generic
+  "/usr/local/sbin"
+  "$HOME/.local/bin"                      # XDG user bin (devbox installer lands here)
+  "$HOME/bin"                             # legacy user bin
+  "$HOME/.cargo/bin"                      # rust / cargo install
+  "$HOME/go/bin"                          # go install
+  "$HOME/.nix-profile/bin"                # nix profile (single-user)
+  "/nix/var/nix/profiles/default/bin"     # nix profile (multi-user)
+)
+
+# True if $1 is invokable, including in common install locations not yet on PATH.
+installed() {
+  local cmd="$1" d
+
+  # Layer 1: PATH (binaries, shims, functions, aliases, builtins).
+  command -v "$cmd" >/dev/null 2>&1 && return 0
+
+  # Layer 2: common install locations that may not be on PATH yet.
+  for d in "${_extra_bindirs[@]}"; do
+    if [[ -x "$d/$cmd" ]]; then
+      echo "[hint] Found '$cmd' at $d/$cmd — not on PATH yet." >&2
+      echo "       Open a new shell or 'export PATH=\"$d:\$PATH\"' to use it." >&2
+      return 0
+    fi
+  done
+
+  return 1
+}
 
 # Dependencies needed to run the install process.
 dependencies=( \
   "devbox" \
   "just" \
   "git" \
+  "yq" \
 )
 
 # Tracks what is missing to, if something is
@@ -51,19 +80,50 @@ if [[ ${#missing[@]} -ne 0 ]]; then
   exit 1
 fi
 
-exists=false
+pre_existing=false
 
 if [[ ! -d "$dir" ]]; then
   git clone $repo $dir
+else
+  pre_existing=true
+fi
+
+# We simply can't do anything if the environment config doesn't exist.
+if [[ ! -f "$env_dotfiles" ]]; then
+  echo "Missing REQUIRED environment config:"
+  echo -e "$env_dotfiles\n"
+  echo "Please ensure the dotfiles was downloaded"
+  echo "correctly and try again with the following:"
+  echo "\$ bash install"
+  exit 1
+else
+  source "$env_dotfiles"
 fi
 
 cd $dir
-
 git checkout $branch
 
-if [[ -d "$dir" ]]; then
+# Path to the build.
+build="$dir/$(yq -r '.build' "$DOTFILES_CONFIG")"
+
+if $pre_existing; then
+  # Ensure latest
   git fetch >&2
   git pull >&2
+
+  # If it exists, we have installed it already. Because there
+  # can be changes between installs, we need to FIRST uninstall
+  # to make sure we are in a clean state before we re-install.
+  if [[ -d "$build" ]]; then
+    just uninstall
+
+    # Triggers a new build.
+    rm -rf "$build"
+  fi
 fi
 
+# The build will happen automatically, as needed.
 just install
+
+# Put the user back where they started from.
+cd "$cwd"

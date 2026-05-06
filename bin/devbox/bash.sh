@@ -1,13 +1,21 @@
 #!/usr/bin/env bash
 set -euo pipefail
+(( $# == 0 )) && exit 0
 
 export DOTFILES_HOME="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 cd "$DOTFILES_HOME"
 
-config="$1"
-shift
+env_dotfiles="$DOTFILES_HOME/.env.dotfiles"
 
-export DOTFILES_CONFIG="$DOTFILES_HOME/$config"
+if [[ -f "$env_dotfiles" ]]; then
+  source "$env_dotfiles"
+else
+  echo "Missing REQUIRED environment config:"
+  echo -e "$env_dotfiles\n"
+  exit 1
+fi
+
+export DOTFILES_CONFIG="$DOTFILES_HOME/$DOTFILES_CONFIG"
 
 if [[ ! -d "$DOTFILES_HOME/.devbox" ]]; then
   devbox install

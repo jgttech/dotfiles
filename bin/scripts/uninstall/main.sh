@@ -10,3 +10,8 @@ while [[ $# -gt 0 ]]; do
 done
 
 dotfiles uninstall
+
+if $purge; then
+  rm -rf ~/.local/share/devbox/global
+  nix-collect-garbage -d
+fi

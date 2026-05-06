@@ -1,6 +1,8 @@
 import "../settings.just"
 import "add.just"
 import "build.just"
+import "clean.just"
+import "doctor.just"
 import "install.just"
 import "search.just"
 import "uninstall.just"
