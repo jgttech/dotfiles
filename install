@@ -1,0 +1,54 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# Where to download it to.
+repo="${1:-"$HOME/.dotfiles"}"
+
+# This function uses a ZSH sub-process to check it a
+# binary/package exists on the system. This is required
+# because the configuration uses ZSH as the default shell.
+# If something it checked against the BASH shell (that
+# runs this install) then I can't properly detect what
+# the ZSH environment detects and can't guarentee compatibility.
+# So checking against ZSH is a requirement.
+installed() { zsh -i -c "which $1" &> /dev/null ; }
+
+# Dependencies needed to run the install process.
+dependencies=( \
+  "devbox" \
+  "just" \
+  "git" \
+)
+
+# Tracks what is missing to, if something is
+# missing, I can display the full list of what
+# is missing instead of failing on each missing
+# system package.
+missing=()
+
+# Check which script dependencies are needed.
+for dep in "${dependencies[@]}"; do
+  if ! installed "$dep"; then
+    missing+=("$dep")
+  fi
+done
+
+# If we have missing packages, fail the install
+# and display all the missing packages.
+if [[ ${#missing[@]} -ne 0 ]]; then
+  echo "[ERROR]"
+  echo "Missing (${#missing[@]}) required dependencies:"
+
+  for missing in "${missing[@]}"; do
+    echo " $missing"
+  done
+
+  exit 1
+fi
+
+if [[ -d "" ]]; then
+fi
+
+git clone git@github.com:jgttech/dotfiles.git $repo && \
+cd $repo && \
+just link

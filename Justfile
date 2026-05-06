@@ -1,6 +1,6 @@
-set export
-set quiet
+import "bin/just/main.just"
 
-import "bin/just/install.just"
-
-default: install
+# List the available commands.
+[script]
+default:
+    just --list --list-submodules
