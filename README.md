@@ -13,7 +13,7 @@ These are the basic requirements so use the dotfiles locally.
 
 > [!TIP]
 >
-> Install the dotfiles using this install script OR clone the repo and run the `just link` command. They result in the same thing. You can either use a one-shot command or clone and link it to your system.
+> Install the dotfiles using this install script OR clone the repo and run the `bash install` command. They result in the same thing. You can either use a one-shot command or clone and link it to your system.
 
 ```bash
 # By default, this installs into ~/.dotfiles
