@@ -19,7 +19,7 @@ These are the basic requirements so use the dotfiles locally.
 
 ```bash
 # By default, this installs into ~/.dotfiles
-wget -qO- "https://raw.githubusercontent.com/jgttech/dotfiles/refs/heads/latest/install" | bash
+curl -fsSL "https://raw.githubusercontent.com/jgttech/dotfiles/refs/heads/latest/install" | bash
 ```
 
 ## Installing Locally
