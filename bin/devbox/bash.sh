@@ -9,5 +9,9 @@ shift
 
 export DOTFILES_CONFIG="$DOTFILES_HOME/$config"
 
+if [[ ! -d "$DOTFILES_HOME/.devbox" ]]; then
+  devbox install
+fi
+
 exec devbox run -q -- bash -euo pipefail -c \
-  "source '$DOTFILES_HOME/bin/devbox/env.sh' && source $(printf '%q' "$1")"
+  "source $(printf '%q' "$DOTFILES_HOME/bin/devbox/bootstrap.sh") && source$(printf ' %q' "$@")"

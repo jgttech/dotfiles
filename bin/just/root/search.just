@@ -11,7 +11,6 @@ search *argv="":
     fi
 
     results="$(devbox search --show-all {{ argv }} 2>&1)"
-
     packages="$(echo "$results" | grep '^\* ' | sed 's/^\* \([^ ]*\).*/\1/')"
 
     if [[ -z "$packages" ]]; then
