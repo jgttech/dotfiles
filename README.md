@@ -25,52 +25,31 @@ wget -qO- "https://raw.githubusercontent.com/jgttech/dotfiles/refs/heads/latest/
 If you want to download the code and then install it, here is what you need to run after downloading it and changing into the projects directory.
 
 ```bash
-# Run the "install" script to install dotfiles from a cloned repo.
 bash install
 ```
 
 ## Getting Started
 
-The general mental model for this is that there are `vX` (version number) directories that handle what is linked into the system so that I can do parallel updates, refactoring, organization, and development of these dotfiles without breaking existing versions that work while I retain existing features and functionality.
-
-> [!TIP]
->
-> View available commands
+> Setup an initial build and install devbox depenencies.
 
 ```bash
-just
+just build
 ```
 
-## Development
-
-> Install dependencies
+> Install the dotfiles, locally.
 
 ```bash
 just install
 ```
 
-## Install
-
-Detects your OS then, if supported, generates install and uninstall scripts.
+> Uninstall the dotfiles, locally, but does NOT delete the source code.
 
 ```bash
-just link
+just uninstall
 ```
 
-## Uninstall
-
-Detects the uninstall script and runs it.
-
-> [!TIP]
->
-> You can also use `--purge` to flag the `unlink` to purge your system from the dotfiles, entirely. Which runs the same unlinking process for the symlinks but then completely removes the dotfiles from the system by deleting the source code at the end.
+> Uninstall the dotfiles, locally, AND destroy the source by deleting it, after removing the symlinks.
 
 ```bash
-just unlink
-```
-
-OR (full purge)
-
-```bash
-just unlink --purge
+just uninstall --purge
 ```
