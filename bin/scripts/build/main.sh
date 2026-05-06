@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-outdir="$DOTFILES_HOME/$DOTFILES_BUILD"
+outdir="$DOTFILES_BUILD"
 os="$DOTFILES_HOME/os"
 shared="$os/shared"
 platform="$os"
@@ -33,7 +33,7 @@ for ctx in "${contexts[@]}"; do
 done
 
 if [[ -d "$outdir" ]]; then
-  rm -rfv "$outdir"
+  rm -rf "$outdir"
 fi
 
 mkdir -p "$outdir"
@@ -42,3 +42,5 @@ printf '%b' "$install" > "$outdir/install"
 printf '%b' "$uninstall" > "$outdir/uninstall"
 
 chmod +x "$outdir/install" "$outdir/uninstall"
+
+echo "Done"
