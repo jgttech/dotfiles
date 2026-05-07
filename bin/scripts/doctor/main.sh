@@ -9,7 +9,7 @@ host_dir="$DOTFILES_HOME/hosts/$host_name"
 shared="$DOTFILES_HOME/os/shared"
 
 case "$OSTYPE" in
-  darwin*) platform="$DOTFILES_HOME/os/macos"; os_label="macOS" ;;
+  darwin*) platform="$DOTFILES_HOME/os/darwin"; os_label="macOS" ;;
   linux*)  platform="$DOTFILES_HOME/os/linux"; os_label="Linux" ;;
   *)       platform=""; os_label="UNSUPPORTED ($OSTYPE)" ;;
 esac

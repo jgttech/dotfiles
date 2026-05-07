@@ -8,7 +8,6 @@ outdir="$DOTFILES_BUILD"
 
 host_dir="$DOTFILES_HOME/hosts"
 host_name="$(hostname -s)"
-has_host=false
 
 os="$DOTFILES_HOME/os"
 shared="$os/shared"
@@ -20,7 +19,7 @@ if [[ -z "$devbox_home" ]]; then
 fi
 
 if [[ "$OSTYPE" == "darwin"* ]]; then
-  platform+="/macos"
+  platform+="/darwin"
 elif [[ "$OSTYPE" == "linux"* ]]; then
   platform+="/linux"
 else
@@ -28,17 +27,16 @@ else
   exit 1
 fi
 
-if [[ -d "$host_dir/$host_name" ]]; then
-  has_host=true
-  host_dir+="/$host_name"
-fi
-
 contexts=(\
   "$shared" \
-  "$platform" \
 )
 
-if $has_host; then
+if [[ -d "$platform" ]]; then
+  contexts+=("$platform")
+fi
+
+if [[ -d "$host_dir/$host_name" ]]; then
+  host_dir+="/$host_name"
   contexts+=("$host_dir")
 fi
 
