@@ -20,5 +20,9 @@ uninstall+="fi\n"
 uninstall+="rm -f \"$HOME/.zshrc.environment\"\n"
 uninstall+="rm -f \"$devbox_home/devbox.json\"\n"
 
+if [[ -f "$brewfile" ]]; then
+  uninstall+="brew bundle cleanup --file=\"$brewfile\" --force\n"
+fi
+
 printf '%b' "$uninstall" > "$outdir/uninstall"
 chmod +x "$outdir/uninstall"

@@ -1,6 +1,11 @@
 #!/usr/bin/env bash
 install="#!/usr/bin/env bash\nset -euo pipefail\n"
 install+="source \"$DOTFILES_BUILD/environment\"\n"
+
+if [[ -f "$brewfile" ]]; then
+  install+="brew bundle install --file=\"$brewfile\"\n"
+fi
+
 install+="if [[ -f \"\$HOME/.zshrc\" && ! -L \"\$HOME/.zshrc\" ]]; then\n"
 install+="  mv \"\$HOME/.zshrc\" \"$zshrc_backup\"\n"
 install+="fi\n"

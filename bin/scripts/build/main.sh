@@ -3,6 +3,8 @@ shopt -s nullglob
 
 zshrc_backup="$HOME/.zshrc.$(date +%s%3N).bak"
 
+brewfile="$DOTFILES_HOME/hosts/$host_name/brew/.config/brew/Brewfile"
+
 devbox_home="$(devbox global path 2>/dev/null)"
 outdir="$DOTFILES_BUILD"
 
