@@ -2,4 +2,9 @@
 [group("root")]
 [script]
 install *argv:
-    script install $@
+    # Can't install without the fabric.
+    if [[ ! -d "$DOTFILES_BUILD" ]]; then
+      script build $@
+    fi
+
+    dotfiles install

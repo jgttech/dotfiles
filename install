@@ -49,6 +49,7 @@ installed() {
 # Dependencies needed to run the install process.
 dependencies=( \
   "devbox" \
+  "brew" \
   "just" \
   "git" \
   "yq" \

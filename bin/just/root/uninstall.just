@@ -2,4 +2,4 @@
 [group("root")]
 [script]
 uninstall *argv:
-    script uninstall $@
+    dotfiles uninstall $@

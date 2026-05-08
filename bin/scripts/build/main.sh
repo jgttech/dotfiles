@@ -1,19 +1,8 @@
 #!/usr/bin/env bash
 shopt -s nullglob
-
-zshrc_backup="$HOME/.zshrc.$(date +%s%3N).bak"
-
-brewfile="$DOTFILES_HOME/hosts/$host_name/brew/.config/brew/Brewfile"
-
-devbox_home="$(devbox global path 2>/dev/null)"
-outdir="$DOTFILES_BUILD"
-
-host_dir="$DOTFILES_HOME/hosts"
 host_name="$(hostname -s)"
-
-os="$DOTFILES_HOME/os"
-shared="$os/shared"
 platform="$os"
+zshrc_backup="$HOME/.zshrc.$(date +%s%3N).bak"
 
 if [[ -z "$devbox_home" ]]; then
   echo "[ERROR] 'devbox global path' returned empty. Is devbox installed?"
@@ -42,11 +31,11 @@ if [[ -d "$host_dir/$host_name" ]]; then
   contexts+=("$host_dir")
 fi
 
-if [[ -d "$outdir" ]]; then
-  rm -rf "$outdir"
+if [[ -d "$DOTFILES_BUILD" ]]; then
+  rm -rf "$DOTFILES_BUILD"
 fi
 
-mkdir -p "$outdir"
+mkdir -p "$DOTFILES_BUILD"
 
 script build.install
 script build.uninstall

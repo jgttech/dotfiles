@@ -2,10 +2,10 @@
 script backup.brew_backup
 
 if installed brew; then
-  host_dir="$DOTFILES_HOME/hosts/$host_name"
-  host_dir+="/brew/.config/brew"
+  host_target="$DOTFILES_HOME/hosts/$host_name"
+  host_target+="/brew/.config/brew"
 
-  if [[ -d "$host_dir" ]]; then
-    brew_backup "$host_dir"
+  if [[ -d "$host_target" ]]; then
+    brew_backup "$host_target"
   fi
 fi
