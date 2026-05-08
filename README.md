@@ -44,3 +44,4 @@ bash install
 | `just uninstall --purge` | Run build assets for removing and deleting dotfiles from the system entirely. |
 | `just clean` | Delete local development resources/dependencies. |
 | `just clean --purge` | Delete local development resources/dependencies and remove devbox store.  |
+| `just unlock` | Switch `.git/` to an authenticated clone via `gh` so changes can be pushed. |
