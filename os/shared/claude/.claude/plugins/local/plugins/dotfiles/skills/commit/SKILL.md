@@ -5,7 +5,7 @@ description: Generate and create a commit for the current changes. Stage what is
 
 # commit
 
-Produce one commit on the current changes. Stage, draft a message in this repo's style (subject, optional body, trailer block), commit. Trailers are git-native (`git interpret-trailers --parse`).
+Produce exactly one commit per invocation on the current changes. The engineer controls commit scope by managing the staging area; the skill never splits changes into multiple commits, regardless of how many distinct concerns the diff appears to span. When a single commit bundles multiple concerns, name the dominant concern in the subject and list secondaries in the body. Trailers are git-native (`git interpret-trailers --parse`).
 
 ## Hard rules
 
@@ -47,7 +47,8 @@ Budget ~15s for typical commits. Spend more only on genuinely ambiguous diffs.
    )"
    ```
 8. **Self-remediate** between stage and commit. If the commit fails, fix the cause and retry: pre-commit hook auto-fixes (formatting/lint) need re-staging; the agent's own changes that broke a hook should be fixed and recommitted. Stop and surface to the user only when the failure needs judgment: a hook fails for reasons unrelated to the current changes, a merge or rebase is in progress, suspicious files (`.env`, credentials, keys, large binaries) would be staged, or the working tree is empty.
-9. **Report** the commit SHA and a one-line outcome.
+9. **Verify hook health** after the commit. Commit-time hooks (`pre-commit`, `commit-msg`) ran via `git commit`; their pass is implicit in the commit succeeding. For non-commit-time hooks (most commonly `pre-push`), invoke them explicitly via the project's framework so the user has confidence the next push will succeed and the hook itself is in a working state. Detect via `.git/hooks/`, `.husky/`, `lefthook.yml`, `.pre-commit-config.yaml`. Surface failures with the reproduction command. Skip if no relevant hooks exist.
+10. **Report** the commit SHA, which hooks ran and passed, and a one-line outcome.
 
 ## Trailer spec
 
