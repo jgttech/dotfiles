@@ -8,3 +8,6 @@ install *argv:
     fi
 
     dotfiles install
+
+    # Defensively re-create the project-local .claude symlink if missing.
+    [ -L .claude ] || ln -s os/shared/claude/.claude .claude

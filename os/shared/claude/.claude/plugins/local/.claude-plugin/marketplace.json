@@ -1,0 +1,17 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "local",
+  "description": "Locally-developed plugins source-controlled in the dotfiles repo.",
+  "owner": {
+    "name": "kronos",
+    "email": "jgt.tech@protonmail.com"
+  },
+  "plugins": [
+    {
+      "name": "dotfiles",
+      "description": "Skills for the dotfiles repo workflow.",
+      "category": "development",
+      "source": "./plugins/dotfiles"
+    }
+  ]
+}
