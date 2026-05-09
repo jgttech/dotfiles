@@ -5,6 +5,7 @@ export DOTFILES_BUILD="$DOTFILES_HOME/$(yq -r '.build' "$DOTFILES_CONFIG")"
 
 # System host
 host_dir="$DOTFILES_HOME/hosts"
+host_name="$(hostname -s)"
 
 # Homebrew
 brewfile="\$HOME/.config/brew/Brewfile"

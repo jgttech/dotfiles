@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+host_name="$(hostname -s)"
 script backup.brew_backup
 
 if installed brew; then
