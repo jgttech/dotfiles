@@ -17,6 +17,7 @@
     }
   },
   "enabledPlugins": {
-    "dotfiles@local": true
+    "dotfiles@local": true,
+    "caveman@local": true
   }
 }

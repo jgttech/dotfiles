@@ -12,6 +12,18 @@
       "description": "Skills for the dotfiles repo workflow.",
       "category": "development",
       "source": "./plugins/dotfiles"
+    },
+    {
+      "name": "caveman",
+      "description": "Ultra-compressed communication mode. Cuts ~75% of output tokens by speaking like a caveman.",
+      "category": "productivity",
+      "homepage": "https://github.com/JuliusBrussee/caveman",
+      "source": {
+        "source": "url",
+        "url": "https://github.com/JuliusBrussee/caveman.git",
+        "ref": "v1.7.0",
+        "sha": "ef6050c5e1848b6880ff47c32ade1a608a64f85e"
+      }
     }
   ]
 }
