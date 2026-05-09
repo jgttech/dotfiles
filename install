@@ -3,11 +3,22 @@ set -euo pipefail
 repo="https://github.com/jgttech/dotfiles.git"
 cwd="$(pwd)"
 
-# Where to download it to.
-dir="${2:-"$HOME/.dotfiles"}"
+# Parse args: filter out --yes/-y before positional parses.
+YES=false
+positional=()
+for arg in "$@"; do
+  case "$arg" in
+    -y|--yes) YES=true ;;
+    *) positional+=("$arg") ;;
+  esac
+done
+set -- ${positional[@]+"${positional[@]}"}
 
 # Which branch to checkout.
 branch="${1:-"latest"}"
+
+# Where to download it to.
+dir="${2:-"$HOME/.dotfiles"}"
 
 # The environment config for install.
 env_dotfiles="$dir/.env.dotfiles"
@@ -46,39 +57,103 @@ installed() {
   return 1
 }
 
-# Dependencies needed to run the install process.
+# Dependencies needed to run the install process. Order is install-order so
+# the list shown to the user reads as the dependency chain.
 dependencies=( \
-  "devbox" \
   "brew" \
+  "devbox" \
   "just" \
-  "git" \
   "yq" \
+  "git" \
 )
 
-# Tracks what is missing to, if something is
-# missing, I can display the full list of what
-# is missing instead of failing on each missing
-# system package.
-missing=()
+# Maps a dependency to the channel the bootstrap will use to install it.
+install_tag() {
+  case "$1" in
+    brew)   echo "curl" ;;
+    devbox) echo "curl" ;;
+    just)   echo "brew" ;;
+    yq)     echo "devbox" ;;
+    git)    echo "xcode-select" ;;
+    *)      echo "unknown" ;;
+  esac
+}
 
-# Check which script dependencies are needed.
+# Yes/no prompt that reads from /dev/tty so it works under `curl ... | bash`
+# (where stdin is the curl pipe, not the user's terminal).
+prompt_yn() {
+  local prompt="$1" answer
+  if [[ ! -e /dev/tty ]]; then
+    echo "[ERROR] No terminal attached; re-run with --yes to skip the prompt." >&2
+    return 1
+  fi
+  read -p "$prompt [Y/n] " answer < /dev/tty
+  case "$answer" in
+    n|N|no|NO|No) return 1 ;;
+    *) return 0 ;;
+  esac
+}
+
+missing=()
 for dep in "${dependencies[@]}"; do
   if ! installed "$dep"; then
     missing+=("$dep")
   fi
 done
 
-# If we have missing packages, fail the install
-# and display all the missing packages.
 if [[ ${#missing[@]} -ne 0 ]]; then
-  echo "[ERROR]"
-  echo "Missing (${#missing[@]}) required dependencies:"
+  echo "Missing required dependencies:"
+  for dep in "${missing[@]}"; do
+    printf '  - (%s) %s\n' "$(install_tag "$dep")" "$dep"
+  done
+  echo
 
-  for missing in "${missing[@]}"; do
-    echo " $missing"
+  # Locate the bootstrap script relative to this install file.
+  script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" 2>/dev/null && pwd)" || script_dir=""
+  bootstrap_script=""
+  if [[ -n "$script_dir" && -f "$script_dir/bin/scripts/bootstrap/main.sh" ]]; then
+    bootstrap_script="$script_dir/bin/scripts/bootstrap/main.sh"
+  fi
+
+  if [[ -z "$bootstrap_script" ]]; then
+    echo "[ERROR] Bootstrap script unavailable in this context." >&2
+    echo "Install the listed dependencies manually and re-run." >&2
+    exit 1
+  fi
+
+  if [[ "$YES" != "true" ]]; then
+    if ! prompt_yn "Run the dotfiles bootstrap to install these for you?"; then
+      echo "Aborted."
+      exit 1
+    fi
+  fi
+
+  echo
+  if [[ "$YES" == "true" ]]; then
+    bash "$bootstrap_script" --yes
+  else
+    bash "$bootstrap_script"
+  fi
+
+  remaining=()
+  for dep in "${missing[@]}"; do
+    if ! installed "$dep"; then
+      remaining+=("$dep")
+    fi
   done
 
-  exit 1
+  if [[ ${#remaining[@]} -ne 0 ]]; then
+    echo
+    echo "[ERROR] Bootstrap completed but the following are still missing:"
+    for dep in "${remaining[@]}"; do
+      printf '  - %s\n' "$dep"
+    done
+    echo
+    echo "If Xcode Command Line Tools are still installing, complete the GUI dialog and re-run." >&2
+    exit 1
+  fi
+
+  echo
 fi
 
 pre_existing=false

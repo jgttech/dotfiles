@@ -1,6 +1,7 @@
 import "../settings.just"
 import "add.just"
 import "backup.just"
+import "bootstrap.just"
 import "build.just"
 import "clean.just"
 import "doctor.just"
