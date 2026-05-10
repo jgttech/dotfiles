@@ -3,7 +3,8 @@
 [script]
 save *argv:
     ts="$(date +%s%3N)"
-    commit="${1:-"WIP $ts"}"
+    commit={{ quote(argv) }}
+    [[ -z "$commit" ]] && commit="WIP $ts"
 
     git add -A
     git commit -m "$commit"
