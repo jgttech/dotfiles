@@ -2,7 +2,8 @@
 shopt -s nullglob
 host_name="$(hostname -s)"
 platform="$os"
-zshrc_backup="$HOME/.zshrc.$(date +%s%3N).bak"
+zshrc_backup="$HOME/.zshrc.$ts.bak"
+claude_backup="$HOME/.claude.$ts.bak"
 
 if [[ -z "$devbox_home" ]]; then
   echo "[ERROR] 'devbox global path' returned empty. Is devbox installed?"

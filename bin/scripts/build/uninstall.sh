@@ -33,6 +33,10 @@ uninstall+="\nif [[ -f \"$zshrc_backup\" ]]; then\n"
 uninstall+="  mv \"$zshrc_backup\" \"\$HOME/.zshrc\"\n"
 uninstall+="fi\n\n"
 
+uninstall+="if [[ -d \"$claude_backup\" ]]; then\n"
+uninstall+="  mv \"$claude_backup\" \"\$HOME/.claude\"\n"
+uninstall+="fi\n\n"
+
 uninstall+="rm -f \"$HOME/.zshrc.environment\"\n"
 uninstall+="rm -f \"$devbox_home/devbox.json\"\n"
 
