@@ -10,5 +10,12 @@
 # Changes here are immediately applied to the environment the
 # next time the shell environment is loaded.
 function dotfiles {
-  echo "WIP"
+  local cwd="$(pwd)"
+  cd "$DOTFILES_HOME" || return $?
+
+  just "$@"
+  local rc=$?
+
+  cd "$cwd"
+  return $rc
 }
