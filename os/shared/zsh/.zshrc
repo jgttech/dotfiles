@@ -16,7 +16,7 @@ _dotfiles=(\
 _dotfiles_failed=()
 
 for src in "${_dotfiles[@]}"; do
-  if [[ -f "$src" ]]; then
+  if [[ -e "$src" ]]; then
     source "$src"
 
     if [[ "$src" == *".zshrc.environment"* ]]; then

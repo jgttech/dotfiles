@@ -2,10 +2,13 @@
 [group("root")]
 [script]
 save *argv:
-    ts="$(date +%s%3N)"
-    commit={{ quote(argv) }}
-    [[ -z "$commit" ]] && commit="WIP $ts"
+    commit="{{ quote(argv) }}"
 
-    git add -A
-    git commit -m "$commit"
+    if [[ -z "$commit" ]]; then
+      claude /commit
+    else
+      git add -A
+      git commit -m "$commit"
+    fi
+
     git push

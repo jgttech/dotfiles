@@ -1,0 +1,23 @@
+{
+  "permissions": {
+    "defaultMode": "auto"
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "bash /Users/kronos/.claude/statusline-command.sh"
+  },
+  "effortLevel": "xhigh",
+  "skipDangerousModePermissionPrompt": true,
+  "skipAutoPermissionPrompt": true,
+  "theme": "auto",
+  "extraKnownMarketplaces": {
+    "local": {
+      "source": "directory",
+      "path": "~/.claude/plugins/local"
+    }
+  },
+  "enabledPlugins": {
+    "dotfiles@local": true,
+    "caveman@local": true
+  }
+}

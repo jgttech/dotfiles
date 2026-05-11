@@ -2,9 +2,6 @@
 [group("root")]
 [script]
 search *argv="":
-    #!/usr/bin/env bash
-    set -euo pipefail
-
     if [[ -z "{{ argv }}" ]]; then
       echo "Usage: just search <term>"
       exit 1
