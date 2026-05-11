@@ -2,7 +2,7 @@
 [group("root")]
 [script]
 save *argv:
-    commit="{{ quote(argv) }}"
+    commit={{ quote(argv) }}
 
     if [[ -z "$commit" ]]; then
       claude /commit
