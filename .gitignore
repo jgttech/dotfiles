@@ -2,4 +2,5 @@
 .build/
 .devbox/
 .opencode/
+.claude/
 !.env.dotfiles
