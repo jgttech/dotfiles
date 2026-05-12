@@ -18,12 +18,7 @@
       "space q": "pane::CloseActiveItem",
       "space shift-q": "pane::CloseInactiveItems",
       "space escape escape": "zed::Quit",
-      "ctrl-\\": [
-        "workspace::OpenTerminal",
-        {
-          "working_directory": "current_project_directory",
-        },
-      ],
+      "ctrl-\\": "workspace::NewCenterTerminal",
     },
   },
   {
