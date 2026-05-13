@@ -1,8 +1,10 @@
 .last-cleanup
 backups/
 cache/
+file-history/
 history.jsonl
 mcp-needs-auth-cache.json
+plugins/installed_plugins.json
 projects/
 sessions/
 session-env/
