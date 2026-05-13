@@ -2,13 +2,11 @@
 install="#!/usr/bin/env bash\nset -euo pipefail\n"
 install+="source \"$DOTFILES_BUILD/environment\"\n\n"
 
-install+="if [[ -f \"\$HOME/.zshrc\" && ! -L \"\$HOME/.zshrc\" ]]; then\n"
-install+="  mv \"\$HOME/.zshrc\" \"$zshrc_backup\"\n"
-install+="fi\n\n"
-
-install+="if [[ -d \"\$HOME/.claude\" && ! -L \"\$HOME/.claude\" ]]; then\n"
-install+="  mv \"\$HOME/.claude\" \"$claude_backup\"\n"
-install+="fi\n\n"
+for rel in "${backups[@]}"; do
+  install+="if [[ -e \"\$HOME/$rel\" && ! -L \"\$HOME/$rel\" ]]; then\n"
+  install+="  mv \"\$HOME/$rel\" \"\$HOME/$rel.$ts.bak\"\n"
+  install+="fi\n\n"
+done
 
 for ctx in "${contexts[@]}"; do
   dirs=()

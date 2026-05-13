@@ -2,8 +2,15 @@
 shopt -s nullglob
 host_name="$(hostname -s)"
 platform="$os"
-zshrc_backup="$HOME/.zshrc.$ts.bak"
-claude_backup="$HOME/.claude.$ts.bak"
+
+# HOME-relative paths whose pre-existing real (non-symlink) copies are
+# moved aside before stow runs, and restored on uninstall. The build
+# bakes "$ts" into the backup name so install/uninstall agree.
+backups=(
+  ".zshrc"
+  ".claude"
+  ".config/zed"
+)
 
 if [[ -z "$devbox_home" ]]; then
   echo "[ERROR] 'devbox global path' returned empty. Is devbox installed?"

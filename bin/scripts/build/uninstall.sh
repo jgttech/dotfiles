@@ -29,13 +29,12 @@ for ctx in "${contexts[@]}"; do
   uninstall+="stow -D -t \"\$HOME\" -d $(printf '%q' "$ctx") $(printf '%q ' "${dirs[@]}")\n"
 done
 
-uninstall+="\nif [[ -f \"$zshrc_backup\" ]]; then\n"
-uninstall+="  mv \"$zshrc_backup\" \"\$HOME/.zshrc\"\n"
-uninstall+="fi\n\n"
-
-uninstall+="if [[ -d \"$claude_backup\" ]]; then\n"
-uninstall+="  mv \"$claude_backup\" \"\$HOME/.claude\"\n"
-uninstall+="fi\n\n"
+uninstall+="\n"
+for rel in "${backups[@]}"; do
+  uninstall+="if [[ -e \"\$HOME/$rel.$ts.bak\" ]]; then\n"
+  uninstall+="  mv \"\$HOME/$rel.$ts.bak\" \"\$HOME/$rel\"\n"
+  uninstall+="fi\n\n"
+done
 
 uninstall+="rm -f \"$HOME/.zshrc.environment\"\n"
 uninstall+="rm -f \"$devbox_home/devbox.json\"\n"
