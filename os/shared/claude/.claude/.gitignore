@@ -1,5 +1,7 @@
 .last-cleanup
 backups/
+cache/
+history.jsonl
 mcp-needs-auth-cache.json
 projects/
 sessions/
