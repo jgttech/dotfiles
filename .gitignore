@@ -4,3 +4,4 @@
 .opencode/
 .claude/
 !.env.dotfiles
+!os/shared/claude/.claude/

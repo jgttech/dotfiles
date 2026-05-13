@@ -1,0 +1,7 @@
+.last-cleanup
+backups/
+mcp-needs-auth-cache.json
+projects/
+sessions/
+session-env/
+shell-snapshots/
