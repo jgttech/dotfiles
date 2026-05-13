@@ -20,7 +20,7 @@ for src in "${_dotfiles[@]}"; do
     source "$src"
 
     if [[ "$src" == *".zshrc.environment"* ]]; then
-      source "$DOTFILES_BUILD/cli"
+      source "$DOTFILES_BUILD/cli/main.zsh"
     fi
   else
     _dotfiles_failed+=("$src")

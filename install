@@ -111,6 +111,7 @@ if [[ ${#missing[@]} -ne 0 ]]; then
   # Locate the bootstrap script relative to this install file.
   script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" 2>/dev/null && pwd)" || script_dir=""
   bootstrap_script=""
+
   if [[ -n "$script_dir" && -f "$script_dir/bin/scripts/bootstrap/main.sh" ]]; then
     bootstrap_script="$script_dir/bin/scripts/bootstrap/main.sh"
   fi
@@ -129,6 +130,7 @@ if [[ ${#missing[@]} -ne 0 ]]; then
   fi
 
   echo
+
   if [[ "$YES" == "true" ]]; then
     bash "$bootstrap_script" --yes
   else
@@ -180,7 +182,7 @@ cd $dir
 git checkout $branch
 
 # Path to the build.
-build="$dir/$(yq -r '.build' "$DOTFILES_CONFIG")"
+build_dir="$dir/$(yq -r '.build' "$DOTFILES_CONFIG")"
 
 if $pre_existing; then
   # Ensure latest
@@ -190,16 +192,17 @@ if $pre_existing; then
   # If it exists, we have installed it already. Because there
   # can be changes between installs, we need to FIRST uninstall
   # to make sure we are in a clean state before we re-install.
-  if [[ -d "$build" ]]; then
+  if [[ -d "$build_dir" ]]; then
     just uninstall
 
     # Triggers a new build.
-    rm -rf "$build"
+    rm -rf "$build_dir"
   fi
 fi
 
 # The build will happen automatically, as needed.
 just install
+just dotfiles install
 
 # Put the user back where they started from.
 cd "$cwd"

@@ -1,4 +1,4 @@
-# Unlink the dotfiles from the system.
+# Run the generated dotfiles install script.
 [script]
 uninstall *argv:
     dotfiles uninstall $@

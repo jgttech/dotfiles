@@ -1,5 +1,4 @@
 # Search and optionally add a devbox CLI package.
-[group("root")]
 [script]
 sync *argv="":
     cwd="$(pwd)"

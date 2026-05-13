@@ -1,5 +1,4 @@
 # Generate a commit based on the message input.
-[group("root")]
 [script]
 save *argv:
     commit={{ quote(argv) }}
