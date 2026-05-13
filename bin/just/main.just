@@ -1,4 +1,5 @@
 import "./settings.just"
 import "root/.mod.just"
 
-mod "dotfiles/.mod.just"
+mod version "version/.mod.just"
+mod dotfiles "dotfiles/.mod.just"

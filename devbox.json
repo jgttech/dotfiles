@@ -4,6 +4,7 @@
     "yq@latest",
     "stow@latest",
     "jq@latest",
-    "gh@latest"
+    "gh@latest",
+    "lefthook@latest"
   ]
 }

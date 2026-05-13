@@ -1,0 +1,4 @@
+pre-commit:
+  commands:
+    bump-patch:
+      run: just version patch && git add dotfiles.yml

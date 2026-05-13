@@ -6,3 +6,4 @@ install *argv:
 
     just build $@
     devbox install
+    lefthook install
