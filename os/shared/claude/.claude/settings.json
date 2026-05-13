@@ -12,8 +12,10 @@
   "theme": "auto",
   "extraKnownMarketplaces": {
     "local": {
-      "source": "directory",
-      "path": "~/.claude/plugins/local"
+      "source": {
+        "source": "directory",
+        "path": "~/.claude/plugins/local"
+      }
     }
   },
   "enabledPlugins": {
