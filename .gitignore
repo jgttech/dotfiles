@@ -2,6 +2,7 @@
 /.build/
 /.devbox/
 /.opencode/
+/tmp/
 .claude/
 !.env.dotfiles
 !os/shared/claude/.claude/
