@@ -62,6 +62,12 @@ for _ctx in "${contexts[@]}"; do
         fi
       fi
       for _leaf in "${_leaves[@]}"; do
+        # macOS protects ~/Library/* from whole-dir moves (ACL/TCC).
+        # Stow handles those per-file; any name collisions there must
+        # be resolved by the user, not by this backup pass.
+        case "$_leaf" in
+          Library/*) continue ;;
+        esac
         [[ -n "${_seen[$_leaf]:-}" ]] && continue
         _seen[$_leaf]=1
         backups+=("$_leaf")
