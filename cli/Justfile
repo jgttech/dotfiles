@@ -1,0 +1,6 @@
+import "settings.just"
+import "main.just"
+
+[script]
+default:
+    just --list --list-submodules
