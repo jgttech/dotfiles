@@ -12,5 +12,5 @@ set positional-arguments
 #
 # PATH-based resolution is cwd-independent and applies uniformly
 # across every submodule via this file's `import`.
-# export PATH := justfile_directory() + "/runtime:" + env("PATH")
-# set script-interpreter := ["shell.zsh"]
+export PATH := justfile_directory() + "/runtime:" + env("PATH")
+set script-interpreter := ["shell.zsh"]

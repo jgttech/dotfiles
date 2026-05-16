@@ -1,3 +1,5 @@
 #!/usr/bin/env bash
 set -euo pipefail
 (( $# == 0 )) && exit 0
+
+exec zsh "$@"
