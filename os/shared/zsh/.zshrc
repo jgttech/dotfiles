@@ -36,6 +36,7 @@ if [[ ${#_dotfiles_failed[@]} -ne 0 ]]; then
   done
 
   echo
+  exit 1
 fi
 
 # Just to keep the global space from being polluted.
