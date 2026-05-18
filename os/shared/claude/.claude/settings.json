@@ -6,20 +6,20 @@
     "type": "command",
     "command": "bash /Users/kronos/.claude/statusline-command.sh"
   },
-  "effortLevel": "xhigh",
-  "skipDangerousModePermissionPrompt": true,
-  "skipAutoPermissionPrompt": true,
-  "theme": "auto",
+  "enabledPlugins": {
+    "caveman@local": true,
+    "dotfiles@local": true
+  },
   "extraKnownMarketplaces": {
     "local": {
       "source": {
         "source": "directory",
-        "path": "~/.claude/plugins/local"
+        "path": "/Users/kronos/.dotfiles/os/shared/claude/.claude/plugins/local"
       }
     }
   },
-  "enabledPlugins": {
-    "dotfiles@local": true,
-    "caveman@local": true
-  }
+  "effortLevel": "xhigh",
+  "skipDangerousModePermissionPrompt": true,
+  "theme": "auto",
+  "skipAutoPermissionPrompt": true
 }

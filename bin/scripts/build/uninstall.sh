@@ -37,7 +37,24 @@ for rel in "${backups[@]}"; do
 done
 
 uninstall+="rm -f \"$HOME/.zshrc.environment\"\n"
-uninstall+="rm -f \"$devbox_home/devbox.json\"\n"
+uninstall+="rm -f \"$devbox_home/devbox.json\"\n\n"
+
+# Uninstall the dotfiles plugin from every scope it was installed at, then
+# remove the local marketplace. Iterating scopes from installed_plugins.json
+# avoids leaving orphan scope-specific records behind.
+uninstall+="if command -v claude >/dev/null 2>&1; then\n"
+uninstall+="  _plugins_state=\"\$HOME/.claude/plugins/installed_plugins.json\"\n"
+uninstall+="  _marketplaces_state=\"\$HOME/.claude/plugins/known_marketplaces.json\"\n"
+uninstall+="  if [[ -f \"\$_plugins_state\" ]] && yq -e '.plugins[\"dotfiles@local\"][]?' \"\$_plugins_state\" >/dev/null 2>&1; then\n"
+uninstall+="    yq -r '.plugins[\"dotfiles@local\"][]?.scope' \"\$_plugins_state\" | while read -r _scope; do\n"
+uninstall+="      claude plugin uninstall dotfiles@local --scope \"\$_scope\" -y || true\n"
+uninstall+="    done\n"
+uninstall+="  fi\n"
+uninstall+="  if [[ -f \"\$_marketplaces_state\" ]] && yq -e '.local' \"\$_marketplaces_state\" >/dev/null 2>&1; then\n"
+uninstall+="    claude plugin marketplace remove local || true\n"
+uninstall+="  fi\n"
+uninstall+="  unset _plugins_state _marketplaces_state\n"
+uninstall+="fi\n"
 
 printf '%b' "$uninstall" > "$DOTFILES_BUILD/uninstall"
 chmod +x "$DOTFILES_BUILD/uninstall"

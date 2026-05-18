@@ -1,4 +1,5 @@
 import "../../settings.just"
+import "add.just"
 import "install.just"
 import "save.just"
 import "uninstall.just"

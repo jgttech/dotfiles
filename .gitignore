@@ -3,6 +3,7 @@
 /.devbox/
 /.opencode/
 /tmp/
+/devbox.fingerprint
 .claude/
 !.env.dotfiles
 !os/shared/claude/.claude/

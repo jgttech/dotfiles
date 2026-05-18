@@ -23,10 +23,27 @@ done
 install+="\nln -sf \"$DOTFILES_BUILD/environment\" \"\$HOME/.zshrc.environment\"\n"
 install+="ln -sf \"$DOTFILES_HOME/devbox.json\" \"$devbox_home/devbox.json\"\n\n"
 
-install+="devbox global install\n\n"
+install+="devbox global install\n"
+install+="stat -f '%m:%z' \"$devbox_home/devbox.json\" \"$devbox_home/devbox.lock\" > \"$DOTFILES_HOME/devbox.fingerprint\"\n\n"
 
 install+="if [[ -f \"$brewfile\" ]]; then\n"
 install+="  brew bundle install --file=\"$brewfile\"\n"
+install+="fi\n\n"
+
+# Register the local marketplace and install the dotfiles plugin for Claude Code.
+# Idempotent: skips both if state files already declare them. claude itself is
+# not idempotent on re-install (creates duplicate scope entries), so guard with
+# yq before invoking.
+install+="if command -v claude >/dev/null 2>&1; then\n"
+install+="  _plugins_state=\"\$HOME/.claude/plugins/installed_plugins.json\"\n"
+install+="  _marketplaces_state=\"\$HOME/.claude/plugins/known_marketplaces.json\"\n"
+install+="  if ! [[ -f \"\$_marketplaces_state\" ]] || ! yq -e '.local' \"\$_marketplaces_state\" >/dev/null 2>&1; then\n"
+install+="    claude plugin marketplace add $(printf '%q' "$DOTFILES_HOME/os/shared/claude/.claude/plugins/local")\n"
+install+="  fi\n"
+install+="  if ! [[ -f \"\$_plugins_state\" ]] || ! yq -e '.plugins[\"dotfiles@local\"][]? | select(.scope == \"user\")' \"\$_plugins_state\" >/dev/null 2>&1; then\n"
+install+="    claude plugin install dotfiles@local --scope user\n"
+install+="  fi\n"
+install+="  unset _plugins_state _marketplaces_state\n"
 install+="fi\n"
 
 printf '%b' "$install" > "$DOTFILES_BUILD/install"

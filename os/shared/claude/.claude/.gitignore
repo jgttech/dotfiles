@@ -4,7 +4,10 @@ cache/
 file-history/
 history.jsonl
 mcp-needs-auth-cache.json
+plans/
+plugins/install-counts-cache.json
 plugins/installed_plugins.json
+plugins/known_marketplaces.json
 projects/
 sessions/
 session-env/
