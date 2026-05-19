@@ -21,7 +21,7 @@ save *argv:
       # flowing through the pipe.
       claude -p /dotfiles:commit --model sonnet --output-format stream-json --include-partial-messages --verbose \
         | jq -j --unbuffered 'if .type=="stream_event" and .event.type=="content_block_delta" and .event.delta.type=="text_delta" then .event.delta.text elif .type=="assistant" then (.message.content[]? | select(.type=="tool_use") | select(.input.description != null) | "\n  ↳ " + .input.description + "\n") else empty end' \
-        | awk '/^$/ {h++; next} /^  ↳/ {h=0; if ($0 != prev) {print; prev=$0}; fflush(); next} {while (h>0) {print ""; h--} prev=""; print; fflush()}'
+        | awk '/^$/ {h++; next} /^  ↳/ {h=0; if ($0 != prev) {print; prev=$0}; fflush(); next} /^→/ {h=0; prev=""; print; fflush(); next} {while (h>0) {print ""; h--} prev=""; print; fflush()}'
       echo
     else
       git add -A

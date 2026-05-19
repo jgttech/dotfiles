@@ -31,6 +31,16 @@ This skill runs non-interactively via `just save` → `claude -p /dotfiles:commi
 
 Example status lines (use the verb-phrases below, or a tight variant when the step's specifics demand it): `→ Reading working tree`, `→ Sampling recent commit style`, `→ Gathering context`, `→ Drafting message`, `→ Staging files`, `→ Committing`, `→ Self-remediating hook failure`, `→ Verifying pre-push hook`, `→ Reporting`.
 
+**Tool descriptions** (the `description` field on Bash and the like) appear in operator output as `  ↳ <description>` nested under the parent status line. Make each tool description add concrete information beyond the status — name the command, the path, or the specific action. **Do not rephrase the status verb.** Bad pairings to avoid:
+
+| Status | Bad description | Better description |
+|---|---|---|
+| `→ Sampling recent commit style` | `Sample recent commit style` | `Read last 10 commit subjects` |
+| `→ Staging files` | `Stage modified files` | `git add bin/... cli/...` (name the files) |
+| `→ Verifying pre-push hook` | `Verify pre-push` | `lefthook run pre-push` |
+
+When you cannot make the description distinct from the status (e.g., a one-off internal lookup), prefer batching the work into a tool that already needs to run; do not surface a redundant description.
+
 ## Procedure
 
 Budget ~15s for typical commits. Spend more only on genuinely ambiguous diffs.
