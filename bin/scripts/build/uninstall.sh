@@ -54,7 +54,12 @@ uninstall+="  if [[ -f \"\$_marketplaces_state\" ]] && yq -e '.local' \"\$_marke
 uninstall+="    claude plugin marketplace remove local || true\n"
 uninstall+="  fi\n"
 uninstall+="  unset _plugins_state _marketplaces_state\n"
-uninstall+="fi\n"
+uninstall+="fi\n\n"
+
+# OS-specific post-uninstall finalization (font caches on darwin, etc.).
+# Uses the `script` helper (sourced via bootstrap.sh) so dispatch runs in
+# the enclosing devbox bash — no nested `devbox run`, no cwd dependence.
+uninstall+="script post-uninstall\n"
 
 printf '%b' "$uninstall" > "$DOTFILES_BUILD/uninstall"
 chmod +x "$DOTFILES_BUILD/uninstall"

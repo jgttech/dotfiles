@@ -1,4 +1,4 @@
-# Search and optionally add a devbox CLI package.
+# Automatically update the repo.
 [script]
 sync *argv="":
     cwd="$(pwd)"

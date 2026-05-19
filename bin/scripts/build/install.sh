@@ -44,7 +44,12 @@ install+="  if ! [[ -f \"\$_plugins_state\" ]] || ! yq -e '.plugins[\"dotfiles@l
 install+="    claude plugin install dotfiles@local --scope user\n"
 install+="  fi\n"
 install+="  unset _plugins_state _marketplaces_state\n"
-install+="fi\n"
+install+="fi\n\n"
+
+# OS-specific post-install finalization (font caches on darwin, etc.).
+# Uses the `script` helper (sourced via bootstrap.sh) so dispatch runs in
+# the enclosing devbox bash — no nested `devbox run`, no cwd dependence.
+install+="script post-install\n"
 
 printf '%b' "$install" > "$DOTFILES_BUILD/install"
 chmod +x "$DOTFILES_BUILD/install"

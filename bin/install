@@ -203,6 +203,7 @@ fi
 # The build will happen automatically, as needed.
 just install
 just dotfiles install
+just post-install
 
 # Put the user back where they started from.
 cd "$cwd"
