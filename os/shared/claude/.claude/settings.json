@@ -6,18 +6,8 @@
     "type": "command",
     "command": "bash /Users/kronos/.claude/statusline-command.sh"
   },
-  "enabledPlugins": {
-    "caveman@local": true,
-    "dotfiles@local": true
-  },
-  "extraKnownMarketplaces": {
-    "local": {
-      "source": {
-        "source": "directory",
-        "path": "/Users/kronos/.dotfiles/os/shared/claude/.claude/plugins/local"
-      }
-    }
-  },
+  "enabledPlugins": {},
+  "extraKnownMarketplaces": {},
   "effortLevel": "xhigh",
   "skipDangerousModePermissionPrompt": true,
   "theme": "auto",

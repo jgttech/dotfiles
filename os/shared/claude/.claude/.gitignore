@@ -1,14 +1,25 @@
-.last-cleanup
-backups/
-cache/
-file-history/
-history.jsonl
-mcp-needs-auth-cache.json
-plans/
-plugins/install-counts-cache.json
-plugins/installed_plugins.json
-plugins/known_marketplaces.json
-projects/
-sessions/
-session-env/
-shell-snapshots/
+# Ignore everything in this directory by default.
+#
+# Claude Code creates and rotates many runtime files (sessions, history,
+# cache, plugin install records, telemetry, etc.) and the set grows with
+# each release. Allowlisting tracked paths avoids needing to chase new
+# ignore rules every time Claude introduces a new state file, and prevents
+# sensitive runtime data from accidentally landing in commits.
+#
+# Add an explicit !exception below when introducing a new tracked path.
+/*
+
+# Tracked: root files.
+!/.gitignore
+!/settings.json
+
+# Tracked: user-defined slash commands.
+!/commands/
+
+# Tracked: locally-developed plugins (source).
+# Re-exclude plugins/* to keep runtime state (cache/, marketplaces/,
+# installed_plugins.json, install-counts-cache.json, known_marketplaces.json)
+# out, then un-exclude the local source dir.
+!/plugins/
+/plugins/*
+!/plugins/local/

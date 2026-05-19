@@ -4,7 +4,7 @@ save *argv:
     commit={{ quote(argv) }}
 
     if [[ -z "$commit" ]]; then
-      claude -p /commit
+      claude -p /dotfiles:commit
     else
       git add -A
       git commit -m "$commit"

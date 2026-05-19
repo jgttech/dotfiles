@@ -193,7 +193,7 @@ if $pre_existing; then
   # can be changes between installs, we need to FIRST uninstall
   # to make sure we are in a clean state before we re-install.
   if [[ -d "$build_dir" ]]; then
-    just uninstall
+    just dotfiles uninstall
 
     # Triggers a new build.
     rm -rf "$build_dir"
