@@ -25,17 +25,23 @@ Tech Lead reviewing their own PR. Subject names *what* changed (precise nouns, a
 | Why: `Code was getting messy.` | Why: `divergent state checks caused drift on partial uninstalls` |
 | `Make things better` | `Drop unused brew taps from kronos-mbp Brewfile` |
 
+## Status output
+
+This skill runs non-interactively via `just save` → `claude -p /dotfiles:commit`. The operator cannot see your tool calls — only your text output. **At the start of every numbered step in the procedure, emit a single status line in the form `→ <verb phrase>` on its own line (no trailing period).** These lines are the only signal the operator has that work is progressing. Keep them short (≤ 60 chars). Do not narrate after the fact unless reporting an unexpected outcome.
+
+Example status lines (use the verb-phrases below, or a tight variant when the step's specifics demand it): `→ Reading working tree`, `→ Sampling recent commit style`, `→ Gathering context`, `→ Drafting message`, `→ Staging files`, `→ Committing`, `→ Self-remediating hook failure`, `→ Verifying pre-push hook`, `→ Reporting`.
+
 ## Procedure
 
 Budget ~15s for typical commits. Spend more only on genuinely ambiguous diffs.
 
-1. **Read the change**: `git status --short`, `git diff --staged`, `git diff`.
-2. **Sample style**: `git log -10 --pretty=format:'%h %s'`. Match it. No `feat:`/`fix:` prefix in the subject; that lives in the trailer block.
-3. **Get context cheaply** before asking the user: `git log -5 --name-status -- <paths>`, file headers, sibling files.
-4. **Ask only if diff and history are both inconclusive.** One consolidated question; do not chain.
-5. **Draft.** Subject ≤ 72 chars, imperative, no period. Body only if it adds something the subject does not. Always `Type:`. Include `Why:` unless the subject self-explains. Other trailers only when they apply.
-6. **Stage.** If something is already staged, respect that staged subset and commit only it. Otherwise `git add` all modified and untracked files (gitignored entries are excluded by git).
-7. **Commit** with the drafted message via heredoc:
+1. `→ Reading working tree` — **Read the change**: `git status --short`, `git diff --staged`, `git diff`.
+2. `→ Sampling recent commit style` — **Sample style**: `git log -10 --pretty=format:'%h %s'`. Match it. No `feat:`/`fix:` prefix in the subject; that lives in the trailer block.
+3. `→ Gathering context` — **Get context cheaply** before asking the user: `git log -5 --name-status -- <paths>`, file headers, sibling files.
+4. **Ask only if diff and history are both inconclusive.** One consolidated question; do not chain. (No status line — asking the user is the signal.)
+5. `→ Drafting message` — **Draft.** Subject ≤ 72 chars, imperative, no period. Body only if it adds something the subject does not. Always `Type:`. Include `Why:` unless the subject self-explains. Other trailers only when they apply.
+6. `→ Staging files` — **Stage.** If something is already staged, respect that staged subset and commit only it. Otherwise `git add` all modified and untracked files (gitignored entries are excluded by git).
+7. `→ Committing` — **Commit** with the drafted message via heredoc:
    ```
    git commit -m "$(cat <<'EOF'
    <subject>
@@ -46,9 +52,9 @@ Budget ~15s for typical commits. Spend more only on genuinely ambiguous diffs.
    EOF
    )"
    ```
-8. **Self-remediate** between stage and commit. If the commit fails, fix the cause and retry: pre-commit hook auto-fixes (formatting/lint) need re-staging; the agent's own changes that broke a hook should be fixed and recommitted. Stop and surface to the user only when the failure needs judgment: a hook fails for reasons unrelated to the current changes, a merge or rebase is in progress, suspicious files (`.env`, credentials, keys, large binaries) would be staged, or the working tree is empty.
-9. **Verify hook health** after the commit. Commit-time hooks (`pre-commit`, `commit-msg`) ran via `git commit`; their pass is implicit in the commit succeeding. For non-commit-time hooks (most commonly `pre-push`), invoke them explicitly via the project's framework so the user has confidence the next push will succeed and the hook itself is in a working state. Detect via `.git/hooks/`, `.husky/`, `lefthook.yml`, `.pre-commit-config.yaml`. Surface failures with the reproduction command. Skip if no relevant hooks exist.
-10. **Report** the commit SHA, which hooks ran and passed, and a one-line outcome.
+8. `→ Self-remediating hook failure` (only if a hook failed) — **Self-remediate** between stage and commit. If the commit fails, fix the cause and retry: pre-commit hook auto-fixes (formatting/lint) need re-staging; the agent's own changes that broke a hook should be fixed and recommitted. Stop and surface to the user only when the failure needs judgment: a hook fails for reasons unrelated to the current changes, a merge or rebase is in progress, suspicious files (`.env`, credentials, keys, large binaries) would be staged, or the working tree is empty.
+9. `→ Verifying pre-push hook` (only if relevant hooks exist) — **Verify hook health** after the commit. Commit-time hooks (`pre-commit`, `commit-msg`) ran via `git commit`; their pass is implicit in the commit succeeding. For non-commit-time hooks (most commonly `pre-push`), invoke them explicitly via the project's framework so the user has confidence the next push will succeed and the hook itself is in a working state. Detect via `.git/hooks/`, `.husky/`, `lefthook.yml`, `.pre-commit-config.yaml`. Surface failures with the reproduction command. Skip if no relevant hooks exist.
+10. `→ Reporting` — **Report** the commit SHA, which hooks ran and passed, and a one-line outcome.
 
 ## Trailer spec
 
