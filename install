@@ -206,3 +206,6 @@ just dotfiles install
 
 # Put the user back where they started from.
 cd "$cwd"
+
+echo
+echo "Install complete. Open a new terminal (or run 'exec zsh') to load the updated shell environment."

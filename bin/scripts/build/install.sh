@@ -24,7 +24,7 @@ install+="\nln -sf \"$DOTFILES_BUILD/environment\" \"\$HOME/.zshrc.environment\"
 install+="ln -sf \"$DOTFILES_HOME/devbox.json\" \"$devbox_home/devbox.json\"\n\n"
 
 install+="devbox global install\n"
-install+="stat -f '%m:%z' \"$devbox_home/devbox.json\" \"$devbox_home/devbox.lock\" > \"$DOTFILES_HOME/devbox.fingerprint\"\n\n"
+install+="stat -c '%Y:%s' \"$devbox_home/devbox.json\" \"$devbox_home/devbox.lock\" > \"$DOTFILES_HOME/devbox.fingerprint\"\n\n"
 
 install+="if [[ -f \"$brewfile\" ]]; then\n"
 install+="  brew bundle install --file=\"$brewfile\"\n"

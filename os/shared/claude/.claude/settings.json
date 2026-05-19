@@ -6,7 +6,9 @@
     "type": "command",
     "command": "bash /Users/kronos/.claude/statusline-command.sh"
   },
-  "enabledPlugins": {},
+  "enabledPlugins": {
+    "dotfiles@local": true
+  },
   "extraKnownMarketplaces": {},
   "effortLevel": "xhigh",
   "skipDangerousModePermissionPrompt": true,

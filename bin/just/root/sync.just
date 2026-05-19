@@ -17,7 +17,7 @@ sync *argv="":
       git pull --ff-only
       if git diff --name-only "$LOCAL" "$REMOTE" | grep -qE '^devbox\.(json|lock)$'; then
         devbox global install
-        stat -f '%m:%z' "$(devbox global path)/devbox.json" "$(devbox global path)/devbox.lock" > "$DOTFILES_HOME/devbox.fingerprint"
+        stat -c '%Y:%s' "$(devbox global path)/devbox.json" "$(devbox global path)/devbox.lock" > "$DOTFILES_HOME/devbox.fingerprint"
       fi
     elif [ "$REMOTE" = "$BASE" ]; then
       echo "Local is ahead. Nothing to pull."
