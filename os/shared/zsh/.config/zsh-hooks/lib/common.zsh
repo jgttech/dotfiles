@@ -3,8 +3,11 @@
 # individual hook, so every hook can rely on these being defined.
 
 # GNU stat (Linux) vs BSD stat (macOS) take different flags; try both so the
-# same hook code works across platforms.
-_dotfiles_fp() { stat -c '%Y:%s' "$@" 2>/dev/null || stat -f '%m:%z' "$@" 2>/dev/null; }
+# same hook code works across platforms. `-L` dereferences symlinks so the
+# fingerprint reflects the target's real mtime/size — without it, stat
+# reports the symlink's own metadata (constant size = path length) and the
+# fingerprint never changes when the underlying file does.
+_dotfiles_fp() { stat -L -c '%Y:%s' "$@" 2>/dev/null || stat -L -f '%m:%z' "$@" 2>/dev/null; }
 
 # True when `just unlock` has marked this clone authoritative for autobackup
 # commits + pushes. Locked clones leave git history and the remote alone.
