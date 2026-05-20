@@ -37,7 +37,8 @@ for rel in "${backups[@]}"; do
 done
 
 uninstall+="rm -f \"$HOME/.zshrc.environment\"\n"
-uninstall+="rm -f \"$devbox_home/devbox.json\"\n\n"
+uninstall+="rm -f \"$devbox_home/devbox.json\"\n"
+uninstall+="rm -f \"$DOTFILES_HOME/devbox.fingerprint\"\n\n"
 
 # Uninstall the dotfiles plugin from every scope it was installed at, then
 # remove the local marketplace. Iterating scopes from installed_plugins.json
