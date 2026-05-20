@@ -40,6 +40,7 @@ done
 
 uninstall+="rm -f \"$HOME/.zshrc.environment\"\n"
 uninstall+="rm -f \"$devbox_home/devbox.json\"\n"
+uninstall+="rm -f \"$devbox_home/devbox.lock\"\n"
 uninstall+="rm -f \"$DOTFILES_HOME/devbox.fingerprint\"\n\n"
 
 # Uninstall the dotfiles plugin from every scope it was installed at, then

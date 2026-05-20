@@ -24,16 +24,17 @@ _dotfiles_repo_busy() {
   return 1
 }
 
-# Commit the named paths with the given message, then fire a detached push
-# so a slow network / auth prompt can't stall the prompt. Callers pass every
-# file the underlying tool touches (e.g. devbox writes both devbox.json and
-# devbox.lock — the lock symlink in install.sh makes that real); `git commit
-# -- "$@"` then captures every named path's working-tree state in one
-# commit. Skip when the repo is mid-merge/rebase/cherry-pick/revert, or
-# when any anchor path is already staged (user driving a commit by hand).
-# lefthook's pre-commit hook bumps dotfiles.yml and stages it on top, so
-# version-bump tracking lands in the same commit without enumerating it
-# here. Transient push failures retry on the next hook firing.
+# Commit every dirty + untracked path in the repo with the given message,
+# then fire a detached push so a slow network / auth prompt can't stall the
+# prompt. The anchor paths passed in are the trigger condition (we only
+# fire when at least one of them has a working-tree diff, so an unrelated
+# dirty file alone won't kick off an autobackup commit), but once we decide
+# to commit, `git add -A` sweeps everything in — single-user repo, the
+# operator wants every correlated change in one snapshot regardless of how
+# many files the underlying tool happens to touch. Skip when any anchor is
+# already staged (user driving a commit by hand) or the repo is mid-merge/
+# rebase/cherry-pick/revert. Transient push failures retry on the next
+# hook firing.
 _dotfiles_commit_and_push() {
   local msg="$1"; shift
   [[ -n "$msg" ]] || return 1
@@ -52,7 +53,8 @@ _dotfiles_commit_and_push() {
 
   _dotfiles_repo_busy && return 1
 
-  git -C "$DOTFILES_HOME" commit --quiet -m "$msg" -- "$@" >/dev/null 2>&1 || return 1
+  git -C "$DOTFILES_HOME" add -A >/dev/null 2>&1 || return 1
+  git -C "$DOTFILES_HOME" commit --quiet -m "$msg" >/dev/null 2>&1 || return 1
 
   ( cd "$DOTFILES_HOME" && git push --quiet >/dev/null 2>&1 & ) >/dev/null 2>&1
 }
