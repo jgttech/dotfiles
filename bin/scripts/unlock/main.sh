@@ -60,6 +60,11 @@ if ! git -C "$DOTFILES_HOME" checkout "$current_branch" 2>/dev/null; then
   echo "[WARN] Could not check out '$current_branch'. Check it out manually." >&2
 fi
 
+# Mark this clone as authoritative for autobackup auto-commit+push. The brew
+# autobackup precmd hook reads this; absent/false means "dump locally, don't
+# touch git history or the remote".
+git -C "$DOTFILES_HOME" config dotfiles.pushable true
+
 echo
 echo "Done. Remote is now:"
 git -C "$DOTFILES_HOME" remote -v
