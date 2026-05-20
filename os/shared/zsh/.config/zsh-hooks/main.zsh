@@ -14,10 +14,8 @@
 #     Re-dumps the host Brewfile when brew's Cellar/Caskroom/Taps mtimes
 #     change. Keeps hosts/<host>/brew/.config/brew/Brewfile in sync with the
 #     installed package state; commits stay manual via `just save`.
-_dotfiles_hooks="$HOME/.config/zsh-hooks"
+_dotfiles_hooks="$HOME/.config/zsh-hooks/hooks"
 
 for hook in "${_dotfiles_hooks[@]}"/*; do
-  if [[ "$hook" == *"_dotfiles_"* ]]; then
-    source "$hook"
-  fi
+  source "$hook"
 done
