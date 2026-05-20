@@ -8,3 +8,8 @@
 # to subsequent app launches without requiring a logout.
 echo "Refreshing macOS font caches..."
 atsutil databases -remove >/dev/null 2>&1 || true
+
+# If nvm is installed, ensure the latest LTS of NodeJS is installed.
+if installed nvm; then
+  nvm install --lts && nvm use --lts --default
+fi

@@ -11,21 +11,29 @@ _dotfiles_brew_autobackup() {
   [[ -n "${DOTFILES_HOME:-}" && -d "$DOTFILES_HOME" ]] || return
   command -v brew >/dev/null 2>&1 || return
 
-  local brewfile fpfile prefix cur last
+  local brewfile fpfile prefix cur last d paths
   brewfile="$DOTFILES_HOME/hosts/$(hostname -s)/brew/.config/brew/Brewfile"
   [[ -d "${brewfile:h}" ]] || return
 
   prefix="$(brew --prefix 2>/dev/null)" || return
   [[ -n "$prefix" ]] || return
 
+  # Library/Taps only exists once you've tapped at least one source; filter
+  # to whatever's actually on disk so a clean brew install still fingerprints.
+  paths=()
+  for d in Cellar Caskroom Library/Taps; do
+    [[ -e "$prefix/$d" ]] && paths+=("$prefix/$d")
+  done
+  (( ${#paths[@]} )) || return
+
   fpfile="$HOME/.config/brew/Brewfile.fingerprint"
-  cur="$(stat -c '%Y:%s' "$prefix/Cellar" "$prefix/Caskroom" "$prefix/Library/Taps" 2>/dev/null)" || return
+  cur="$(stat -c '%Y:%s' "${paths[@]}" 2>/dev/null)" || return
   last=""
   [[ -r "$fpfile" ]] && last="$(<"$fpfile")"
   [[ "$cur" == "$last" ]] && return
 
   if brew bundle dump --file="$brewfile" --force >/dev/null; then
-    stat -c '%Y:%s' "$prefix/Cellar" "$prefix/Caskroom" "$prefix/Library/Taps" > "$fpfile"
+    stat -c '%Y:%s' "${paths[@]}" > "$fpfile"
   fi
 }
 

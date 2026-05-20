@@ -1,5 +1,7 @@
 import "../../settings.just"
 import "add.just"
+import "doctor.just"
 import "install.just"
+import "reinstall.just"
 import "save.just"
 import "uninstall.just"

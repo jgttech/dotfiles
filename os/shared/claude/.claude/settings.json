@@ -14,7 +14,7 @@
     "dotfiles@local": true
   },
   "extraKnownMarketplaces": {},
-  "effortLevel": "xhigh",
+  "effortLevel": "high",
   "skipDangerousModePermissionPrompt": true,
   "theme": "auto",
   "skipAutoPermissionPrompt": true

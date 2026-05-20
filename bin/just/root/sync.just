@@ -21,7 +21,11 @@ sync *argv="":
       fi
       if git diff --name-only "$LOCAL" "$REMOTE" | grep -qE "^hosts/$(hostname -s)/brew/\.config/brew/Brewfile$"; then
         brew bundle install --file="$HOME/.config/brew/Brewfile"
-        stat -c '%Y:%s' "$(brew --prefix)/Cellar" "$(brew --prefix)/Caskroom" "$(brew --prefix)/Library/Taps" > "$HOME/.config/brew/Brewfile.fingerprint"
+        brewfp_paths=()
+        for d in Cellar Caskroom Library/Taps; do
+          [[ -e "$(brew --prefix)/$d" ]] && brewfp_paths+=("$(brew --prefix)/$d")
+        done
+        (( ${#brewfp_paths[@]} )) && stat -c '%Y:%s' "${brewfp_paths[@]}" > "$HOME/.config/brew/Brewfile.fingerprint"
       fi
     elif [ "$REMOTE" = "$BASE" ]; then
       echo "Local is ahead. Nothing to pull."

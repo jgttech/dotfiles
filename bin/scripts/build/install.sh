@@ -28,7 +28,12 @@ install+="stat -c '%Y:%s' \"$devbox_home/devbox.json\" \"$devbox_home/devbox.loc
 
 install+="if [[ -f \"$brewfile\" ]]; then\n"
 install+="  brew bundle install --file=\"$brewfile\"\n"
-install+="  stat -c '%Y:%s' \"\$(brew --prefix)/Cellar\" \"\$(brew --prefix)/Caskroom\" \"\$(brew --prefix)/Library/Taps\" > \"\$HOME/.config/brew/Brewfile.fingerprint\"\n"
+install+="  _brewfp_paths=()\n"
+install+="  for _d in Cellar Caskroom Library/Taps; do\n"
+install+="    [[ -e \"\$(brew --prefix)/\$_d\" ]] && _brewfp_paths+=(\"\$(brew --prefix)/\$_d\")\n"
+install+="  done\n"
+install+="  (( \${#_brewfp_paths[@]} )) && stat -c '%Y:%s' \"\${_brewfp_paths[@]}\" > \"\$HOME/.config/brew/Brewfile.fingerprint\"\n"
+install+="  unset _brewfp_paths _d\n"
 install+="fi\n\n"
 
 # Register the local marketplace and install the dotfiles plugin for Claude Code.
