@@ -24,11 +24,16 @@ _dotfiles_repo_busy() {
   return 1
 }
 
-# Commit a specific set of paths with a given message, then fire a detached
-# push so a slow network / auth prompt can't stall the prompt. Returns
-# non-zero (without committing) when there's nothing to commit, when any of
-# the paths already has staged changes (user mid-edit), or when the repo is
-# busy. Transient push failures retry on the next hook firing.
+# Commit the named paths with the given message, then fire a detached push
+# so a slow network / auth prompt can't stall the prompt. Callers pass every
+# file the underlying tool touches (e.g. devbox writes both devbox.json and
+# devbox.lock — the lock symlink in install.sh makes that real); `git commit
+# -- "$@"` then captures every named path's working-tree state in one
+# commit. Skip when the repo is mid-merge/rebase/cherry-pick/revert, or
+# when any anchor path is already staged (user driving a commit by hand).
+# lefthook's pre-commit hook bumps dotfiles.yml and stages it on top, so
+# version-bump tracking lands in the same commit without enumerating it
+# here. Transient push failures retry on the next hook firing.
 _dotfiles_commit_and_push() {
   local msg="$1"; shift
   [[ -n "$msg" ]] || return 1

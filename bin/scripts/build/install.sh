@@ -21,7 +21,11 @@ for ctx in "${contexts[@]}"; do
 done
 
 install+="\nln -sf \"$DOTFILES_BUILD/environment\" \"\$HOME/.zshrc.environment\"\n"
-install+="ln -sf \"$DOTFILES_HOME/devbox.json\" \"$devbox_home/devbox.json\"\n\n"
+install+="ln -sf \"$DOTFILES_HOME/devbox.json\" \"$devbox_home/devbox.json\"\n"
+# Symlink the lock file the same way. Without this, devbox writes the lock
+# into $devbox_home and the repo's devbox.lock drifts silently, breaking
+# autocommit (which can only commit what's actually in the working tree).
+install+="ln -sf \"$DOTFILES_HOME/devbox.lock\" \"$devbox_home/devbox.lock\"\n\n"
 
 install+="devbox global install\n"
 install+="stat -c '%Y:%s' \"$devbox_home/devbox.json\" \"$devbox_home/devbox.lock\" > \"$DOTFILES_HOME/devbox.fingerprint\"\n\n"
