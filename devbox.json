@@ -5,6 +5,7 @@
     "stow@latest",
     "gh@latest",
     "lefthook@latest",
-    "direnv@latest"
+    "direnv@latest",
+    "jq@latest"
   ]
 }
