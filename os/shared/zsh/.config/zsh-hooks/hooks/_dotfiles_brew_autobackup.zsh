@@ -15,7 +15,7 @@
 # equivalent brew/cask/tap/mas/vscode command so `git log --oneline` reads as
 # the action you would have run by hand.
 _dotfiles_brew_commit_msg() {
-  local repo="$1" brewfile="$2" host="$3"
+  local brewfile="$1" host="$2"
   local line body verb pkg
   local -a actions
   while IFS= read -r line; do
@@ -43,7 +43,7 @@ _dotfiles_brew_commit_msg() {
         pkg="${body#vscode \"}"; pkg="${pkg%%\"*}"
         actions+=("vscode $verb $pkg") ;;
     esac
-  done < <(git -C "$repo" diff -- "$brewfile")
+  done < <(git -C "$DOTFILES_HOME" diff -- "$brewfile")
 
   (( ${#actions[@]} )) || return 1
   printf '%s: %s' "$host" "${(j:; :)actions}"
@@ -56,7 +56,7 @@ _dotfiles_brew_autobackup() {
   [[ -n "${DOTFILES_HOME:-}" && -d "$DOTFILES_HOME" ]] || return
   command -v brew >/dev/null 2>&1 || return
 
-  local brewfile fpfile prefix cur last d host pushable msg
+  local brewfile fpfile prefix cur last d host msg
   local -a paths
   host="$(hostname -s)"
   brewfile="$DOTFILES_HOME/hosts/$host/brew/.config/brew/Brewfile"
@@ -86,26 +86,10 @@ _dotfiles_brew_autobackup() {
   # Auto-commit + push only when the clone was authenticated by `just unlock`.
   # Locked clones stop here — the Brewfile diff is left in the working tree.
   [[ "${DOTFILES_BREW_AUTOCOMMIT:-1}" == "0" ]] && return
-  pushable="$(git -C "$DOTFILES_HOME" config --get dotfiles.pushable 2>/dev/null)"
-  [[ "$pushable" == "true" ]] || return
+  _dotfiles_pushable || return
 
-  # Skip if the dump produced no real diff, if the Brewfile is already staged
-  # (user is mid-edit), or if the repo is in a special state we shouldn't
-  # silently commit into.
-  git -C "$DOTFILES_HOME" diff --quiet -- "$brewfile" && return
-  git -C "$DOTFILES_HOME" diff --cached --quiet -- "$brewfile" || return
-  for d in MERGE_HEAD REBASE_HEAD CHERRY_PICK_HEAD REVERT_HEAD; do
-    [[ -e "$DOTFILES_HOME/.git/$d" ]] && return
-  done
-
-  msg="$(_dotfiles_brew_commit_msg "$DOTFILES_HOME" "$brewfile" "$host")" || return
-  [[ -n "$msg" ]] || return
-
-  git -C "$DOTFILES_HOME" commit --quiet -m "$msg" -- "$brewfile" >/dev/null 2>&1 || return
-
-  # Detach push so a slow network / auth prompt can't stall the user's
-  # prompt; transient failures retry on the next state-changing brew command.
-  ( cd "$DOTFILES_HOME" && git push --quiet >/dev/null 2>&1 & ) >/dev/null 2>&1
+  msg="$(_dotfiles_brew_commit_msg "$brewfile" "$host")" || return
+  _dotfiles_commit_and_push "$msg" "$brewfile"
 }
 
 add-zsh-hook precmd _dotfiles_brew_autobackup
