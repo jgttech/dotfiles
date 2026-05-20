@@ -69,7 +69,12 @@ _dotfiles_devbox_autosync() {
   [[ "$cur" == "$last" ]] && return
 
   devbox global install || return
-  eval "$(devbox global shellenv)"
+  # Equivalent to running the `refresh-global` alias that `devbox global add`
+  # tells you to run after a manifest change: --preserve-path-stack -r emits
+  # a fresh shellenv block, and `hash -r` flushes zsh's command-path cache
+  # so freshly-installed binaries (or freshly-removed ones) resolve correctly
+  # on the next prompt without requiring a manual reload.
+  eval "$(devbox global shellenv --preserve-path-stack -r)" && hash -r
   _dotfiles_fp "$manifest" "$lockfile" > "$fpfile"
 
   # Auto-commit + push only when the clone was authenticated by `just unlock`.
