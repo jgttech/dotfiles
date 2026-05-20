@@ -19,6 +19,10 @@ sync *argv="":
         devbox global install
         stat -c '%Y:%s' "$(devbox global path)/devbox.json" "$(devbox global path)/devbox.lock" > "$DOTFILES_HOME/devbox.fingerprint"
       fi
+      if git diff --name-only "$LOCAL" "$REMOTE" | grep -qE "^hosts/$(hostname -s)/brew/\.config/brew/Brewfile$"; then
+        brew bundle install --file="$HOME/.config/brew/Brewfile"
+        stat -c '%Y:%s' "$(brew --prefix)/Cellar" "$(brew --prefix)/Caskroom" "$(brew --prefix)/Library/Taps" > "$HOME/.config/brew/Brewfile.fingerprint"
+      fi
     elif [ "$REMOTE" = "$BASE" ]; then
       echo "Local is ahead. Nothing to pull."
     else

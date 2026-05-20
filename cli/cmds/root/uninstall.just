@@ -3,5 +3,5 @@
 uninstall *argv:
     cwd="$(pwd)"
     cd "$DOTFILES_HOME"
-    just uninstall {{ argv }}
+    just dotfiles uninstall {{ argv }}
     cd "$cwd"

@@ -17,6 +17,8 @@ uninstall+="if [[ -f \"$brewfile\" ]]; then\n"
 uninstall+="  brew bundle cleanup --file=\"$brewfile\" --force\n"
 uninstall+="fi\n\n"
 
+uninstall+="rm -f \"\$HOME/.config/brew/Brewfile.fingerprint\"\n\n"
+
 for ctx in "${contexts[@]}"; do
   dirs=()
 

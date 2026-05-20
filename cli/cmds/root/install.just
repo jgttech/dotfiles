@@ -1,4 +1,7 @@
-# Dotfiles CLI install script.
+# Dotfiles CLI uninstall script.
 [script]
 install *argv:
-    exit 0
+    cwd="$(pwd)"
+    cd "$DOTFILES_HOME"
+    just dotfiles install {{ argv }}
+    cd "$cwd"
