@@ -3,7 +3,6 @@
   "packages": [
     "yq@latest",
     "stow@latest",
-    "jq@latest",
     "gh@latest",
     "lefthook@latest",
     "direnv@latest"
