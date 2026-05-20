@@ -18,14 +18,15 @@ _dotfiles_devbox_autosync() {
   [[ -e "$manifest" && -e "$lockfile" ]] || return
 
   fpfile="$DOTFILES_HOME/devbox.fingerprint"
-  cur="$(stat -c '%Y:%s' "$manifest" "$lockfile" 2>/dev/null)" || return
+  cur="$(_dotfiles_fp "$manifest" "$lockfile")"
+  [[ -n "$cur" ]] || return
   last=""
   [[ -r "$fpfile" ]] && last="$(<"$fpfile")"
   [[ "$cur" == "$last" ]] && return
 
   if devbox global install; then
     eval "$(devbox global shellenv)"
-    stat -c '%Y:%s' "$manifest" "$lockfile" > "$fpfile"
+    _dotfiles_fp "$manifest" "$lockfile" > "$fpfile"
   fi
 }
 

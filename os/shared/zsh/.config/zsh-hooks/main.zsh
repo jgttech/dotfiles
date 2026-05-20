@@ -14,8 +14,16 @@
 #     Re-dumps the host Brewfile when brew's Cellar/Caskroom/Taps mtimes
 #     change. Keeps hosts/<host>/brew/.config/brew/Brewfile in sync with the
 #     installed package state; commits stay manual via `just save`.
-_dotfiles_hooks="$HOME/.config/zsh-hooks/hooks"
+_dotfiles_zsh_hooks_root="$HOME/.config/zsh-hooks"
 
-for hook in "${_dotfiles_hooks[@]}"/*; do
-  source "$hook"
+# Shared helpers (BSD/GNU stat, pushable gate, repo-busy check, commit/push)
+# load before any hook so every hook can use them.
+for _libfile in "$_dotfiles_zsh_hooks_root"/lib/*.zsh(N); do
+  source "$_libfile"
 done
+
+for _hook in "$_dotfiles_zsh_hooks_root"/hooks/*(N); do
+  source "$_hook"
+done
+
+unset _dotfiles_zsh_hooks_root _libfile _hook

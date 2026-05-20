@@ -9,8 +9,7 @@
 # Opt-outs: DOTFILES_BREW_AUTOBACKUP=0 (whole hook), DOTFILES_BREW_AUTOCOMMIT=0
 # (keep dumping, skip commit+push even when unlocked).
 
-# GNU stat (Linux) vs BSD stat (macOS) take different flags; try both.
-_dotfiles_brew_fp() { stat -c '%Y:%s' "$@" 2>/dev/null || stat -f '%m:%z' "$@" 2>/dev/null; }
+# `_dotfiles_fp` is provided by lib/common.zsh (BSD/GNU stat shim).
 
 # Derive a commit message from the Brewfile diff. Each +/- line maps to its
 # equivalent brew/cask/tap/mas/vscode command so `git log --oneline` reads as
@@ -75,14 +74,14 @@ _dotfiles_brew_autobackup() {
   (( ${#paths[@]} )) || return
 
   fpfile="$HOME/.config/brew/Brewfile.fingerprint"
-  cur="$(_dotfiles_brew_fp "${paths[@]}")"
+  cur="$(_dotfiles_fp "${paths[@]}")"
   [[ -n "$cur" ]] || return
   last=""
   [[ -r "$fpfile" ]] && last="$(<"$fpfile")"
   [[ "$cur" == "$last" ]] && return
 
   brew bundle dump --file="$brewfile" --force >/dev/null || return
-  _dotfiles_brew_fp "${paths[@]}" > "$fpfile"
+  _dotfiles_fp "${paths[@]}" > "$fpfile"
 
   # Auto-commit + push only when the clone was authenticated by `just unlock`.
   # Locked clones stop here — the Brewfile diff is left in the working tree.
